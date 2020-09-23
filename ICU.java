@@ -15,7 +15,7 @@ public class ICU {
         this.Capacity = capacity;
         BedsNumber = settingBedsNumber(capacity);
     }
-s
+    
     public String getName() {
         return Name;
     }
