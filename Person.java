@@ -1,50 +1,51 @@
 public class Person {
-    private String name , id , address,phone , birthDate , sex ;
+    private String Name , Id , Address,Phone , BirthDate , Sex ;
  
     public Person() {
     }
     public Person(String name, String id, String address, String phone, String birthDate, String sex) {
-        this.name = name;
-        this.id = id;
-        this.address = address;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.sex = sex;
+        Name = name;
+        Id = id;
+        Address = address;
+        Phone = phone;
+        BirthDate = birthDate;
+        Sex = sex;
     }
+
     public String getName() {
-        return name;
+        return Name;
     }
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
     public String getId() {
-        return id;
+        return Id;
     }
     public void setId(String id) {
-        this.id = id;
+        Id = id;
     }
     public String getAddress() {
-        return address;
+        return Address;
     }
     public void setAddress(String address) {
-        this.address = address;
+        Address = address;
     }
     public String getPhone() {
-        return phone;
+        return Phone;
     }
     public void setPhone(String phone) {
-        this.phone = phone;
+        Phone = phone;
     }
     public String getBirthDate() {
-        return birthDate;
+        return BirthDate;
     }
     public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+        BirthDate = birthDate;
     }
     public String getSex() {
-        return sex;
+        return Sex;
     }
     public void setSex(String sex) {
-        this.sex = sex;
+        Sex = sex;
     }
 }
