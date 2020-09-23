@@ -3,6 +3,7 @@ public class Doctor extends Person {
     private Patient[] patients;
     private double[] HoursPerWeekPerPatient ; 
     private Prescription[][] Prescriptions ; 
+    
     public Doctor(){
     }
 
