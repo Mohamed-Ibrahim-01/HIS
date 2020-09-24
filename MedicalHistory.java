@@ -1,12 +1,36 @@
 class MedicalHistory{
+    private Patient Patient ; 
     private PersonMH PatientMH;
     private FamilyMH PatientFamilyMH;
-    public MedicalHistory(PersonMH patientMH,FamilyMH patientFamilyMH){
-        this.PatientMH = patientMH;
-        this.PatientFamilyMH = patientFamilyMH;
+
+    public MedicalHistory(Patient patient, PersonMH patientMH, FamilyMH patientFamilyMH) {
+        Patient = patient;
+        PatientMH = patientMH;
+        PatientFamilyMH = patientFamilyMH;
     }
-    public PersonMH getPatientMH(){ return PatientMH;}
-    public FamilyMH getPatientFamilyMH(){ return PatientFamilyMH;}
-    public void setPatientMH(PersonMH patientMH){ this.PatientMH = patientMH;}
-    public void setPatientFamilyMH(FamilyMH patientFamilyMH){ this.PatientFamilyMH = patientFamilyMH;}
+
+    public Patient getPatient() {
+        return Patient;
+    }
+
+    public void setPatient(Patient patient) {
+        Patient = patient;
+    }
+
+    public PersonMH getPatientMH() {
+        return PatientMH;
+    }
+
+    public void setPatientMH(PersonMH patientMH) {
+        PatientMH = patientMH;
+    }
+
+    public FamilyMH getPatientFamilyMH() {
+        return PatientFamilyMH;
+    }
+
+    public void setPatientFamilyMH(FamilyMH patientFamilyMH) {
+        PatientFamilyMH = patientFamilyMH;
+    }
+    
 }
