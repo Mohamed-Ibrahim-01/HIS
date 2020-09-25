@@ -1,3 +1,4 @@
+import java.util.UUID;
 
 public class Patient extends Person {
         private String PatientId , AdmittanceDate ;
@@ -10,7 +11,7 @@ public class Patient extends Person {
     public Patient() {
     }
 
-    public Patient(String name, String id, String address, String phone, String birthDate, String sex, String patientId,
+    public Patient(String name, UUID id, String address, String phone, String birthDate, String sex, String patientId,
             String admittanceDate, MedicalStatus medicalStatus, MedicalHistory medicalHistory, Doctor[] doctors,
             Prescription[][] prescriptions, double[] hoursPerWeekPerDoctor, Medication[] medications) {
         super(name, id, address, phone, birthDate, sex);

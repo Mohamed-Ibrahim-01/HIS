@@ -1,9 +1,11 @@
+import java.util.UUID;
+
 public class Person {
-    private String Name , Id , Address,Phone , BirthDate , Sex ;
- 
+    private String Name , Address , Phone , BirthDate , Sex ;
+    private UUID Id ; 
     public Person() {
     }
-    public Person(String name, String id, String address, String phone, String birthDate, String sex) {
+    public Person(String name, UUID id, String address, String phone, String birthDate, String sex) {
         Name = name;
         Id = id;
         Address = address;
@@ -18,11 +20,8 @@ public class Person {
     public void setName(String name) {
         Name = name;
     }
-    public String getId() {
+    public UUID getId() {
         return Id;
-    }
-    public void setId(String id) {
-        Id = id;
     }
     public String getAddress() {
         return Address;

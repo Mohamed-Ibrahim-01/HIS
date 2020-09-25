@@ -1,3 +1,5 @@
+import java.util.UUID;
+
 public class Doctor extends Person {
     private String SSN, MSA , Degree ; 
     private Patient[] patients;
@@ -7,7 +9,7 @@ public class Doctor extends Person {
     public Doctor(){
     }
 
-    public Doctor(String name, String id, String address, String phone, String birthDate, String sex, String sSN,
+    public Doctor(String name, UUID id, String address, String phone, String birthDate, String sex, String sSN,
             String mSA, String degree, Patient[] patients, double[] hoursPerWeekPerPatient,
             Prescription[][] prescriptions) {
         super(name, id, address, phone, birthDate, sex);
