@@ -2,6 +2,7 @@
 public class Patient extends Person {
         private String PatientId , AdmittanceDate ;
         private MedicalStatus MedicalStatus ;
+        private String Complain ;
         private MedicalHistory MedicalHistory ;  
         private Doctor[] Doctors ; 
         private Prescription[][] Prescriptions ; 
@@ -87,6 +88,10 @@ public class Patient extends Person {
     public void setMedications(Medication[] medications) {
         Medications = medications;
     }
+    public void setComplain(String complain){
+        this.Complain = complain;
+    }
+    public String getComplain(){return this.Complain;}
     
 
 }
