@@ -1,4 +1,5 @@
 public class Doctor extends Person {
+    // SSN : Social Security Number MSA: Major Scientific Area
     private String SSN, MSA , Degree ; 
     private Patient[] patients;
     private double[] HoursPerWeekPerPatient ; 
