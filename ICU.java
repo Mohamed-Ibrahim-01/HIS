@@ -1,19 +1,21 @@
 import enums.Capacity;
 public class ICU {
     private String Name , ICU_Code, Manager ;
-    private Capacity Capacity ;
-    private int BedsNumber;
-
+    private Capacity capacity ;
+    private int BedsNumber ,Free , Busy;
+    
     public ICU(){
 
     }
 
-    public ICU(String name, String iCU_Code, String manager, enums.Capacity capacity) {
+    public ICU(String name, String iCU_Code, String manager, int BedsNumber,int Busy) {
         Name = name;
         ICU_Code = iCU_Code;
         Manager = manager;
-        this.Capacity = capacity;
-        BedsNumber = settingBedsNumber(capacity);
+        this.BedsNumber = BedsNumber ;
+        this.Busy = Busy;
+        Free = BedsNumber - Busy ; 
+        this.capacity = settingCapacity(BedsNumber);
     }
     
     public String getName() {
@@ -41,28 +43,47 @@ public class ICU {
     }
 
     public Capacity getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
-    public void setCapacity(Capacity capacity) {
-        Capacity = capacity;
+    public void setCapacity(int BedsNumber) {
+       this.capacity = settingCapacity(BedsNumber);
     }
 
     public int getBedsNumber() {
         return BedsNumber;
     }
 
-    public void setBedsNumber(Capacity capacity) {
-        BedsNumber = settingBedsNumber(capacity);
+    public void setBedsNumber(int BedsNumber) {
+       this.BedsNumber = BedsNumber ; 
     }
 
-    private static int settingBedsNumber(Capacity capacity){
-        int BedsNumber = 0 ;
-        switch(capacity){
-            case BIG : BedsNumber = 6; break;
-            case MEDUIM : BedsNumber = 4; break;
-            case SMALL : BedsNumber = 2; break;
-        }
-        return BedsNumber ; 
+    public int getBusy() {
+        return Busy;
     }
+
+    public void setBusy(int busy) {
+        Busy = busy;
+        Free = BedsNumber - Busy ; 
+    }
+
+    public void addBusy(int increament ){
+        Busy +=increament;
+        Free = BedsNumber - Busy; 
+    }
+
+    public void FreeBeds(int beds){
+        Busy -= beds;
+        Free = BedsNumber - Busy; 
+    }
+
+    private static Capacity settingCapacity(int BedsNumber){
+         Capacity cap = Capacity.SMALL ;
+        switch(BedsNumber){
+            case 2 : cap = Capacity.SMALL; break;
+            case 4 : cap = Capacity.MEDUIM; break;
+            case 6 : cap = Capacity.BIG; break;
+        }
+        return cap ; 
+    }  
 }
