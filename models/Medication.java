@@ -1,3 +1,5 @@
+package models;
+
 import java.util.UUID;
 class Medication{
     private UUID uuid;

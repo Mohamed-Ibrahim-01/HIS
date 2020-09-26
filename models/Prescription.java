@@ -1,3 +1,5 @@
+package models;
+
 public class Prescription {
     private Medication[] Medications;
     private String date;

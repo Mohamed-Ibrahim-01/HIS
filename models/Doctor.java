@@ -1,3 +1,4 @@
+package models;
 import java.util.UUID;
 import java.util.HashMap;
 public class Doctor extends Person {

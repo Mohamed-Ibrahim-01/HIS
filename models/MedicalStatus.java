@@ -1,3 +1,5 @@
+package models;
+
 class MedicalStatus{
    private String BloodPressure;
    private int SystolicBP,DiastolicBP,HeartRate,Temprature;

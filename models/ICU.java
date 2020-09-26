@@ -1,3 +1,5 @@
+
+package models;
 import enums.Capacity;
 public class ICU {
     private String Name , ICU_Code, Manager ;

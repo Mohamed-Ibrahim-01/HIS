@@ -1,3 +1,5 @@
+
+package models;
 class MedicalHistory{
     private Patient Patient ; 
     private PersonMH PatientMH;
