@@ -1,25 +1,20 @@
 import java.util.UUID;
-
+import java.util.HashMap;
 public class Doctor extends Person {
     // SSN : Social Security Number MSA: Major Scientific Area
     private String SSN, MSA , Degree ; 
-    private Patient[] patients;
-    private double[] HoursPerWeekPerPatient ; 
-    private Prescription[][] Prescriptions ; 
-    
+    private HashMap<Patient,PatientData> Patients;
+
     public Doctor(){
     }
 
     public Doctor(String name, UUID id, String address, String phone, String birthDate, String sex, String sSN,
-            String mSA, String degree, Patient[] patients, double[] hoursPerWeekPerPatient,
-            Prescription[][] prescriptions) {
+            String mSA, String degree, HashMap<Patient,PatientData> Patients) {
         super(name, id, address, phone, birthDate, sex);
         SSN = sSN;
         MSA = mSA;
         Degree = degree;
-        this.patients = patients;
-        HoursPerWeekPerPatient = hoursPerWeekPerPatient;
-        Prescriptions = prescriptions;
+        this.Patients = Patients;
     }
 
     public String getSSN() {
@@ -46,28 +41,12 @@ public class Doctor extends Person {
         Degree = degree;
     }
 
-    public Patient[] getPatients() {
-        return patients;
+    public HashMap<Patient, PatientData> getPatients() {
+        return Patients;
     }
 
-    public void setPatients(Patient[] patients) {
-        this.patients = patients;
+    public void setPatients(HashMap<Patient, PatientData> patients) {
+        Patients = patients;
     }
 
-    public double[] getHoursPerWeekPerPatient() {
-        return HoursPerWeekPerPatient;
-    }
-
-    public void setHoursPerWeekPerPatient(double[] hoursPerWeekPerPatient) {
-        HoursPerWeekPerPatient = hoursPerWeekPerPatient;
-    }
-
-    public Prescription[][] getPrescriptions() {
-        return Prescriptions;
-    }
-
-    public void setPrescriptions(Prescription[][] prescriptions) {
-        Prescriptions = prescriptions;
-    }
-    
 }
