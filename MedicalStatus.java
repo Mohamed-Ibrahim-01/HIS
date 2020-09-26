@@ -1,10 +1,11 @@
 class MedicalStatus{
    private String BloodPressure;
    private int SystolicBP,DiastolicBP,HeartRate,Temprature;
-   public MedicalStatus(int SystolicBP,int DiastolicBP,int Temprature){
+   public MedicalStatus(int SystolicBP,int DiastolicBP,int Temprature, int HeartRate){
        this.Temprature = Temprature;
        this.SystolicBP = SystolicBP;
        this.DiastolicBP = DiastolicBP;
+       this.HeartRate = HeartRate;
        BloodPressure = SystolicBP + "/"+ DiastolicBP;
    }
    public String getBloodPressure() {return BloodPressure;}
