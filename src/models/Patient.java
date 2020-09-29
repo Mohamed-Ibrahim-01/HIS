@@ -1,4 +1,4 @@
-package models;
+package src.models;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,5 +36,8 @@ public class Patient extends Person {
     public void setComplain(String complain){ Complain = complain; }
     
     public TreatmentData getDoctorData(Doctor d) {return DoctorsData.get(d);}
+    public void addTreatmentData(Doctor doctor, TreatmentData treatmentData){
+        DoctorsData.put(doctor, treatmentData);
+    }
 
 }

@@ -1,6 +1,6 @@
 
-package models;
-import enums.Capacity;
+package src.models;
+import src.enums.Capacity;
 public class ICU {
     private String Name , Code, Manager ;
     private Capacity capacity ;

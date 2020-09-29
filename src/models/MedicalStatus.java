@@ -1,4 +1,4 @@
-package models;
+package src.models;
 
 class MedicalStatus{
    private String BloodPressure;

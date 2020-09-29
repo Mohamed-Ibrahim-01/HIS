@@ -1,4 +1,4 @@
-package models;
+package src.models;
 class MedicalHistory{
     private Patient Patient ; 
     private PersonMH PatientMH;

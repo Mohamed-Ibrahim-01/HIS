@@ -1,9 +1,8 @@
+package src;
 import java.util.HashMap;
 import java.util.UUID;
+import src.models.*;
 
-import javax.print.Doc;
-
-import models.*;
 public class HospitalNetwork {
 
     private HashMap<UUID,Person> Persons;
@@ -29,7 +28,7 @@ public class HospitalNetwork {
         Persons.put(Id, p);
         return true;
     }
-    public addTreatmentData(Patient patient, Doctor doctor, TreatmentData treatmentData){
+    public void addTreatmentData(Patient patient, Doctor doctor, TreatmentData treatmentData){
         patient.addTreatmentData(doctor,treatmentData);
         doctor.addTreatmentData(patient,treatmentData);
     }
