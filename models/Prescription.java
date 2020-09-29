@@ -1,66 +1,40 @@
 package models;
+import java.util.List;
 
 public class Prescription {
-    private Medication[] Medications;
-    private String date;
+    private List<Medication> Medications;
+    private String Date;
     private Patient Patient;
     private Doctor Doctor ;
-    private int duration;
+    private int Duration;
 
     public Prescription(){
     }
 
-    public Prescription(Medication[] medications, String date, Patient patient, Doctor doctor, int duration) {
+    public Prescription(List<Medication> medications, String date, Patient patient, Doctor doctor, int duration) {
         Medications = medications;
-        this.date = date;
+        Date = date;
         Patient = patient;
         Doctor = doctor;
-        this.duration = duration;
+        Duration = duration;
     }
 
-    public Medication[] getMedications() {
-        return Medications;
-    }
+    public List<Medication> getMedications() { return Medications; }
+    public void setMedications(List<Medication> medications) { Medications = medications; }
 
-    public void setMedications(Medication[] medications) {
-        Medications = medications;
-    }
+    public String getDate() { return Date; }
+    public void setDate(String date) { Date = date; } 
 
-    public String getDate() {
-        return date;
-    }
+    public Patient getPatient() { return Patient; }
+    public void setPatient(Patient patient) { Patient = patient; }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+    public Doctor getDoctor() { return Doctor; }
+    public void setDoctor(Doctor doctor) { Doctor = doctor; }
 
-    public Patient getPatient() {
-        return Patient;
-    }
+    public int getDuration() { return Duration; }
+    public void setDuration(int duration) { Duration = duration; }
 
-    public void setPatient(Patient patient) {
-        Patient = patient;
-    }
-
-    public Doctor getDoctor() {
-        return Doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        Doctor = doctor;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-    
     public void showDetails(){
-        
-
 
     }
     

@@ -12,14 +12,14 @@ class PersonMH{
     
     public PersonMH(){
     }
-    public PersonMH(HashMap<String,Date> ChronicDiseases,HashMap<String,Date> Diseases
-        ,HashMap<String,Date> Hospitalizations ,HashMap<String,Date> Medications,ArrayList<String> GeneticDiseases){
+    public PersonMH(HashMap<String,Date> chronicDiseases,HashMap<String,Date> diseases
+        ,HashMap<String,Date> hospitalizations ,HashMap<String,Date> medications,ArrayList<String> geneticDiseases){
 
-        this.ChronicDiseases = ChronicDiseases;
-        this.Hospitalizations = Hospitalizations;
-        this.Diseases = Diseases;
-        this.Medications = Medications;
-        this.GeneticDiseases = GeneticDiseases;
+        this.ChronicDiseases = chronicDiseases;
+        this.Hospitalizations = hospitalizations;
+        this.Diseases = diseases;
+        this.Medications = medications;
+        this.GeneticDiseases = geneticDiseases;
     }
 
    public HashMap<String,Date> getChronicDiseases(){return this.ChronicDiseases;} 
@@ -28,11 +28,11 @@ class PersonMH{
    public HashMap<String,Date> getMedications(){ return this.Medications;}
    public ArrayList<String> getGeneticDiseases(){return this.GeneticDiseases;}
    
-   public void setChronicDiseases(HashMap<String,Date> ChronicDiseases){this.ChronicDiseases = ChronicDiseases;} 
-   public void setDiseases(HashMap<String,Date> Diseases){this.Diseases = Diseases;} 
-   public void setHospitalizations(HashMap<String,Date> Hospitalizations){this.Hospitalizations = Hospitalizations;} 
-   public void setMedications(HashMap<String,Date> Medications){this.Medications = Medications;}
-   public void setGeneticDiseases(ArrayList<String> GeneticDiseases){ this.GeneticDiseases = GeneticDiseases;}
+   public void setChronicDiseases(HashMap<String,Date> chronicDiseases){ChronicDiseases = chronicDiseases;} 
+   public void setDiseases(HashMap<String,Date> diseases){Diseases = diseases;} 
+   public void setHospitalizations(HashMap<String,Date> hospitalizations){Hospitalizations = hospitalizations;} 
+   public void setMedications(HashMap<String,Date> medications){Medications = medications;}
+   public void setGeneticDiseases(ArrayList<String> geneticDiseases){ GeneticDiseases = geneticDiseases;}
    
    public boolean addDisease(String name, Date date){
        if(this.Diseases == null) Diseases = new HashMap<String,Date>();

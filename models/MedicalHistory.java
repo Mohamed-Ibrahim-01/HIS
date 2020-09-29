@@ -1,4 +1,3 @@
-
 package models;
 class MedicalHistory{
     private Patient Patient ; 
@@ -11,28 +10,13 @@ class MedicalHistory{
         PatientFamilyMH = patientFamilyMH;
     }
 
-    public Patient getPatient() {
-        return Patient;
-    }
+    public Patient getPatient() { return Patient; }
+    public void setPatient(Patient patient) { Patient = patient; }
 
-    public void setPatient(Patient patient) {
-        Patient = patient;
-    }
+    public PersonMH getPatientMH() { return PatientMH; }
+    public void setPatientMH(PersonMH patientMH) { PatientMH = patientMH; }
 
-    public PersonMH getPatientMH() {
-        return PatientMH;
-    }
-
-    public void setPatientMH(PersonMH patientMH) {
-        PatientMH = patientMH;
-    }
-
-    public FamilyMH getPatientFamilyMH() {
-        return PatientFamilyMH;
-    }
-
-    public void setPatientFamilyMH(FamilyMH patientFamilyMH) {
-        PatientFamilyMH = patientFamilyMH;
-    }
+    public FamilyMH getPatientFamilyMH() { return PatientFamilyMH; }
+    public void setPatientFamilyMH(FamilyMH patientFamilyMH) { PatientFamilyMH = patientFamilyMH; }
     
 }

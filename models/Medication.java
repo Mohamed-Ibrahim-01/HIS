@@ -2,32 +2,32 @@ package models;
 
 import java.util.UUID;
 class Medication{
-    private UUID uuid;
+    private UUID Id;
     private String Name;
     private int DailyDose, WeeklyDose, DoseValue, Quantity;
-    public Medication(String Name,int DailyDose, int DoseValue, int Quantity,UUID uuid){
-        this.Name = Name;
-        this.DailyDose = DailyDose;
-        WeeklyDose = (DailyDose*7) ;
-        this.DoseValue = DoseValue;
-        this.Quantity = Quantity;
-        this.uuid = uuid ;
+    public Medication(String name,int dailyDose, int doseValue, int quantity,UUID id){
+        Name = name;
+        DailyDose = dailyDose;
+        DoseValue = doseValue;
+        Quantity = quantity;
+        Id = id ;
+        WeeklyDose = DailyDose * 7 ;
     }    
     public String getName(){ return Name;}
+    public void setName(String name){ Name = name;}
+
     public int getDailyDose(){ return DailyDose;}
+    public void setDailyDose(int dailyDose){ DailyDose = dailyDose;}
+
     public int getWeeklyDose(){ return WeeklyDose;}
+    public void setWeeklyDose(int weeklyDose){ WeeklyDose = weeklyDose;}
+
     public int getDoseValue(){ return DoseValue;}
+    public void setDoseValue(int doseValue){ DoseValue = doseValue;}
+
     public int getQuantity(){ return Quantity;}
-    public UUID getUuid() {
-        return uuid;
-    }
-    
-    public void setName(String Name){this.Name = Name;}
-    public void setDailyDose(int DailyDose){this.DailyDose = DailyDose;}
-    public void setWeeklyDose(int WeeklyDose){this.WeeklyDose = WeeklyDose;}
-    public void setDoseValue(int DoseValue){this.DoseValue = DoseValue;}
-    public void setQuantity(int Quantity){this.Quantity = Quantity;}
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
+    public void setQuantity(int quantity){ Quantity = quantity;}
+
+    public UUID getUuid() { return Id; }
+    public void setUuid(UUID id) { Id = id; }
 }
