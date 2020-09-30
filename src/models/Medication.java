@@ -15,7 +15,7 @@ class Medication{
     public void setDailyDose(int dailyDose){ DailyDose = dailyDose;}
 
     public int getWeeklyDose(){ return WeeklyDose;}
-    public void setWeeklyDose(int weeklyDose){ WeeklyDose = weeklyDose;}
+    public void setWeeklyDose(int DailyDose){WeeklyDose = DailyDose * 7 ;}
 
     public int getDoseValue(){ return DoseValue;}
     public void setDoseValue(int doseValue){ DoseValue = doseValue;}
