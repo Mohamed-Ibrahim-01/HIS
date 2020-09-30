@@ -1,16 +1,11 @@
 package src.models;
-
-import java.util.UUID;
 class Medication{
-    private UUID Id;
     private String Name;
-    private int DailyDose, WeeklyDose, DoseValue, Quantity;
-    public Medication(String name,int dailyDose, int doseValue, int quantity,UUID id){
+    private int DailyDose, WeeklyDose, DoseValue ;
+    public Medication(String name,int dailyDose, int doseValue){
         Name = name;
         DailyDose = dailyDose;
         DoseValue = doseValue;
-        Quantity = quantity;
-        Id = id ;
         WeeklyDose = DailyDose * 7 ;
     }    
     public String getName(){ return Name;}
@@ -25,9 +20,4 @@ class Medication{
     public int getDoseValue(){ return DoseValue;}
     public void setDoseValue(int doseValue){ DoseValue = doseValue;}
 
-    public int getQuantity(){ return Quantity;}
-    public void setQuantity(int quantity){ Quantity = quantity;}
-
-    public UUID getUuid() { return Id; }
-    public void setUuid(UUID id) { Id = id; }
 }
