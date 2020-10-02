@@ -10,8 +10,8 @@ public class Doctor extends Person {
     public Doctor(){
     }
 
-    public Doctor(String name, UUID id, String address, String phone, String birthDate, String sex, String ssn,
-            String msa, String degree, HashMap<Patient,TreatmentData> patients) {
+    public Doctor(UUID id,String name,String address, String phone, String birthDate, String sex, String ssn,
+            String msa, String degree) {
         super(name, id, address, phone, birthDate, sex);
         SSN = ssn;
         MSA = msa;
