@@ -11,8 +11,10 @@ public class Patient extends Person {
     private HashMap<Doctor,TreatmentData> DoctorsData;
     private HashSet<Medication> Medications ; 
 
-    public Patient(String name, UUID id, String address, String phone, String birthDate, String sex){
+    public Patient(String name, UUID id, String address, String phone, String birthDate, String sex,String complain ,String admittanceDate){
         super(name,id,address,phone,birthDate,sex);
+        this.Complain = complain;
+        this.AdmittanceDate = admittanceDate;
         this.Medications = new HashSet<Medication>();
         this.DoctorsData = new HashMap<Doctor,TreatmentData>();
     }
