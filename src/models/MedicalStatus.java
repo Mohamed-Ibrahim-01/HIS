@@ -1,14 +1,14 @@
-package models;
+package src.models;
 
 class MedicalStatus{
    private String BloodPressure;
    private int SystolicBP,DiastolicBP,HeartRate,Temprature;
-   public MedicalStatus(int SystolicBP,int DiastolicBP,int Temprature, int HeartRate){
-       this.Temprature = Temprature;
-       this.SystolicBP = SystolicBP;
-       this.DiastolicBP = DiastolicBP;
-       this.HeartRate = HeartRate;
-       BloodPressure = SystolicBP + "/"+ DiastolicBP;
+   public MedicalStatus(int systolicBP,int diastolicBP,int temprature, int heartRate){
+       this.Temprature = temprature;
+       this.SystolicBP = systolicBP;
+       this.DiastolicBP = diastolicBP;
+       this.HeartRate = heartRate;
+       BloodPressure = systolicBP + "/"+ DiastolicBP;
    }
    public String getBloodPressure() {return BloodPressure;}
    public int getSystolicBP(){ return SystolicBP;}
