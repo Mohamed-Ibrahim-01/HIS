@@ -6,11 +6,11 @@ public class Patient extends Person {
         private String PatientId , AdmittanceDate ;
         private MedicalStatus MedicalStatus ;
         private String Complain ;
-        private MedicalHistory MedicalHistory ;  
-        private Doctor[] Doctors ; 
-        private Prescription[][] Prescriptions ; 
-        private double[] HoursPerWeekPerDoctor ;  
-        private Medication[] Medications ; 
+        private MedicalHistory MedicalHistory ;  //Folder for Each Patient 
+        private Doctor[] Doctors ;               //  |
+        private Prescription[][] Prescriptions ; // |Those 4 should be in a class called "DoctorsData" 
+        private double[] HoursPerWeekPerDoctor ; //|
+        private Medication[] Medications ;       //  |
     public Patient() {
     }
 
