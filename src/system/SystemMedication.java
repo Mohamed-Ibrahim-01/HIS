@@ -2,7 +2,7 @@ package src.system;
 
 import java.util.UUID;
 
-public class MedicationStorage {
+public class SystemMedication {
     private UUID Id;
     private String Name ; 
     private int Quantity;
