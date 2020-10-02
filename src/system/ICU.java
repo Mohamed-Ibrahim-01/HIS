@@ -1,5 +1,4 @@
-
-package src.models;
+package src.system;
 import src.enums.Capacity;
 public class ICU {
     private String Name , Code, Manager ;

@@ -1,5 +1,4 @@
-
-package src;
+package src.system;
 public class System {
     
 }
