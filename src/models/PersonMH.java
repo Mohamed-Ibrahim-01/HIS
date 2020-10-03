@@ -3,7 +3,7 @@ package src.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-class PersonMH{
+public class PersonMH{
     private HashMap<String,Date> ChronicDiseases;
     private HashMap<String,Date> Diseases;
     private HashMap<String,Date> Hospitalizations;

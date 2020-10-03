@@ -1,7 +1,7 @@
 package src.models;
 import java.util.HashMap;
 
-class FamilyMH{
+public class FamilyMH{
 HashMap<String,PersonMH>  FamilyMembers ;
 
 public FamilyMH(HashMap<String, PersonMH> familyMembers) { FamilyMembers = familyMembers; }

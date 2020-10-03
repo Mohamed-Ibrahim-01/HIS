@@ -11,6 +11,9 @@ public class Patient extends Person {
     private HashMap<Doctor,TreatmentData> DoctorsData;
     private HashSet<Medication> Medications ; 
 
+    public Patient(final String[] params){
+        super(params);
+    }
     public Patient(String name, UUID id, String address, String phone, String birthDate, String sex,String complain ,String admittanceDate){
         super(name,id,address,phone,birthDate,sex);
         this.Complain = complain;

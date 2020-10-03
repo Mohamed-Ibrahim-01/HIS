@@ -1,8 +1,11 @@
 package src.models;
-class MedicalHistory{
+public class MedicalHistory{
     private Patient Patient ; 
     private PersonMH PatientMH;
     private FamilyMH PatientFamilyMH;
+    public MedicalHistory(){
+
+    }
 
     public MedicalHistory(Patient patient, PersonMH patientMH, FamilyMH patientFamilyMH) {
         Patient = patient;

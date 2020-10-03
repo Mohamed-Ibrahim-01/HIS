@@ -7,6 +7,14 @@ public class Person {
     private UUID Id ; 
     public Person() {
     }
+    public Person(final String[] params){
+        Id = UUID.fromString(params[0]);
+        Name = params[1];
+        Address = params[2];
+        Phone = params[3];
+        BirthDate = params[4];
+        Sex = params[5];
+    }
     public Person(String name, UUID id, String address, String phone, String birthDate, String sex) {
         Name = name;
         Id = id;

@@ -2,10 +2,16 @@ package src.fileoperations;
 import src.models.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
+import jdk.vm.ci.code.site.Site;
+
 import java.util.LinkedList;
 import src.system.ICU;
 import src.system.SystemMedication;
@@ -13,6 +19,20 @@ import src.system.SystemMedication;
 public class Read {
    private static String slash = File.pathSeparator;
     public static List<Patient> readPatients(){
+       String line,slash = File.pathSeparator;
+       String patientsDataPath = ".."+slash+".."+slash+"data"+slash+"patientsdata";
+       List<Patient> patients = new ArrayList<Patient>();
+       String[] lineArray ;
+       try{
+         BufferedReader br = new BufferedReader(new FileReader(new File(patientsDataPath+slash+"patients.csv")));
+         br.readLine();
+         while( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            patients.add(createPatient(lineArray,patientsDataPath+slash+lineArray[0]));
+         }
+       }
+       catch(Exception e){
+       }
        return null;
     }
     public static List<Doctor> readDoctors(){
@@ -73,7 +93,53 @@ public class Read {
        }
       return treatmentData;
     }
-    private static Patient createPatient(){
+    private static Patient createPatient(final String[] personlData,final String patientPath){
+       Patient patient = new Patient(personlData);
+       patient.setComplain(personlData[6]);
+       patient.setAdmittanceDate(personlData[7]);
+       patient.setMedicalStatus(getMs(patientPath+slash+"ms.csv"));
+       patient.setMedicalHistory(getMh(patientPath,patient));
+       return patient;
+    }
+    private static MedicalStatus getMs(String patientMsPath){
+       MedicalStatus medicalStatus = null; 
+       try{
+         BufferedReader br = new BufferedReader(new FileReader(new File(patientMsPath)));
+         br.readLine();
+         String[] lineArray = readCSVLine(br.readLine()); 
+         medicalStatus = new MedicalStatus(lineArray); 
+       }
+       catch(Exception e){}
+       return medicalStatus; 
+    }
+    private static MedicalHistory getMh(String patientPath, Patient patient){
+       HashMap<String,PersonMH>  familyMembers  = new HashMap<String,PersonMH>();
+       MedicalHistory medicalHistory = new MedicalHistory();
+       medicalHistory.setPatient(patient);
+       try{
+          File patientFolder = new File(patientPath);
+          File[] mhFiles = patientFolder.listFiles(new FileFilter(){
+             public boolean accept(File pathName){
+                return !pathName.getName().equals("ms.csv");
+             }
+          });
+          for(File fmh : mhFiles){
+             switch (fmh.getName()){
+                case "pmh.csv": medicalHistory.setPatientMH(getPmh(fmh)); break;
+                case "fmh.csv": familyMembers.put("FatherMH",getPmh(fmh)); break;
+                case "mmh.csv": familyMembers.put("MotherMH",getPmh(fmh)); break;
+                case "gmmh1.csv": familyMembers.put("GrandMMH1",getPmh(fmh)); break;
+                case "gfmh1.csv": familyMembers.put("GrandFMH1",getPmh(fmh)); break;
+                case "gmmh2.csv": familyMembers.put("GrandMMH2",getPmh(fmh)); break;
+                case "gfmh2.csv": familyMembers.put("GrandFMH2",getPmh(fmh)); break;
+             }
+          }
+          medicalHistory.setPatientFamilyMH(new FamilyMH(familyMembers));
+       }
+       catch(Exception e){}
+       return medicalHistory; 
+    }
+    private static PersonMH getPmh(File pmh){
        return null;
     }
     private static String[] getTd(String path)throws Exception{

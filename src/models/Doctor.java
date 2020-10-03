@@ -9,16 +9,11 @@ public class Doctor extends Person {
 
     public Doctor(){
     }
-    public Doctor(String[] params){
-        setId(UUID.fromString(params[0]));
-        setName(params[1]);
-        setAddress(params[2]);
-        setPhone(params[3]);
-        setBirthDate(params[4]);
-        setSex(params[5]);
-        setSSN(params[6]);
-        setMSA(params[7]);
-        setDegree(params[8]);
+    public Doctor(final String[] params){
+        super(params);
+        SSN = params[6];
+        MSA = params[7];
+        Degree = params[8];
     }
 
     public Doctor(UUID id,String name,String address, String phone, String birthDate, String sex, String ssn,
