@@ -16,9 +16,21 @@ public class Read {
        return null;
     }
     public static List<Doctor> readDoctors(){
-       String slash = File.pathSeparator;
-       String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"d";
-       return null;
+       String line,slash = File.pathSeparator;
+       String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"doctorsdata"+slash+"Doctors.csv";
+       List<Doctor> doctors = new ArrayList<Doctor>();
+       String[] lineArray ;
+       try{
+         BufferedReader br = new BufferedReader(new FileReader(new File(doctorsDataPath)));
+         br.readLine();
+         while( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            doctors.add(new Doctor(lineArray));
+         }
+       }
+       catch(Exception e){
+       }
+       return doctors;
     }
     public static List<ICU> readICUs()throws Exception{
       String Path = ".."+slash+".."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
@@ -62,9 +74,6 @@ public class Read {
       return treatmentData;
     }
     private static Patient createPatient(){
-       return null;
-    }
-    private static Doctor createDoctor(){
        return null;
     }
     private static String[] getTd(String path)throws Exception{
