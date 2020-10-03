@@ -21,7 +21,7 @@ public class Read {
        return null;
     }
     public static List<ICU> readICUs()throws Exception{
-      String Path = ".."+slash+".."+slash+"data"+slash+"ICUs.csv";
+      String Path = ".."+slash+".."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
       BufferedReader br ; 
       br = new BufferedReader(new FileReader(new File(Path)));
       br.readLine();
@@ -36,7 +36,7 @@ public class Read {
        return icus ;
     }
     public static List<SystemMedication> readMedicationStorage()throws Exception{
-      String Path = ".."+slash+".."+slash+"data"+slash+"medcationStorage.csv";
+      String Path = ".."+slash+".."+slash+"data"+slash+"storage"+slash+"medcationStorage.csv";
       BufferedReader br ; 
       br = new BufferedReader(new FileReader(new File(Path)));
       br.readLine();
