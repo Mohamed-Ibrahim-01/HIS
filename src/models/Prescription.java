@@ -11,11 +11,9 @@ public class Prescription {
     public Prescription(){
     }
 
-    public Prescription(List<Medication> medications, String date, Patient patient, Doctor doctor, int duration) {
+    public Prescription(List<Medication> medications, String date,int duration) {
         Medications = medications;
         Date = date;
-        Patient = patient;
-        Doctor = doctor;
         Duration = duration;
     }
 

@@ -26,6 +26,18 @@ public class Read {
     private static Doctor createDoctor(){
        return null;
     }
-    
-    
+    private static String[] getTrestmentData(String tdPath){
+       return null ; 
+    }
+    private static String[] getMd(String mdPath){
+       
+      return null ; 
+    }   
+    private static String[] getPr(String prPath){
+      return null ; 
+    }   
+    private static TreatmentData creatTreatmentData(String treatmentDataObjectPath){
+      return null ; 
+   }   
+ 
 }
