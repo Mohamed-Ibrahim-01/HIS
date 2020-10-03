@@ -7,12 +7,12 @@ public class SystemMedication {
     private String Name ; 
     private int Quantity;
     
-    public MedicationStorage(){
+    public SystemMedication(){
 
 
     }   
 
-    public MedicationStorage(UUID id , String name , int quantity){
+    public SystemMedication(UUID id , String name , int quantity){
         this.Id = id;
         this.Name = name ;
         this.Quantity = quantity;

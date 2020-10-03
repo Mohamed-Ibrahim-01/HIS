@@ -7,14 +7,14 @@ public class Prescription {
     private Patient Patient;
     private Doctor Doctor ;
     private int Duration;
-
+    
     public Prescription(){
     }
 
-    public Prescription(List<Medication> medications, String date,int duration) {
+    public Prescription(List<Medication> medications,String[] data ) {
         Medications = medications;
-        Date = date;
-        Duration = duration;
+        Date = data[1];
+        Duration = Integer.parseInt(data[2]);
     }
 
     public List<Medication> getMedications() { return Medications; }

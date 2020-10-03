@@ -1,11 +1,11 @@
 package src.models;
-class Medication{
+public class Medication{
     private String Name;
     private int DailyDose, WeeklyDose, DoseValue ;
-    public Medication(String name,int dailyDose, int doseValue){
-        Name = name;
-        DailyDose = dailyDose;
-        DoseValue = doseValue;
+    public Medication(String[] data){
+        Name = data[0];
+        DailyDose = Integer.parseInt(data[1]);
+        DoseValue = Integer.parseInt(data[2]);
         WeeklyDose = DailyDose * 7 ;
     }    
     public String getName(){ return Name;}

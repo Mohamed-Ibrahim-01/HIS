@@ -2,9 +2,9 @@ package src.fileoperations;
 import src.models.*;
 import java.io.BufferedReader;
 import java.io.File;
-import java.util.Arrays;
 import java.io.FileReader;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import src.system.ICU;
@@ -36,13 +36,30 @@ private static BufferedReader br ;
     private static String[] getTrestmentData(String tdPath){
        return null ; 
     }
-    private static String[] getMd(String mdPath){  
+    private static List<Medication> getMd(String mdPath) throws Exception{  
          br = new BufferedReader(new FileReader(new File(mdPath)));
-
-         return null ; 
+         br.readLine();
+         String line ;
+         String[] lineArray ;
+         List<Medication> medications = new ArrayList<Medication>();
+            while( (line = br.readLine()) != null){
+               lineArray = readCSVLine(line);
+               medications.add(new Medication(lineArray));
+         }         
+         return medications ; 
     }   
-    private static String[] getPr(String prPath){
-      return null ; 
+    private static List<Prescription> getPr(String path) throws Exception{
+         br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
+         br.readLine();
+         String line ;
+         String[] lineArray ;
+         List<Prescription> prescriptions = new ArrayList<Prescription>();
+               while ( (line = br.readLine()) != null){
+                  lineArray = readCSVLine(line);
+                 List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
+                 prescriptions.add(new Prescription(medications,lineArray));
+               }     
+      return prescriptions ; 
     }   
     private static TreatmentData creatTreatmentData(String treatmentDataObjectPath){
       return null ; 
