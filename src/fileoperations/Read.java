@@ -20,12 +20,37 @@ public class Read {
        String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"d";
        return null;
     }
-    public static List<ICU> readICUs(){
-       return null;
+    public static List<ICU> readICUs()throws Exception{
+      String Path = ".."+slash+".."+slash+"data"+slash+"ICUs.csv";
+      BufferedReader br ; 
+      br = new BufferedReader(new FileReader(new File(Path)));
+      br.readLine();
+      String line ;
+      String[] lineArray = null;
+      List<ICU> icus = new ArrayList<ICU>();
+         while ( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            icus.add(new ICU(lineArray));
+         }      
+         br.close();
+       return icus ;
     }
-    public static List<SystemMedication> readMedicationStorage(){
-        return null;
+    public static List<SystemMedication> readMedicationStorage()throws Exception{
+      String Path = ".."+slash+".."+slash+"data"+slash+"medcationStorage.csv";
+      BufferedReader br ; 
+      br = new BufferedReader(new FileReader(new File(Path)));
+      br.readLine();
+      String line ;
+      String[] lineArray = null;
+      List<SystemMedication> medicationStorage = new ArrayList<SystemMedication>();
+         while ( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            medicationStorage.add(new SystemMedication(lineArray));
+         }      
+         br.close();
+        return medicationStorage;
     }
+
     public static List<TreatmentData> readTreatmentData()throws Exception{
        String Path = ".."+slash+".."+slash+"data"+slash+"TreatmentData";
        File Folder = new File(Path);
@@ -88,7 +113,7 @@ public class Read {
 
     private static TreatmentData creatTreatmentData(String path)throws Exception{
      return  new TreatmentData(getTd(path),getPr(path)); 
-   }   
+   }  
 
     private static String[] readCSVLine(String line){
       String[] splitedLine = line.split(",");

@@ -1,7 +1,5 @@
 package src.system;
-
 import java.util.UUID;
-
 public class SystemMedication {
     private UUID Id;
     private String Name ; 
@@ -12,10 +10,10 @@ public class SystemMedication {
 
     }   
 
-    public SystemMedication(UUID id , String name , int quantity){
-        this.Id = id;
-        this.Name = name ;
-        this.Quantity = quantity;
+    public SystemMedication(String[] data){
+        this.Id = UUID.fromString(data[0]);
+        this.Name = data[1] ;
+        this.Quantity = Integer.parseInt(data[2]);
     }
     
     public UUID getId() {
