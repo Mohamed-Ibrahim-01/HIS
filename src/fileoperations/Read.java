@@ -11,11 +11,12 @@ import src.system.ICU;
 import src.system.SystemMedication;
 
 public class Read {
-private static BufferedReader br ;
     public static List<Patient> readPatients(){
        return null;
     }
     public static List<Doctor> readDoctors(){
+       String slash = File.pathSeparator;
+       String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"d";
        return null;
     }
     public static List<ICU> readICUs(){
@@ -36,7 +37,9 @@ private static BufferedReader br ;
     private static String[] getTrestmentData(String tdPath){
        return null ; 
     }
+
     private static List<Medication> getMd(String mdPath) throws Exception{  
+         BufferedReader br ;
          br = new BufferedReader(new FileReader(new File(mdPath)));
          br.readLine();
          String line ;
@@ -46,24 +49,30 @@ private static BufferedReader br ;
                lineArray = readCSVLine(line);
                medications.add(new Medication(lineArray));
          }         
+         br.close();
          return medications ; 
     }   
+
     private static List<Prescription> getPr(String path) throws Exception{
-         br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
-         br.readLine();
-         String line ;
-         String[] lineArray ;
-         List<Prescription> prescriptions = new ArrayList<Prescription>();
-               while ( (line = br.readLine()) != null){
-                  lineArray = readCSVLine(line);
-                 List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
-                 prescriptions.add(new Prescription(medications,lineArray));
-               }     
+      BufferedReader br ;
+      br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
+      br.readLine();
+      String line ;
+      String[] lineArray ;
+      List<Prescription> prescriptions = new ArrayList<Prescription>();
+      while ( (line = br.readLine()) != null){
+         lineArray = readCSVLine(line);
+         List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
+         prescriptions.add(new Prescription(medications,lineArray));
+      }     
+      br.close();
       return prescriptions ; 
     }   
+
     private static TreatmentData creatTreatmentData(String treatmentDataObjectPath){
       return null ; 
-    }   
+    }
+
     private static String[] readCSVLine(String line){
       String[] splitedLine = line.split(",");
       List<String> lineAttributes = new LinkedList<String>();
