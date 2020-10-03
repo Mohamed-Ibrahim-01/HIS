@@ -3,6 +3,7 @@ import src.models.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import src.system.ICU;
 import src.system.SystemMedication;
@@ -33,10 +34,17 @@ private static BufferedReader br ;
     private static String[] getTrestmentData(String tdPath){
        return null ; 
     }
-    private static String[] getMd(String mdPath){  
+    private static List<Medication> getMd(String mdPath){  
          br = new BufferedReader(new FileReader(new File(mdPath)));
-
-         return null ; 
+         br.readLine();
+         String line ;
+         String[] lineArray ;
+         List<Medication> medications = new ArrayList<Medication>();
+            while( (line = br.readLine()) != null){
+               lineArray = readCSVLine(line);
+           medications.add(new Medication(lineArray));
+         }         
+         return medications ; 
     }   
     private static String[] getPr(String prPath){
       return null ; 
