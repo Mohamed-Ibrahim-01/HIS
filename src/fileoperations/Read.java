@@ -35,17 +35,21 @@ private static BufferedReader br ;
        return null ; 
     }
     private static List<Medication> getMd(String mdPath){  
-         br = new BufferedReader(new FileReader(new File(mdPath)));
-         br.readLine();
-         String line ;
-         String[] lineArray ;
-         List<Medication> medications = new ArrayList<Medication>();
-            while( (line = br.readLine()) != null){
-               lineArray = readCSVLine(line);
-           medications.add(new Medication(lineArray));
-         }         
-         return medications ; 
-    }   
+         try{
+            br = new BufferedReader(new FileReader(new File(mdPath)));
+            br.readLine();
+            String line ;
+            String[] lineArray ;
+            List<Medication> medications = new ArrayList<Medication>();
+               while( (line = br.readLine()) != null){
+                  lineArray = readCSVLine(line);
+                  medications.add(new Medication(lineArray));
+            }         
+            return medications ; 
+         }
+         catch(Exception e){
+            System.out.println(e.getMessage());
+         }
     private static String[] getPr(String prPath){
       return null ; 
     }   

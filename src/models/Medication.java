@@ -1,5 +1,5 @@
 package src.models;
-class Medication{
+public class Medication{
     private String Name;
     private int DailyDose, WeeklyDose, DoseValue ;
     public Medication(String[] data){
