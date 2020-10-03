@@ -3,18 +3,21 @@ import src.models.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 import src.system.ICU;
 import src.system.SystemMedication;
 
 public class Read {
    private static String slash = File.pathSeparator;
-   private static BufferedReader br ;
     public static List<Patient> readPatients(){
        return null;
     }
     public static List<Doctor> readDoctors(){
+       String slash = File.pathSeparator;
+       String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"d";
        return null;
     }
     public static List<ICU> readICUs(){
@@ -40,6 +43,7 @@ public class Read {
        return null;
     }
     private static String[] getTd(String path)throws Exception{
+      BufferedReader br ; 
       br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"td.csv")));
       br.readLine();
       String line ;
@@ -47,9 +51,12 @@ public class Read {
          while ( (line = br.readLine()) != null){
             lineArray = readCSVLine(line);
          }
+         br.close();
        return lineArray ; 
     }
+
     private static List<Medication> getMd(String mdPath) throws Exception{  
+         BufferedReader br ;
          br = new BufferedReader(new FileReader(new File(mdPath)));
          br.readLine();
          String line ;
@@ -59,28 +66,43 @@ public class Read {
                lineArray = readCSVLine(line);
                medications.add(new Medication(lineArray));
          }         
+         br.close();
          return medications ; 
     }   
+
     private static List<Prescription> getPr(String path) throws Exception{
-         br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
-         br.readLine();
-         String line ;
-         String[] lineArray ;
-         List<Prescription> prescriptions = new ArrayList<Prescription>();
-               while ( (line = br.readLine()) != null){
-                  lineArray = readCSVLine(line);
-                 List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
-                 prescriptions.add(new Prescription(medications,lineArray));
-               }     
+      BufferedReader br ;
+      br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
+      br.readLine();
+      String line ;
+      String[] lineArray ;
+      List<Prescription> prescriptions = new ArrayList<Prescription>();
+      while ( (line = br.readLine()) != null){
+         lineArray = readCSVLine(line);
+         List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
+         prescriptions.add(new Prescription(medications,lineArray));
+      }     
+      br.close();
       return prescriptions ; 
-    }   
+    }
+
     private static TreatmentData creatTreatmentData(String path)throws Exception{
-      TreatmentData treatmentData =  new TreatmentData(getTd(path),getPr(path)); 
-      return treatmentData ; 
+     return  new TreatmentData(getTd(path),getPr(path)); 
    }   
-   private static String[] readCSVLine(String line){
-      String[] arr = line.split(",");      
-      return arr; 
+
+    private static String[] readCSVLine(String line){
+      String[] splitedLine = line.split(",");
+      List<String> lineAttributes = new LinkedList<String>();
+      Collections.addAll(lineAttributes, splitedLine);
+      for(int i = 0; i < lineAttributes.size(); i++){
+         String curr = lineAttributes.get(i);
+         if(curr.startsWith("\"")){
+            String next = lineAttributes.get(i+1);
+            curr = (curr +","+ next).replace("\"", "");
+            lineAttributes.set(i,curr);
+            lineAttributes.remove(next);
+         }
+      }
+      return lineAttributes.toArray(new String[lineAttributes.size()]);
    }
- 
 }
