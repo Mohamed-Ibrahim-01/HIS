@@ -34,24 +34,30 @@ private static BufferedReader br ;
     private static String[] getTrestmentData(String tdPath){
        return null ; 
     }
-    private static List<Medication> getMd(String mdPath){  
-         try{
-            br = new BufferedReader(new FileReader(new File(mdPath)));
-            br.readLine();
-            String line ;
-            String[] lineArray ;
-            List<Medication> medications = new ArrayList<Medication>();
-               while( (line = br.readLine()) != null){
+    private static List<Medication> getMd(String mdPath) throws Exception{  
+         br = new BufferedReader(new FileReader(new File(mdPath)));
+         br.readLine();
+         String line ;
+         String[] lineArray ;
+         List<Medication> medications = new ArrayList<Medication>();
+            while( (line = br.readLine()) != null){
+               lineArray = readCSVLine(line);
+               medications.add(new Medication(lineArray));
+         }         
+         return medications ; 
+    }   
+    private static List<Prescription> getPr(String path) throws Exception{
+         br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
+         br.readLine();
+         String line ;
+         String[] lineArray ;
+         List<Prescription> prescriptions = new ArrayList<Prescription>();
+               while ( (line = br.readLine()) != null){
                   lineArray = readCSVLine(line);
-                  medications.add(new Medication(lineArray));
-            }         
-            return medications ; 
-         }
-         catch(Exception e){
-            System.out.println(e.getMessage());
-         }
-    private static String[] getPr(String prPath){
-      return null ; 
+                 List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
+                 prescriptions.add(new Prescription(medications,lineArray));
+               }     
+      return prescriptions ; 
     }   
     private static TreatmentData creatTreatmentData(String treatmentDataObjectPath){
       return null ; 
