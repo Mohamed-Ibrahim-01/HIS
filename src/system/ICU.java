@@ -8,15 +8,15 @@ public class ICU {
     public ICU(){
 
     }
-
-    public ICU(String name, String iCU_Code, String manager, int BedsNumber,int Busy) {
-        Name = name;
-        Code = iCU_Code;
-        Manager = manager;
-        this.BedsNumber = BedsNumber ;
-        this.BusyBeds = Busy;
+    
+    public ICU(String[] data) {
+        Name = data[0];
+        Code = data[1];
+        Manager = data[2];
+        this.BedsNumber = Integer.parseInt(data[3]) ;
+        this.BusyBeds = Integer.parseInt(data[4]);
         this.capacity = settingCapacity(BedsNumber);
-        FreeBeds = BedsNumber - Busy ; 
+        FreeBeds = BedsNumber - BusyBeds ; 
     }
     
     public String getName() { return Name; }

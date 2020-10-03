@@ -11,6 +11,7 @@ import src.system.ICU;
 import src.system.SystemMedication;
 
 public class Read {
+   private static String slash = File.pathSeparator;
     public static List<Patient> readPatients(){
        return null;
     }
@@ -31,20 +32,61 @@ public class Read {
        }
        return doctors;
     }
-    public static List<ICU> readICUs(){
-       return null;
+    public static List<ICU> readICUs()throws Exception{
+      String Path = ".."+slash+".."+slash+"data"+slash+"ICUs.csv";
+      BufferedReader br ; 
+      br = new BufferedReader(new FileReader(new File(Path)));
+      br.readLine();
+      String line ;
+      String[] lineArray = null;
+      List<ICU> icus = new ArrayList<ICU>();
+         while ( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            icus.add(new ICU(lineArray));
+         }      
+         br.close();
+       return icus ;
     }
-    public static List<SystemMedication> readMedicationStorage(){
-        return null;
+    public static List<SystemMedication> readMedicationStorage()throws Exception{
+      String Path = ".."+slash+".."+slash+"data"+slash+"medcationStorage.csv";
+      BufferedReader br ; 
+      br = new BufferedReader(new FileReader(new File(Path)));
+      br.readLine();
+      String line ;
+      String[] lineArray = null;
+      List<SystemMedication> medicationStorage = new ArrayList<SystemMedication>();
+         while ( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+            medicationStorage.add(new SystemMedication(lineArray));
+         }      
+         br.close();
+        return medicationStorage;
     }
-    public static List<TreatmentData> readTreatmentData(){
-        return null;
+
+    public static List<TreatmentData> readTreatmentData()throws Exception{
+       String Path = ".."+slash+".."+slash+"data"+slash+"TreatmentData";
+       File Folder = new File(Path);
+       File[] folders = Folder.listFiles();
+       List<TreatmentData> treatmentData = new ArrayList<TreatmentData>();
+       for(File folder : folders){
+          treatmentData.add(creatTreatmentData(folder.getCanonicalPath()));
+       }
+      return treatmentData;
     }
     private static Patient createPatient(){
        return null;
     }
-    private static String[] getTrestmentData(String tdPath){
-       return null ; 
+    private static String[] getTd(String path)throws Exception{
+      BufferedReader br ; 
+      br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"td.csv")));
+      br.readLine();
+      String line ;
+      String[] lineArray = null;
+         while ( (line = br.readLine()) != null){
+            lineArray = readCSVLine(line);
+         }
+         br.close();
+       return lineArray ; 
     }
 
     private static List<Medication> getMd(String mdPath) throws Exception{  
@@ -76,11 +118,11 @@ public class Read {
       }     
       br.close();
       return prescriptions ; 
-    }   
-
-    private static TreatmentData creatTreatmentData(String treatmentDataObjectPath){
-      return null ; 
     }
+
+    private static TreatmentData creatTreatmentData(String path)throws Exception{
+     return  new TreatmentData(getTd(path),getPr(path)); 
+   }  
 
     private static String[] readCSVLine(String line){
       String[] splitedLine = line.split(",");
@@ -97,5 +139,4 @@ public class Read {
       }
       return lineAttributes.toArray(new String[lineAttributes.size()]);
    }
- 
 }
