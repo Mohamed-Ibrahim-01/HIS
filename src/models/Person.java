@@ -20,6 +20,7 @@ public class Person {
     public void setName(String name) { Name = name; }
 
     public UUID getId() { return Id; }
+    public void setId(UUID id) { Id = id; }
 
     public String getAddress() { return Address; }
     public void setAddress(String address) { Address = address; }
