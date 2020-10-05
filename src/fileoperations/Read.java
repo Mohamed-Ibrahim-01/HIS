@@ -8,12 +8,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Date;
 import java.util.LinkedList;
+import java.text.SimpleDateFormat;
 import src.system.ICU;
 import src.system.SystemMedication;
 
 public class Read {
-   private static String slash = File.pathSeparator;
+   private static final int CHRONIC_DISEASES = 0, DISEASES = 1, HOSPITALIZATIONS = 2, MEDICATIONS = 3, GENETIC_DISEASES = 4;
+   private static final String slash = File.pathSeparator;
     public static List<Patient> readPatients(){
        String line,slash = File.pathSeparator;
        String patientsDataPath = ".."+slash+".."+slash+"data"+slash+"patientsdata";
@@ -136,7 +141,45 @@ public class Read {
        return medicalHistory; 
     }
     private static PersonMH getPmh(File pmh){
-       return null;
+       PersonMH personMH = new PersonMH();
+       try{ 
+         BufferedReader br = new BufferedReader(new FileReader(pmh));
+         String line;
+         for(int i = 0;(line = br.readLine()) != null;i++){
+            String[] lineArray = readCSVLine(line);
+            switch(i){
+               case CHRONIC_DISEASES: personMH.setChronicDiseases(getPmhMap(lineArray));break;
+               case DISEASES: personMH.setDiseases(getPmhMap(lineArray));break;
+               case HOSPITALIZATIONS: personMH.setHospitalizations(getPmhMap(lineArray));break;
+               case MEDICATIONS: personMH.setMedications(getPmhMap(lineArray));break;
+               case GENETIC_DISEASES: {
+                  List<String> lineAttributes = new ArrayList<String>();
+                  Collections.addAll(lineAttributes, lineArray);
+                  break;
+               }
+            }
+         }
+         br.close();
+       }
+       catch(Exception e){}
+       return personMH;
+    }
+    private static HashMap<String,Date> getPmhMap(String[] lineArray){
+       if(lineArray.length == 1 && lineArray[0].equals("null")) return null;
+       else{
+          HashMap<String,Date> data = new HashMap<String,Date>();
+          for(String S : lineArray){
+             Matcher m = Pattern.compile("(\\w+):(.+)").matcher(S);
+             m.find();
+             try{
+               Date date = new SimpleDateFormat("dd/MM/yyyy").parse(m.group(2));
+               String value = m.group(1);
+               data.put(value, date);
+             }
+             catch(Exception e){}
+          }
+          return data;
+       }
     }
     private static String[] getTd(String path)throws Exception{
       BufferedReader br ; 
