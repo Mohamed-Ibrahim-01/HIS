@@ -22,7 +22,7 @@ public class Read {
 
     public static List<Patient> readPatients(){
         String line;
-        String patientsDataPath = ".."+slash+".."+slash+"data"+slash+"patientsdata";
+        String patientsDataPath = "."+slash+"data"+slash+"patientsdata";
         List<Patient> patients = new ArrayList<Patient>();
         String[] lineArray ;
         try{
@@ -35,11 +35,11 @@ public class Read {
         }
         catch(Exception e){
         }
-        return null;
+        return patients;
     }
     public static List<Doctor> readDoctors(){
-        String line,slash = File.pathSeparator;
-        String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"doctorsdata"+slash+"Doctors.csv";
+        String line;
+        String doctorsDataPath = "."+slash+"data"+slash+"doctorsdata"+slash+"Doctors.csv";
         List<Doctor> doctors = new ArrayList<Doctor>();
         String[] lineArray ;
         try{
@@ -115,9 +115,9 @@ public class Read {
         return medicalStatus; 
     }
     private static MedicalHistory getMh(String patientPath, Patient patient){
-        HashMap<String,PersonMH>  familyMembers  = new HashMap<String,PersonMH>();
         MedicalHistory medicalHistory = new MedicalHistory();
         medicalHistory.setPatient(patient);
+        HashMap<String,PersonMH>  familyMembers  = new HashMap<String,PersonMH>();
         try{
             File patientFolder = new File(patientPath);
             File[] mhFiles = patientFolder.listFiles(new FileFilter(){
@@ -154,9 +154,9 @@ public class Read {
                     case HOSPITALIZATIONS: personMH.setHospitalizations(getPmhMap(lineArray));break;
                     case MEDICATIONS: personMH.setMedications(getPmhMap(lineArray));break;
                     case GENETIC_DISEASES: {
-                                           List<String> lineAttributes = new ArrayList<String>();
-                                           Collections.addAll(lineAttributes, lineArray);
-                                           break;
+                       List<String> lineAttributes = new ArrayList<String>();
+                       Collections.addAll(lineAttributes, lineArray);
+                       break;
                     }
                 }
             }
