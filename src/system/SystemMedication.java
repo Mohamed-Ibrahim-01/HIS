@@ -6,38 +6,25 @@ public class SystemMedication {
     private int Quantity;
     
     public SystemMedication(){
-
-
     }   
-
     public SystemMedication(String[] data){
         this.Id = UUID.fromString(data[0]);
         this.Name = data[1] ;
         this.Quantity = Integer.parseInt(data[2]);
     }
+
+    @Override
+    public String toString(){
+        return Id.toString() + ":" + Name + " : " + Quantity + "\n";
+    }
     
-    public UUID getId() {
-        return Id;
-    }
+    public UUID getId() { return Id; }
+    public void setId(UUID id) { Id = id; }
 
-    public void setId(UUID id) {
-        Id = id;
-    }
+    public String getName() { return Name; }
+    public void setName(String name) { Name = name; }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public int getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        Quantity = quantity;
-    }
+    public int getQuantity() { return Quantity; }
+    public void setQuantity(int quantity) { Quantity = quantity; }
     
 }
