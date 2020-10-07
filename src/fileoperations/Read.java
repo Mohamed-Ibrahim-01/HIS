@@ -18,11 +18,11 @@ import src.system.SystemMedication;
 
 public class Read {
     private static final int CHRONIC_DISEASES = 0, DISEASES = 1, HOSPITALIZATIONS = 2, MEDICATIONS = 3, GENETIC_DISEASES = 4;
-    private static final String slash = File.pathSeparator;
+    private static final String slash = File.separator;
 
     public static List<Patient> readPatients(){
         String line;
-        String patientsDataPath = ".."+slash+".."+slash+"data"+slash+"patientsdata";
+        String patientsDataPath = "."+slash+"data"+slash+"patientsdata";
         List<Patient> patients = new ArrayList<Patient>();
         String[] lineArray ;
         try{
@@ -35,11 +35,11 @@ public class Read {
         }
         catch(Exception e){
         }
-        return null;
+        return patients;
     }
     public static List<Doctor> readDoctors(){
-        String line,slash = File.pathSeparator;
-        String doctorsDataPath = ".."+slash+".."+slash+"data"+slash+"doctorsdata"+slash+"Doctors.csv";
+        String line;
+        String doctorsDataPath = "."+slash+"data"+slash+"doctorsdata"+slash+"Doctors.csv";
         List<Doctor> doctors = new ArrayList<Doctor>();
         String[] lineArray ;
         try{
@@ -51,11 +51,13 @@ public class Read {
             }
         }
         catch(Exception e){
+            System.out.println("Doctors not found in : " + doctorsDataPath);
+            System.out.println("I'm in the folder : " + new File("").getAbsolutePath());
         }
         return doctors;
     }
     public static List<ICU> readICUs()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
+        String Path = "."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
         BufferedReader br ; 
         br = new BufferedReader(new FileReader(new File(Path)));
         br.readLine();
@@ -70,7 +72,7 @@ public class Read {
         return icus ;
     }
     public static List<SystemMedication> readMedicationStorage()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"storage"+slash+"medcationStorage.csv";
+        String Path = "."+slash+"data"+slash+"storage"+slash+"medcationStorage.csv";
         BufferedReader br ; 
         br = new BufferedReader(new FileReader(new File(Path)));
         br.readLine();
@@ -86,7 +88,7 @@ public class Read {
     }
 
     public static List<TreatmentData> readTreatmentData()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"TreatmentData";
+        String Path = "."+slash+"data"+slash+"TreatmentData";
         File Folder = new File(Path);
         File[] folders = Folder.listFiles();
         List<TreatmentData> treatmentData = new ArrayList<TreatmentData>();
@@ -115,9 +117,9 @@ public class Read {
         return medicalStatus; 
     }
     private static MedicalHistory getMh(String patientPath, Patient patient){
-        HashMap<String,PersonMH>  familyMembers  = new HashMap<String,PersonMH>();
         MedicalHistory medicalHistory = new MedicalHistory();
         medicalHistory.setPatient(patient);
+        HashMap<String,PersonMH>  familyMembers  = new HashMap<String,PersonMH>();
         try{
             File patientFolder = new File(patientPath);
             File[] mhFiles = patientFolder.listFiles(new FileFilter(){
@@ -154,9 +156,9 @@ public class Read {
                     case HOSPITALIZATIONS: personMH.setHospitalizations(getPmhMap(lineArray));break;
                     case MEDICATIONS: personMH.setMedications(getPmhMap(lineArray));break;
                     case GENETIC_DISEASES: {
-                                           List<String> lineAttributes = new ArrayList<String>();
-                                           Collections.addAll(lineAttributes, lineArray);
-                                           break;
+                       List<String> lineAttributes = new ArrayList<String>();
+                       Collections.addAll(lineAttributes, lineArray);
+                       break;
                     }
                 }
             }

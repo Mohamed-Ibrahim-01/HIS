@@ -6,7 +6,7 @@ public class System1 {
     public static void main(String[] args){
         List<Doctor> doctors = Read.readDoctors();
         for(Doctor d : doctors){
-            System.out.println(d.getId().toString()+":"+d.getName());
+            System.out.println(d);
         }
     }
 }
