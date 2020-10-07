@@ -55,7 +55,7 @@ public class Read {
         return doctors;
     }
     public static List<ICU> readICUs()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
+        String Path = "."+slash+"data"+slash+"icu"+slash+"ICUs.csv";
         BufferedReader br ; 
         br = new BufferedReader(new FileReader(new File(Path)));
         br.readLine();
@@ -70,7 +70,7 @@ public class Read {
         return icus ;
     }
     public static List<SystemMedication> readMedicationStorage()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"storage"+slash+"medcationStorage.csv";
+        String Path = "."+slash+"data"+slash+"storage"+slash+"medcationStorage.csv";
         BufferedReader br ; 
         br = new BufferedReader(new FileReader(new File(Path)));
         br.readLine();
@@ -86,7 +86,7 @@ public class Read {
     }
 
     public static List<TreatmentData> readTreatmentData()throws Exception{
-        String Path = ".."+slash+".."+slash+"data"+slash+"TreatmentData";
+        String Path = "."+slash+"data"+slash+"TreatmentData";
         File Folder = new File(Path);
         File[] folders = Folder.listFiles();
         List<TreatmentData> treatmentData = new ArrayList<TreatmentData>();
