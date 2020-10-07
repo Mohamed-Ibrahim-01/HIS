@@ -19,5 +19,9 @@ public class Medication{
 
     public int getDoseValue(){ return DoseValue;}
     public void setDoseValue(int doseValue){ DoseValue = doseValue;}
+@Override 
+public String toString(){
+return "name =  " + Name + " dailydose = "+DailyDose + "\n"+" Weeklydose  ="+ WeeklyDose +" dosevalue = "+ DoseValue ; 
 
+}
 }
