@@ -30,5 +30,16 @@ public class TreatmentData {
     public void setPrescriptions(List<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
-    
+private String returnprescriptions(){
+    String pr = ""; 
+     for (Prescription p : prescriptions){
+        pr += p + "\n\n " ;
+ }
+    return pr ; 
+}
+@Override 
+public String toString(){
+return "patient id = "+PatientId +" doctor id =  "+ DoctorId +" WTH =  " + WTH +"\n" +
+returnprescriptions();
+}
 }
