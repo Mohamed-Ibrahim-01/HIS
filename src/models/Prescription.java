@@ -17,6 +17,13 @@ public class Prescription {
         Duration = Integer.parseInt(data[2]);
     }
 
+    public String toString(){
+        String medications = "";
+        for(Medication m : Medications ){
+            medications += " "+m.toString() +"\n";
+        }
+        return Date + " : " + Duration + ": " + "\n " + medications; 
+    }
     public List<Medication> getMedications() { return Medications; }
     public void setMedications(List<Medication> medications) { Medications = medications; }
 
