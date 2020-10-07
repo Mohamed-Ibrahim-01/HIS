@@ -24,6 +24,10 @@ public class Doctor extends Person {
         Degree = degree;
         PatientsData = new HashMap<Patient, TreatmentData>();
     }
+    @Override
+    public String toString(){
+        return  super.toString() +  "::" + SSN + "::" + MSA + "::" + Degree;
+    }
 
     public String getSSN() { return SSN; }
     public void setSSN(String sSN) { SSN = sSN; }

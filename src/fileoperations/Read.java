@@ -18,7 +18,7 @@ import src.system.SystemMedication;
 
 public class Read {
     private static final int CHRONIC_DISEASES = 0, DISEASES = 1, HOSPITALIZATIONS = 2, MEDICATIONS = 3, GENETIC_DISEASES = 4;
-    private static final String slash = File.pathSeparator;
+    private static final String slash = File.separator;
 
     public static List<Patient> readPatients(){
         String line;
@@ -51,6 +51,8 @@ public class Read {
             }
         }
         catch(Exception e){
+            System.out.println("Doctors not found in : " + doctorsDataPath);
+            System.out.println("I'm in the folder : " + new File("").getAbsolutePath());
         }
         return doctors;
     }

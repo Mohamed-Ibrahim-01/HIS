@@ -24,6 +24,11 @@ public class Person {
         Sex = sex;
     }
 
+    @Override
+    public String toString(){
+        return Name + "::" + Address + "::" + Phone + "::" + BirthDate + "::" + Sex + "\\n";
+    }
+
     public String getName() { return Name; }
     public void setName(String name) { Name = name; }
 
