@@ -113,7 +113,10 @@ public class Read {
             String[] lineArray = readCSVLine(br.readLine()); 
             medicalStatus = new MedicalStatus(lineArray); 
         }
-        catch(Exception e){}
+        catch(Exception e){
+            System.out.println("******************not comleted****************");
+            
+        }
         return medicalStatus; 
     }
     private static MedicalHistory getMh(String patientPath, Patient patient){

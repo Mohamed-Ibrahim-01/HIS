@@ -44,5 +44,9 @@ public class Patient extends Person {
     public void addTreatmentData(Doctor doctor, TreatmentData treatmentData){
         DoctorsData.put(doctor, treatmentData);
     }
+    @Override 
+    public String toString(){
+      return super.toString() + AdmittanceDate + Complain +" \" "+ MedicalStatus.getBloodPressure() +" \""+ MedicalHistory.getPatientMH().getChronicDiseases();      
+    }
 
 }

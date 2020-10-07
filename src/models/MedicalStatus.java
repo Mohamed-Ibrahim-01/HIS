@@ -2,30 +2,30 @@ package src.models;
 
 public class MedicalStatus{
    private String BloodPressure;
-   private int SystolicBP,DiastolicBP,HeartRate,Temprature;
+   private double SystolicBP,DiastolicBP,HeartRate,Temprature;
    public MedicalStatus(final String[] params){
-       this.Temprature = Integer.parseInt(params[0]);
-       this.SystolicBP = Integer.parseInt(params[1]);
-       this.DiastolicBP = Integer.parseInt(params[2]);
-       this.HeartRate = Integer.parseInt(params[3]);
+       this.Temprature = Double.parseDouble(params[0]);
+       this.SystolicBP = Double.parseDouble(params[1]);
+       this.DiastolicBP =Double.parseDouble(params[2]);
+       this.HeartRate = Double.parseDouble(params[3]);
        BloodPressure = SystolicBP + "/"+ DiastolicBP;
    }
-   public MedicalStatus(int systolicBP,int diastolicBP,int temprature, int heartRate){
-       this.Temprature = temprature;
-       this.SystolicBP = systolicBP;
-       this.DiastolicBP = diastolicBP;
-       this.HeartRate = heartRate;
-       BloodPressure = SystolicBP + "/"+ DiastolicBP;
-   }
+//    public MedicalStatus(int systolicBP,int diastolicBP,int temprature, int heartRate){
+//        this.Temprature = temprature;
+//        this.SystolicBP = systolicBP;
+//        this.DiastolicBP = diastolicBP;
+//        this.HeartRate = heartRate;
+//        BloodPressure = SystolicBP + "/"+ DiastolicBP;
+  // }
    public String getBloodPressure() {return BloodPressure;}
-   public int getSystolicBP(){ return SystolicBP;}
-   public int getDiastolicBP(){ return DiastolicBP;}
-   public int getHeartRate(){ return HeartRate;}
-   public int getTemprature(){ return Temprature;}
+   public double getSystolicBP(){ return SystolicBP;}
+   public double getDiastolicBP(){ return DiastolicBP;}
+   public double getHeartRate(){ return HeartRate;}
+   public double getTemprature(){ return Temprature;}
    
-   public void setSystolicBP(int systolic){ this.SystolicBP = systolic;}
-   public void setDiastolicBP(int diastolic){ this.DiastolicBP = diastolic;}
-   public void setTemprature(int temprature){ this.Temprature = temprature;}
-   public void setHeartRate(int heartRate){ this.HeartRate = heartRate;}
+   public void setSystolicBP(double systolic){ this.SystolicBP = systolic;}
+   public void setDiastolicBP(double diastolic){ this.DiastolicBP = diastolic;}
+   public void setTemprature(double temprature){ this.Temprature = temprature;}
+   public void setHeartRate(double heartRate){ this.HeartRate = heartRate;}
 
 }
