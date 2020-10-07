@@ -20,9 +20,9 @@ public class Prescription {
     public String toString(){
         String medications = "";
         for(Medication m : Medications ){
-            medications += " "+m.toString() +" ";
+            medications += " "+m.toString() +"\n";
         }
-        return Date + " : " + Duration + ": " + medications; 
+        return Date + " : " + Duration + ": " + "\n " + medications; 
     }
     public List<Medication> getMedications() { return Medications; }
     public void setMedications(List<Medication> medications) { Medications = medications; }
