@@ -60,5 +60,10 @@ public class ICU {
             case 6 : cap = Capacity.BIG; break;
         }
         return cap ; 
+    }
+    @Override
+    public String toString(){
+        return "code = " +this.Code+"name = "+ this.Name+"manager = "+this.Manager+"beds number = "+this.BedsNumber+"\n"+"capacity = "+this.capacity+"busy = "+this.BusyBeds+"free = "+this.FreeBeds ;
+
     }  
 }
