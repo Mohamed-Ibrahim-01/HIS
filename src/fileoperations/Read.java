@@ -93,7 +93,7 @@ public class Read {
         File[] folders = Folder.listFiles();
         List<TreatmentData> treatmentData = new ArrayList<TreatmentData>();
         for(File folder : folders){
-            treatmentData.add(creatTreatmentData(folder.getCanonicalPath()));
+            treatmentData.add(creatTreatmentData(folder.getAbsolutePath()));
         }
         return treatmentData;
     }
@@ -189,7 +189,7 @@ public class Read {
     }
     private static String[] getTd(String path)throws Exception{
         BufferedReader br ; 
-        br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"td.csv")));
+        br = new BufferedReader(new FileReader(new File(path+slash+"td.csv")));
         br.readLine();
         String line ;
         String[] lineArray = null;
@@ -217,14 +217,14 @@ public class Read {
 
     private static List<Prescription> getPr(String path) throws Exception{
         BufferedReader br ;
-        br = new BufferedReader(new FileReader(new File(path+File.pathSeparator+"pr.csv")));
+        br = new BufferedReader(new FileReader(new File(path+slash+"pr.csv")));
         br.readLine();
         String line ;
         String[] lineArray ;
         List<Prescription> prescriptions = new ArrayList<Prescription>();
         while ( (line = br.readLine()) != null){
             lineArray = readCSVLine(line);
-            List<Medication> medications =  getMd(path+File.pathSeparator+"md"+lineArray[0]+".csv");
+            List<Medication> medications =  getMd(path+slash+"md"+lineArray[0]+".csv");
             prescriptions.add(new Prescription(medications,lineArray));
         }     
         br.close();
