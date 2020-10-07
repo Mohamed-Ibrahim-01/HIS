@@ -9,5 +9,4 @@ public class System1 {
             System.out.println(d.getId().toString()+":"+d.getName());
         }
     }
-    
 }
