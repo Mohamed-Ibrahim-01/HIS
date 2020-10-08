@@ -1,10 +1,15 @@
 package src.system;
+import java.util.HashMap;
+import java.util.UUID;
+
 import src.enums.Capacity;
+import src.models.Patient;
 public class ICU {
     private String Name , Code, Manager ;
     private Capacity capacity ;
     private int BedsNumber ,FreeBeds , BusyBeds;
-    
+    private HashMap<UUID,Integer> patientsBeds ;
+   
     public ICU(){
 
     }
@@ -66,4 +71,5 @@ public class ICU {
         return "code = " +this.Code+"name = "+ this.Name+"manager = "+this.Manager+"beds number = "+this.BedsNumber+"\n"+"capacity = "+this.capacity+"busy = "+this.BusyBeds+"free = "+this.FreeBeds ;
 
     }  
+
 }

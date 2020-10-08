@@ -1,18 +1,16 @@
 package src.system;
+
 import src.models.*;
 import src.fileoperations.*;
 import java.util.List;
+
 public class System1 {
-    public static void main(String[] args){
-       try{
-        List<TreatmentData> data = Read.readTreatmentData();
-        for(TreatmentData d : data){
-            System.out.println(d);
-        }
-    }
-    catch(Exception e){
-        System.out.println("Exception occured");
-        e.printStackTrace();
-    }
+    private static List<ICU> icus;
+    private static List<SystemMedication> MedicationStorage;
+
+    public static void loadAllData() {
+        HospitalNetwork.loadData();
+        icus = Read.readICUs();
+        MedicationStorage = Read.readMedicationStorage();
     }
 }
