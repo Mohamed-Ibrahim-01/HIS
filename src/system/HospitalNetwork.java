@@ -1,11 +1,17 @@
 package src.system;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
-import src.models.*;
-import src.fileoperations.*;
+
+import src.fileoperations.Read;
+import src.models.Doctor;
+import src.models.Medication;
+import src.models.Patient;
+import src.models.Person;
+import src.models.Prescription;
+import src.models.TreatmentData;
 
 public class HospitalNetwork {
 
@@ -80,5 +86,8 @@ public class HospitalNetwork {
 
     public static int getNumDoctors() {
         return numDoctors;
+    }
+    public static Set<UUID> Ids(){
+        return Persons.keySet();
     }
 }

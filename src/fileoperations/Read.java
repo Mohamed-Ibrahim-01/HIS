@@ -82,7 +82,7 @@ public class Read {
             String line;
             while ((line = br.readLine()) != null) {
                 patientsLineArray = readCSVLine(line);
-                icu.addPatient(patientsLineArray[0],Integer.parseInt(patientsLineArray[1]));
+                icu.addPatient(patientsLineArray[0],patientsLineArray[1]);
             }
         }
         catch(Exception e){
@@ -127,6 +127,8 @@ public class Read {
         Patient patient = new Patient(personlData);
         patient.setComplain(personlData[6]);
         patient.setAdmittanceDate(personlData[7]);
+        patient.setICUname(personlData[8]);
+        patient.setBedNumber(personlData[9]);
         patient.setMedicalStatus(getMs(patientPath + slash + "ms.csv"));
         patient.setMedicalHistory(getMh(patientPath, patient));
         return patient;

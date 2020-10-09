@@ -8,7 +8,7 @@ public class ICU {
     private String Name , Code, Manager ;
     private Capacity capacity ;
     private int BedsNumber ,FreeBeds , BusyBeds;
-    private HashMap<UUID,Integer> patientsBeds ;
+    private HashMap<UUID,String> patientsBeds ;
    
     public ICU(){
 
@@ -21,10 +21,10 @@ public class ICU {
         this.BedsNumber = Integer.parseInt(data[3]) ;
         this.BusyBeds = Integer.parseInt(data[4]);
         this.capacity = settingCapacity(BedsNumber);
-        patientsBeds = new HashMap<UUID, Integer>();
+        patientsBeds = new HashMap<UUID, String>();
         FreeBeds = BedsNumber - BusyBeds ; 
     }
-    public void addPatient(String id, int bedNum){
+    public void addPatient(String id, String bedNum){
         patientsBeds.put(UUID.fromString(id), bedNum);
     }
     
@@ -75,5 +75,6 @@ public class ICU {
         return "code = " +this.Code+"name = "+ this.Name+"manager = "+this.Manager+"beds number = "+this.BedsNumber+"\n"+"capacity = "+this.capacity+"busy = "+this.BusyBeds+"free = "+this.FreeBeds ;
 
     }  
+
 
 }
