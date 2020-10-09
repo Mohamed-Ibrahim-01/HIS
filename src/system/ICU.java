@@ -21,7 +21,11 @@ public class ICU {
         this.BedsNumber = Integer.parseInt(data[3]) ;
         this.BusyBeds = Integer.parseInt(data[4]);
         this.capacity = settingCapacity(BedsNumber);
+        patientsBeds = new HashMap<UUID, Integer>();
         FreeBeds = BedsNumber - BusyBeds ; 
+    }
+    public void addPatient(String id, int bedNum){
+        patientsBeds.put(UUID.fromString(id), bedNum);
     }
     
     public String getName() { return Name; }
