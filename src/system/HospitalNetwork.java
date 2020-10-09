@@ -37,6 +37,8 @@ public class HospitalNetwork {
             addTreatmentData(patient, doctor, t);
             List<Prescription> prescriptions = t.getPrescriptions();
             for (Prescription p : prescriptions) {
+                p.setDoctor(doctor);
+                p.setPatient(patient);
                 List<Medication> medications = p.getMedications();
                 for (Medication m : medications) {
                     patient.addMedication(m);
