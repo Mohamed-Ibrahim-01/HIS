@@ -2,7 +2,6 @@ package src.fileoperations;
 
 import java.util.List;
 import java.util.UUID;
-
 import src.models.*;
 import src.system.HospitalNetwork;
 import src.system.SystemMedication;
@@ -16,23 +15,19 @@ public class Write {
         addMedicalStatus(id);
         return null;
     }
-
     public static MedicalHistory addMedicalHistory(UUID id) throws Exception {
         addFamilyMH(id);
         addPersonMH(id);
         return null;
     }
-
     public static PersonMH addPersonMH(UUID id) throws Exception {
 
         return null;
     }
-
     public static FamilyMH addFamilyMH(UUID id) throws Exception {
 
         return null;
     }
-
     public static MedicalStatus addMedicalStatus(UUID id) throws Exception {
 
         return null;
@@ -56,6 +51,4 @@ public class Write {
     public static List<Medication> addPrMedications(){
         return null ; 
     }
- 
-
 }
