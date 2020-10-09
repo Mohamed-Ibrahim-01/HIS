@@ -13,6 +13,12 @@ public class Patient extends Person {
     
     public Patient(final String[] params) {
         super(params);
+        this.Complain = params[6];
+        this.AdmittanceDate = params[7];
+        this.ICUname = params[8];
+        this.BedNumber = params[9];
+        this.Medications = new HashSet<Medication>();
+        this.DoctorsData = new HashMap<Doctor, TreatmentData>();
     }
 
     public Patient(String name, UUID id, String address, String phone, String birthDate, String sex, String complain,

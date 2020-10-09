@@ -1,5 +1,6 @@
 package src.fileoperations;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import src.models.*;
@@ -28,13 +29,15 @@ public class Write {
 
         return null;
     }
+    public static HashMap<String,Date> addPmhMap(){
+     return null ;
+    }
     public static MedicalStatus addMedicalStatus(UUID id) throws Exception {
 
         return null;
     }
     public static Doctor addNewDoctor()throws Exception{
         return null ; 
-
     }
     public static SystemMedication addNewSystemMedication(){
 
