@@ -18,7 +18,6 @@ private String dashLine = "----------------------------------------------";
     public String[] getDoctorInput(){};
     public String[] getMedInput(){};
     public String[] getPRInput(){};
-    public String[] getSysMedInput(){};
     private String getStringDate() {
         return "";
     }
@@ -37,4 +36,18 @@ private String dashLine = "----------------------------------------------";
     private String getCRDisease() {
         return "";
     }
-}
+    public String[] getSysMedInput() {
+        String[] medData = new String[3];
+        try {
+            System.out.print("Please,Enter the drug name : ");
+            medData[1] = br.readLine();
+            System.out.print("Please,Enter drug quantity : ");
+            medData[2] = br.readLine();
+        } catch (Exception e) {
+            System.out.println("exception has been occured");
+        }
+        return medData;
+    }
+        
+    }
+

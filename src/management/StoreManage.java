@@ -1,5 +1,6 @@
 package src.management;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
@@ -9,15 +10,14 @@ import src.models.SystemMedication;
 
 public class StoreManage {
 
-    public static List<SystemMedication> MedicationStorage;
     public static HashSet<UUID> storageid;
-    public static HashSet<String> storageName;
+    public static HashMap<String,SystemMedication> medicationStorage ;
 
     public static void loadData() {
-        MedicationStorage = Read.readMedicationStorage();
+        List<SystemMedication> MedicationStorage = Read.readMedicationStorage();
         for (SystemMedication m : MedicationStorage) {
             storageid.add(m.getId());
-            storageName.add(m.getName());
+            medicationStorage.put(m.getName(), m);
         }
     }
 }
