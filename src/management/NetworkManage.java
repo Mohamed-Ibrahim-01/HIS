@@ -1,4 +1,4 @@
-package src.system;
+package src.management;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +13,12 @@ import src.models.Person;
 import src.models.Prescription;
 import src.models.TreatmentData;
 
-public class HospitalNetwork {
+public class NetworkManage {
 
     private static HashMap<UUID, Person> Persons;
     private static int numPatients, numDoctors;
 
-    public HospitalNetwork() {
+    public NetworkManage() {
          Persons = new HashMap<UUID, Person>();
     }
 

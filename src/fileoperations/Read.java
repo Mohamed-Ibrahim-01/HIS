@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
-import java.net.SocketImpl;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ import java.util.regex.Pattern;
 import java.util.Date;
 import java.util.LinkedList;
 import java.text.SimpleDateFormat;
-import src.system.ICU;
-import src.system.SystemMedication;
 
 public class Read {
     private static final int CHRONIC_DISEASES = 0, DISEASES = 1, HOSPITALIZATIONS = 2, MEDICATIONS = 3,

@@ -1,16 +1,20 @@
 package src.system;
 
-import src.models.*;
-import src.fileoperations.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
+
+import src.fileoperations.Read;
+import src.management.ICUManage;
+import src.management.NetworkManage;
+import src.management.StoreManage;
+import src.models.ICU;
 
 public class System1 {
-    private static List<ICU> icus;
-    private static List<SystemMedication> MedicationStorage;
 
     public static void loadAllData() {
-        HospitalNetwork.loadData();
-        icus = Read.readICUs();
-        MedicationStorage = Read.readMedicationStorage();
+        NetworkManage.loadData();
+        ICUManage.loadData();
+        StoreManage.loadData();
     }
 }

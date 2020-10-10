@@ -1,4 +1,4 @@
-package src.system;
+package src.models;
 import java.util.HashMap;
 import java.util.UUID;
 
