@@ -37,3 +37,4 @@ private String dashLine = "----------------------------------------------";
     private String getCRDisease() {
         return "";
     }
+}
