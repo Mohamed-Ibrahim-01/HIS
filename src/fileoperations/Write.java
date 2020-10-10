@@ -25,6 +25,7 @@ import src.validation.ValidInput;
 public class Write {
     private static final String slash = File.separator;
     private static CmdInput input = new CmdInput();
+
     public static Patient addNewPatient() throws Exception {
         UUID id;
         do {
@@ -64,20 +65,12 @@ public class Write {
     }
 
     public static void addSystemMedication() {
-     String [] medData = input.getSysMedInput();
-     if (ValidInput.isExistSysMed(medData[1])){
-
-     }
-
-     UUID id;
-        do {
-            id = UUID.randomUUID();
-        } while (StoreManage.storageid.contains(id));
-        medData[0] = id.toString();
-        SystemMedication newmed = new SystemMedication(medData);
-        StoreManage.MedicationStorage.add(newmed);
-        StoreManage.storageid.add(id);
-       
+        String[] medData = input.getSysMedInput();
+        if (ValidInput.isExistSysMed(medData[1])) {
+            updateExistedSysMed(medData);
+        } else {
+            addNewSysMed(medData);
+        }
     }
 
     public static TreatmentData addNewTreatmentData() {
@@ -94,8 +87,20 @@ public class Write {
     public static List<Medication> addPrMedications() {
         return null;
     }
-    private static void addExistedSysMed(String Quantity){
+
+    private static void updateExistedSysMed(String[] medData) {
         Prompt.addedExistedSysMed();
-        
+        StoreManage.medicationStorage.get(medData[1]).addQuantity(medData[2]);
+    }
+
+    private static void addNewSysMed(String[] medData) {
+        UUID id;
+        do {
+            id = UUID.randomUUID();
+        } while (StoreManage.storageid.contains(id));
+        medData[0] = id.toString();
+        SystemMedication newmed = new SystemMedication(medData);
+        StoreManage.medicationStorage.put(newmed.getName(), newmed);
+        StoreManage.storageid.add(id);
     }
 }

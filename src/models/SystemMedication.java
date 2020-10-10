@@ -24,5 +24,7 @@ public class SystemMedication {
 
     public int getQuantity() { return Quantity; }
     public void setQuantity(int quantity) { Quantity = quantity; }
-    
+    public void addQuantity(String quantity){
+        Quantity += Integer.parseInt(quantity);
+    }
 }
