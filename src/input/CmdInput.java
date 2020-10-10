@@ -1,11 +1,13 @@
 package src.input;
-
-import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class CmdInput implements Input {
 private String dashLine = "----------------------------------------------";
+    private static final InputStreamReader r = new InputStreamReader(System.in);
+    private static final BufferedReader br = new BufferedReader(r);
     public String[] getPatientInput() {
-        String[] patientData = ;
+        String[] patientData  ;
         System.out.println(dashLine);
     };
     public String[] getMsInput(){};
@@ -20,7 +22,6 @@ private String dashLine = "----------------------------------------------";
     private String getStringDate() {
         return "";
     }
-
     private String getmed() {
         return "";
     }
@@ -36,4 +37,3 @@ private String dashLine = "----------------------------------------------";
     private String getCRDisease() {
         return "";
     }
-}

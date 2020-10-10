@@ -1,12 +1,10 @@
-package src.system;
+package src.models;
 import java.util.UUID;
 public class SystemMedication {
     private UUID Id;
     private String Name ; 
     private int Quantity;
     
-    public SystemMedication(){
-    }   
     public SystemMedication(String[] data){
         this.Id = UUID.fromString(data[0]);
         this.Name = data[1] ;
