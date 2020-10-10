@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import src.enums.Capacity;
-import src.models.Patient;
 public class ICU {
     private String Name , Code, Manager ;
     private Capacity capacity ;
