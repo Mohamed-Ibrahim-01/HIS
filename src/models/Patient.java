@@ -5,14 +5,20 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class Patient extends Person {
-    private String AdmittanceDate, Complain;
+    private String AdmittanceDate, Complain,ICUname,BedNumber;
     private MedicalStatus MedicalStatus;
     private MedicalHistory MedicalHistory;
     private HashMap<Doctor, TreatmentData> DoctorsData;
     private HashSet<Medication> Medications;
-
+    
     public Patient(final String[] params) {
         super(params);
+        this.Complain = params[6];
+        this.AdmittanceDate = params[7];
+        this.ICUname = params[8];
+        this.BedNumber = params[9];
+        this.Medications = new HashSet<Medication>();
+        this.DoctorsData = new HashMap<Doctor, TreatmentData>();
     }
 
     public Patient(String name, UUID id, String address, String phone, String birthDate, String sex, String complain,
@@ -81,5 +87,30 @@ public class Patient extends Person {
         return super.toString() + AdmittanceDate + Complain + " \" " + MedicalStatus.getBloodPressure() + " \""
                 + MedicalHistory.getPatientMH().getChronicDiseases();
     }
+
+    public String getICUname() {
+        return ICUname;
+    }
+
+    public void setICUname(String iCUname) {
+        ICUname = iCUname;
+    }
+
+    public String getBedNumber() {
+        return BedNumber;
+    }
+
+    public void setBedNumber(String bedNumber) {
+        BedNumber = bedNumber;
+    }
+
+    public HashMap<Doctor, TreatmentData> getDoctorsData() {
+        return DoctorsData;
+    }
+
+    public void setDoctorsData(HashMap<Doctor, TreatmentData> doctorsData) {
+        DoctorsData = doctorsData;
+    }
+ 
 
 }

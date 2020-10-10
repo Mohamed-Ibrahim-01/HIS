@@ -60,31 +60,31 @@ public class Read {
 
     public static List<ICU> readICUs() {
         List<ICU> icus = new ArrayList<ICU>();
-        String Path = "." + slash + "data" + slash + "icu" ;
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(Path+ slash +"ICUs.csv")));) {
+        String Path = "." + slash + "data" + slash + "icu";
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(Path + slash + "ICUs.csv")));) {
             br.readLine();
             String line;
             String[] lineArray = null;
             while ((line = br.readLine()) != null) {
                 lineArray = readCSVLine(line);
-                icus.add(createIcu(lineArray,Path + slash + lineArray[0]));
+                icus.add(createIcu(lineArray, Path + slash + lineArray[0]));
             }
         } catch (Exception e) {
             System.out.println("Exception occured");
         }
         return icus;
     }
-    public static ICU createIcu(String[] lineArray,String patientsDataPath){
+
+    public static ICU createIcu(String[] lineArray, String patientsDataPath) {
         ICU icu = new ICU(lineArray);
-        try(BufferedReader br = new BufferedReader(new FileReader(new File(patientsDataPath+slash+"ps.csv")))){
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(patientsDataPath + slash + "ps.csv")))) {
             String[] patientsLineArray = null;
             String line;
             while ((line = br.readLine()) != null) {
                 patientsLineArray = readCSVLine(line);
-                icu.addPatient(patientsLineArray[0],Integer.parseInt(patientsLineArray[1]));
+                icu.addPatient(patientsLineArray[0], patientsLineArray[1]);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("There is a problem in createIcu");
         }
         return icu;
@@ -126,6 +126,8 @@ public class Read {
         Patient patient = new Patient(personlData);
         patient.setComplain(personlData[6]);
         patient.setAdmittanceDate(personlData[7]);
+        patient.setICUname(personlData[8]);
+        patient.setBedNumber(personlData[9]);
         patient.setMedicalStatus(getMs(patientPath + slash + "ms.csv"));
         patient.setMedicalHistory(getMh(patientPath, patient));
         return patient;
