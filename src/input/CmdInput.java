@@ -42,4 +42,6 @@ public class CmdInput implements Input {
         }
         return medData;
     }
-}
+        
+    }
+
