@@ -7,7 +7,7 @@ public class SystemMedication {
     
     public SystemMedication(String[] data){
         this.Id = UUID.fromString(data[0]);
-        this.Name = data[1] ;
+        this.Name = data[1];
         this.Quantity = Integer.parseInt(data[2]);
     }
 
