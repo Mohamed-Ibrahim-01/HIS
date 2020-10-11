@@ -59,6 +59,13 @@ public class ICU {
         BusyBeds -= freedBeds;
         FreeBeds = BedsNumber - BusyBeds; 
     }
+    public boolean isFull(){
+        return (FreeBeds == 0);
+    }
+    //Pre Condition : Free Beds not equal 0 (Not Full)
+    public int nextFreeBed(){
+        return BusyBeds+1;
+    }
 
     private static Capacity settingCapacity(int BedsNumber){
         Capacity cap = Capacity.SMALL ;

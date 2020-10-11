@@ -5,12 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-
-//import jdk.javadoc.internal.doclets.formats.html.resources.standard;
+import java.text.SimpleDateFormat;
 import src.input.CmdInput;
+import src.management.ICUManage;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
@@ -91,13 +92,30 @@ public class Write {
         }
         CSVLine = CSVLine.substring(1);
         return CSVLine;
+        }
+    private static String currentDate(){
+        SimpleDateFormat formatter= new SimpleDateFormat("dd/mm/yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        return formatter.format(date);
     }
-
+    private static boolean replaceLineInFile(){
+        return false;
+    }
+    private static void addPatientToIcu(Patient patient){
+        String patientData = patient.getId().toString() + ","+ patient.getBedNumber();
+        String IcusDataPath = "."+slash+"icu";
+        writeInFile(IcusDataPath + slash + "ICUs.csv", patientData);
+    }
     public static Patient addNewPatient() throws Exception {
         String[] patientData = input.getPatientInput();
         String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
+        patientData[7] = currentDate();
+        patientData[8] = ICUData[0];
+        patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
+        writeInFile(patientDataPath,arrToCSV(patientData));
+        addPatientToIcu(patient);
         addMedicalHistory(patient);
         addMedicalStatus(patient);
         createFolder(patientDataPath, patient.getId().toString());
