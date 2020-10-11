@@ -285,7 +285,7 @@ public class Read {
         return new TreatmentData(getTd(path), getPr(path));
     }
 
-    private static String[] readCSVLine(String line) {
+    public static String[] readCSVLine(String line) {
         String[] splitedLine = line.split(",");
         List<String> lineAttributes = new LinkedList<String>();
         Collections.addAll(lineAttributes, splitedLine);

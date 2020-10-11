@@ -48,8 +48,8 @@ public class CmdInput implements Input {
     public String[] getSysMedInput() {
         String[] medData = new String[3];
         try {
-            System.out.print("Please,Enter the drug name \"First Character of each word must be CAPITAL !!\" : ");
-            medData[1] = br.readLine();
+            System.out.print("Please,Enter the drug name : ");
+            medData[1] = br.readLine().toLowerCase();
             System.out.print("Please,Enter drug quantity : ");
             medData[2] = br.readLine();
         } catch (Exception e) {

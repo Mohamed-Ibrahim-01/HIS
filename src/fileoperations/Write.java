@@ -5,13 +5,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-import java.text.SimpleDateFormat;
+
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+import javax.xml.catalog.Catalog;
+
+//import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 import src.input.CmdInput;
-import src.management.ICUManage;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
@@ -66,8 +68,30 @@ public class Write {
             return false;
         }
     }
-    private static void deleteLine(String path ,int index)throws Exception{
+
+    private static void updateStorageFile(String path, String[] medData){
+       try{
         BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+        String line = br.readLine();
+        String[] linearray;
+        String stream = "";
+        int q = 0;
+        while (line != null) {
+            linearray = Read.readCSVLine(line);
+            if (line.contains(medData[1])) {
+                q = Integer.parseInt(linearray[2]);
+                q += Integer.parseInt(medData[2]);
+                linearray[2] = String.valueOf(q);
+                stream += (arrToCSV(linearray) + System.lineSeparator() + "n");
+            } else {
+                stream += (line + System.lineSeparator() + "n");
+            }
+            bw.write(stream);
+        }}catch(Exception e){
+            System.out.println("Exception has been occured");
+        }
+
         
     }
 
@@ -81,30 +105,13 @@ public class Write {
         }
         CSVLine = CSVLine.substring(1);
         return CSVLine;
-        }
-    private static String currentDate(){
-        SimpleDateFormat formatter= new SimpleDateFormat("dd/mm/yyyy");
-        Date date = new Date(System.currentTimeMillis());
-        return formatter.format(date);
     }
-    private static boolean replaceLineInFile(){
-        return false;
-    }
-    private static void addPatientToIcu(Patient patient){
-        String patientData = patient.getId().toString() + ","+ patient.getBedNumber();
-        String IcusDataPath = "."+slash+"icu";
-        writeInFile(IcusDataPath + slash + "ICUs.csv", patientData);
-    }
+
     public static Patient addNewPatient() throws Exception {
         String[] patientData = input.getPatientInput(),ICUData = ICUManage.getEmptyBed();
         String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
-        patientData[7] = currentDate();
-        patientData[8] = ICUData[0];
-        patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
-        writeInFile(patientDataPath,arrToCSV(patientData));
-        addPatientToIcu(patient);
         addMedicalHistory(patient);
         addMedicalStatus(patient);
         createFolder(patientDataPath, patient.getId().toString());
@@ -137,11 +144,12 @@ public class Write {
     }
 
     public static void addSystemMedication() {
+        String path = "." + slash + "data" + slash + "storage" + slash + "medcationStorage.csv";
         String[] medData = input.getSysMedInput();
         if (ValidInput.isExistSysMed(medData[1])) {
-            updateExistedSysMed(medData);
+            updateExistedSysMed(path,medData);
         } else {
-            addNewSysMed(medData);
+            addNewSysMed(path,medData);
         }
     }
 
@@ -160,13 +168,13 @@ public class Write {
         return null;
     }
 
-    private static void updateExistedSysMed(String[] medData) {
+    private static void updateExistedSysMed(String path,String[] medData) {
         Prompt.addedExistedSysMed();
         StoreManage.medicationStorage.get(medData[1]).addQuantity(medData[2]);
+        updateStorageFile(path, medData);
     }
 
-    private static void addNewSysMed(String[] medData) {
-        String path = "."+ slash +"data"+slash+"storage"+slash +"medcationStorage.csv";
+    private static void addNewSysMed(String path,String[] medData) {
         UUID id;
         do {
             id = UUID.randomUUID();
@@ -175,6 +183,6 @@ public class Write {
         SystemMedication newmed = new SystemMedication(medData);
         StoreManage.medicationStorage.put(newmed.getName(), newmed);
         StoreManage.storageid.add(id);
-        writeInFile(path,arrToCSV(medData));
+        writeInFile(path, arrToCSV(medData));
     }
 }
