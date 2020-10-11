@@ -1,34 +1,49 @@
 package src.input;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class CmdInput implements Input {
+import src.output.Prompt;
 
+public class CmdInput implements Input {
     private static final InputStreamReader r = new InputStreamReader(System.in);
     private static final BufferedReader br = new BufferedReader(r);
-
-    private String getStringDate() {
-        return "";
-
+    @Override
+    public String[] getPatientInput() {
+        Prompt.showTitle("Patient Data");
+        String[] patientData = new String[7];
+        String[] patientDataStrs = {"Name","Address","Phone","Birth Date","Sex","Complain"};
+        try{
+            for(int i = 0; i < 6; i++){
+                Prompt.askToInput("Patient "+patientDataStrs[i]);
+                patientData[i+1] = br.readLine();
+            }
+        }
+        catch(Exception e){
+        }
+        Prompt.printDashline();
+        return patientData;
     }
-
-    private String getmed() {
-        return "";
-    }
-
-    private String getHosp() {
-        return "";
-    }
-
-    private String getDisease() {
-        return "";
-    }
-
-    private String getCRDisease() {
-        return "";
-    }
+    @Override
+    public String[] getMsInput(){ return null; }
+    @Override
+    public String getCRDisMap(){ return null; }
+    @Override
+    public String getDisMap(){ return null; }
+    @Override
+    public String getHospMap(){ return null; }
+    @Override
+    public String getMedMap(){ return null; }
+    @Override
+    public String[] getDoctorInput(){ return null; }
+    @Override
+    public String[] getMedInput(){ return null; }
+    @Override
+    public String[] getPRInput(){ return null; }
+    private String getStringDate() { return ""; }
+    private String getmed() { return ""; }
+    private String getHosp() { return ""; }
+    private String getDisease() { return ""; }
+    private String getCRDisease() { return ""; }
 
     public String[] getSysMedInput() {
         String[] medData = new String[3];
@@ -43,5 +58,5 @@ public class CmdInput implements Input {
         return medData;
     }
         
-    }
+}
 
