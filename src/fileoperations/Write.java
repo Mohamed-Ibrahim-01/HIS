@@ -69,7 +69,7 @@ public class Write {
         }
     }
 
-    private static void updateStorageFile(String path, String[] medData) throws Exception {
+    private static void updateStorageFile(String path, String[] medData){
        try{
         BufferedReader br = new BufferedReader(new FileReader(new File(path)));
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
@@ -147,9 +147,9 @@ public class Write {
         String path = "." + slash + "data" + slash + "storage" + slash + "medcationStorage.csv";
         String[] medData = input.getSysMedInput();
         if (ValidInput.isExistSysMed(medData[1])) {
-            updateExistedSysMed(medData);
+            updateExistedSysMed(path,medData);
         } else {
-            addNewSysMed(medData);
+            addNewSysMed(path,medData);
         }
     }
 
@@ -174,8 +174,7 @@ public class Write {
         updateStorageFile(path, medData);
     }
 
-    private static void addNewSysMed(String[] medData) {
-      
+    private static void addNewSysMed(String path,String[] medData) {
         UUID id;
         do {
             id = UUID.randomUUID();
