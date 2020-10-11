@@ -1,23 +1,20 @@
 package src.fileoperations;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
-import jdk.javadoc.internal.doclets.formats.html.resources.standard;
+//import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 import src.input.CmdInput;
-import src.system.System1;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
-import src.models.FamilyMH;
 import src.models.MedicalHistory;
-import src.models.MedicalStatus;
 import src.models.Medication;
 import src.models.Patient;
 import src.models.PersonMH;
@@ -25,13 +22,14 @@ import src.models.Prescription;
 import src.models.SystemMedication;
 import src.models.TreatmentData;
 import src.output.Prompt;
+import src.system.System1;
 import src.validation.ValidInput;
 
 public class Write {
     private static final String slash = File.separator;
     private static CmdInput input = new CmdInput();
 
-    private static UUID genretaUuid(){
+    private static UUID genretaUuid() {
         UUID id;
         do {
             id = UUID.randomUUID();
@@ -39,39 +37,60 @@ public class Write {
         System1.Ids.add(id);
         return id;
     }
-    private static boolean createFolder(String path,String name){
+
+    private static boolean createFolder(String path, String name) {
         File Folder = new File(path + slash + name);
         return Folder.mkdir();
     }
-    private static boolean writeInFile(String filePath,String strToWrite){
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
-            bw.write(strToWrite);
-            bw.flush(); bw.close();
-            return true;
+
+    private static boolean creatFile(String path, String name) {
+        boolean result = false;
+        try {
+            File file = new File(path + slash + name);
+            result = file.createNewFile();
+        } catch (Exception e) {
+            System.out.println("Exception has been occured !!");
         }
-        catch(Exception e){
+        return result;
+    }
+
+    private static boolean writeInFile(String filePath, String strToWrite) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));
+            bw.write(strToWrite);
+            bw.flush();
+            bw.close();
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
-    private static String arrToCSV(String[] arr){
+    private static void deleteLine(String path ,int index)throws Exception{
+        BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+        
+    }
+
+    private static String arrToCSV(String[] arr) {
         String CSVLine = "";
-        for(String str : arr){
-            if(str.contains(",")) CSVLine += ",\"" + str + "\"";
-            else CSVLine += "," + str;
+        for (String str : arr) {
+            if (str.contains(","))
+                CSVLine += ",\"" + str + "\"";
+            else
+                CSVLine += "," + str;
         }
         CSVLine = CSVLine.substring(1);
         return CSVLine;
-        }
+    }
+
     public static Patient addNewPatient() throws Exception {
         String[] patientData = input.getPatientInput();
-        String patientDataPath = "."+slash+"data"+slash+"patientsdata";
+        String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
         Patient patient = new Patient(patientData);
         addMedicalHistory(patient);
         addMedicalStatus(patient);
         createFolder(patientDataPath, patient.getId().toString());
-        writeInFile(patientDataPath,arrToCSV(patientData));
+        writeInFile(patientDataPath, arrToCSV(patientData));
         NetworkManage.addPatient(patient);
         return null;
     }
@@ -91,10 +110,9 @@ public class Write {
     public static void addPmhMap(PersonMH personMH) {
     }
 
-    public static void addMedicalStatus(Patient patient){
+    public static void addMedicalStatus(Patient patient) {
 
-    } 
-
+    }
 
     public static Doctor addNewDoctor() throws Exception {
         return null;
@@ -130,6 +148,7 @@ public class Write {
     }
 
     private static void addNewSysMed(String[] medData) {
+        String path = "."+ slash +"data"+slash+"storage"+slash +"medcationStorage.csv";
         UUID id;
         do {
             id = UUID.randomUUID();
@@ -138,5 +157,6 @@ public class Write {
         SystemMedication newmed = new SystemMedication(medData);
         StoreManage.medicationStorage.put(newmed.getName(), newmed);
         StoreManage.storageid.add(id);
+        writeInFile(path,arrToCSV(medData));
     }
 }
