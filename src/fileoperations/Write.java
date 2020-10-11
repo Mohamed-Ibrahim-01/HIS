@@ -12,6 +12,7 @@ import src.input.CmdInput;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
+import src.models.ICU;
 import src.models.MedicalHistory;
 import src.models.Medication;
 import src.models.Patient;
@@ -23,6 +24,8 @@ import src.output.Prompt;
 import src.system.System1;
 import src.validation.ValidInput;
 import src.management.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Write {
     private static final String slash = File.separator;
@@ -87,8 +90,28 @@ public class Write {
         }}catch(Exception e){
             System.out.println("Exception has been occured");
         }
-
         
+    }
+    private static void updateCSVLine(String path,String keyword,int[] columns, String... newValues){
+       try(BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));){
+
+            String line = br.readLine();
+            String[] linearray;
+            String stream = "";
+            while (line != null) {
+                linearray = Read.readCSVLine(line);
+                if (line.contains(keyword)) {
+                    for(int i = 0; i < columns.length;i++){
+                        linearray[columns[i]] = newValues[i];
+                    }
+                    stream += (arrToCSV(linearray) + System.lineSeparator());
+                } else stream += (line + System.lineSeparator() );
+            }
+            bw.write(stream);
+        }catch(Exception e){
+            System.out.println("Exception has been occured");
+        }
     }
 
     private static String arrToCSV(String[] arr) {
@@ -103,11 +126,36 @@ public class Write {
         return CSVLine;
     }
 
+    private static String currentDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
+        return formatter.format(new Date());
+    }
+    private static void addPatienttoIcus(Patient patient){
+        ICUManage.addPatient(patient);
+        ICU patientIcu = ICUManage.getICU(patient.getICUname());
+        int[] columns = {4};
+        String icusDataPath = "."+ slash + "data"+slash+ "icu";
+        String icusPath = icusDataPath + slash + "ICUs.csv", newBedsNum = String.valueOf(patientIcu.getBusyBeds());
+        updateCSVLine(icusPath,patientIcu.getName(),columns,newBedsNum) ;
+        File icuFolder = new File(icusDataPath+slash+patientIcu.getName());
+        if(icuFolder.exists()){
+
+        }
+        else{
+
+        }
+
+    }
+
     public static Patient addNewPatient() throws Exception {
         String[] patientData = input.getPatientInput(),ICUData = ICUManage.getEmptyBed();
         String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
+        patientData[7] = ICUData[0];
+        patientData[8] = currentDate();
+        patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
+        addPatienttoIcus(patient);
         addMedicalHistory(patient);
         addMedicalStatus(patient);
         createFolder(patientDataPath, patient.getId().toString());

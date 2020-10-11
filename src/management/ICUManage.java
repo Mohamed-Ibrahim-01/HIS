@@ -1,19 +1,25 @@
 package src.management;
 
+import java.util.HashMap;
 import java.util.List;
 
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 import src.fileoperations.Read;
 import src.models.ICU;
+import src.models.Patient;
 
 public class ICUManage {
-    public static List<ICU> icus;
-
+    public static HashMap<String,ICU> icus ;
     public static void loadData(){
-        icus = Read.readICUs();
+        List<ICU> icusList = Read.readICUs();
+        for(ICU icu : icusList){
+            icus.put(icu.getName(), icu);
+        }
     }
     public static String[] getEmptyBed(){
         String[] bedData = new String[2]; 
-        for(ICU icu : icus){
+        for(String icuName : icus.keySet()){
+            ICU icu = icus.get(icuName);
             if(!icu.isFull()){
                 bedData[0] = icu.getName();
                 bedData[1] = String.valueOf(icu.nextFreeBed());
@@ -21,5 +27,11 @@ public class ICUManage {
             }
         }
         return null;
+    }
+    public static void addPatient(Patient patient){
+        icus.get(patient.getICUname()).addPatient(patient.getId().toString(),patient.getBedNumber());
+    }
+    public static ICU getICU(String icuName){
+        return icus.get(icuName);
     }
 }
