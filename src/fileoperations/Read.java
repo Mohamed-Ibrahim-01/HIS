@@ -122,10 +122,6 @@ public class Read {
 
     private static Patient createPatient(final String[] personlData, final String patientPath) {
         Patient patient = new Patient(personlData);
-        patient.setComplain(personlData[6]);
-        patient.setAdmittanceDate(personlData[7]);
-        patient.setICUname(personlData[8]);
-        patient.setBedNumber(personlData[9]);
         patient.setMedicalStatus(getMs(patientPath + slash + "ms.csv"));
         patient.setMedicalHistory(getMh(patientPath, patient));
         return patient;
