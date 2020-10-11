@@ -65,9 +65,20 @@ public class Write {
             return false;
         }
     }
-    private static void deleteLine(String path ,int index)throws Exception{
+
+    private static void deleteLine(String path,String SysMedName) throws Exception {
         BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-        
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+        String line = br.readLine();
+        String[] linearray ;
+        String stream ;
+        while (line != null) {
+            linearray = Read.readCSVLine(line);
+            if (linearray[1]==SysMedName){
+
+            }
+            else
+        }
     }
 
     private static String arrToCSV(String[] arr) {
@@ -148,7 +159,7 @@ public class Write {
     }
 
     private static void addNewSysMed(String[] medData) {
-        String path = "."+ slash +"data"+slash+"storage"+slash +"medcationStorage.csv";
+        String path = "." + slash + "data" + slash + "storage" + slash + "medcationStorage.csv";
         UUID id;
         do {
             id = UUID.randomUUID();
@@ -157,6 +168,6 @@ public class Write {
         SystemMedication newmed = new SystemMedication(medData);
         StoreManage.medicationStorage.put(newmed.getName(), newmed);
         StoreManage.storageid.add(id);
-        writeInFile(path,arrToCSV(medData));
+        writeInFile(path, arrToCSV(medData));
     }
 }
