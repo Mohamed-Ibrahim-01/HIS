@@ -1,11 +1,17 @@
 package src.fileoperations;
 
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 import src.input.CmdInput;
+import src.system.System1;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
@@ -25,39 +31,70 @@ public class Write {
     private static final String slash = File.separator;
     private static CmdInput input = new CmdInput();
 
-    public static Patient addNewPatient() throws Exception {
+    private static UUID genretaUuid(){
         UUID id;
         do {
             id = UUID.randomUUID();
-        } while (NetworkManage.Ids().contains(id));
-        addMedicalStatus(id);
+        } while (System1.Ids.contains(id));
+        System1.Ids.add(id);
+        return id;
+    }
+    private static boolean createFolder(String path,String name){
+        File Folder = new File(path + slash + name);
+        return Folder.mkdir();
+    }
+    private static boolean writeInFile(String filePath,String strToWrite){
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
+            bw.write(strToWrite);
+            bw.flush(); bw.close();
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+    private static String arrToCSV(String[] arr){
+        String CSVLine = "";
+        for(String str : arr){
+            if(str.contains(",")) CSVLine += ",\"" + str + "\"";
+            else CSVLine += "," + str;
+        }
+        CSVLine = CSVLine.substring(1);
+        return CSVLine;
+        }
+    public static Patient addNewPatient() throws Exception {
+        String[] patientData = input.getPatientInput();
+        String patientDataPath = "."+slash+"data"+slash+"patientsdata";
+        patientData[0] = genretaUuid().toString();
+        Patient patient = new Patient(patientData);
+        addMedicalHistory(patient);
+        addMedicalStatus(patient);
+        createFolder(patientDataPath, patient.getId().toString());
+        writeInFile(patientDataPath,arrToCSV(patientData));
+        NetworkManage.addPatient(patient);
         return null;
     }
 
-    public static MedicalHistory addMedicalHistory(UUID id) throws Exception {
-        addFamilyMH(id);
-        addPersonMH(id);
-        return null;
+    public static void addMedicalHistory(Patient patient) throws Exception {
+
     }
 
-    public static PersonMH addPersonMH(UUID id) throws Exception {
+    public static void addPersonMH(MedicalHistory medicalHistory) {
 
-        return null;
     }
 
-    public static FamilyMH addFamilyMH(UUID id) throws Exception {
+    public static void addFamilyMH(MedicalHistory medicalHistory) {
 
-        return null;
     }
 
-    public static HashMap<String, Date> addPmhMap() {
-        return null;
+    public static void addPmhMap(PersonMH personMH) {
     }
 
-    public static MedicalStatus addMedicalStatus(UUID id) throws Exception {
+    public static void addMedicalStatus(Patient patient){
 
-        return null;
-    }
+    } 
+
 
     public static Doctor addNewDoctor() throws Exception {
         return null;

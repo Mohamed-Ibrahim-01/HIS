@@ -12,6 +12,7 @@ import src.management.StoreManage;
 import src.models.ICU;
 
 public class System1 {
+    public static HashSet<UUID> Ids = new HashSet<UUID>();
 
     public static void loadAllData() {
         NetworkManage.loadData();
