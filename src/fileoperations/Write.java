@@ -96,7 +96,7 @@ public class Write {
         writeInFile(IcusDataPath + slash + "ICUs.csv", patientData);
     }
     public static Patient addNewPatient() throws Exception {
-        String[] patientData = input.getPatientInput();
+        String[] patientData = input.getPatientInput(),ICUData = ICUManage.getEmptyBed();
         String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
         patientData[7] = currentDate();
