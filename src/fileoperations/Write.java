@@ -8,11 +8,6 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import javax.xml.catalog.Catalog;
-
-//import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 import src.input.CmdInput;
 import src.management.NetworkManage;
 import src.management.StoreManage;
@@ -27,6 +22,7 @@ import src.models.TreatmentData;
 import src.output.Prompt;
 import src.system.System1;
 import src.validation.ValidInput;
+import src.management.*;
 
 public class Write {
     private static final String slash = File.separator;
