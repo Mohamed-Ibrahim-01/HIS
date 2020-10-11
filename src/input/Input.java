@@ -11,4 +11,5 @@ public interface Input {
     public String[] getMedInput();
     public String[] getPRInput();
     public String[] getSysMedInput();
+    public String[] getTdinfo();
 }

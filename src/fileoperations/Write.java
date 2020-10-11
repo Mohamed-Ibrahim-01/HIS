@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 import src.input.CmdInput;
 import src.management.NetworkManage;
 import src.management.StoreManage;
@@ -65,30 +64,29 @@ public class Write {
         }
     }
 
-    private static void updateStorageFile(String path, String[] medData){
-       try{
-        BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
-        String line = br.readLine();
-        String[] linearray;
-        String stream = "";
-        int q = 0;
-        while (line != null) {
-            linearray = Read.readCSVLine(line);
-            if (line.contains(medData[1])) {
-                q = Integer.parseInt(linearray[2]);
-                q += Integer.parseInt(medData[2]);
-                linearray[2] = String.valueOf(q);
-                stream += (arrToCSV(linearray) + System.lineSeparator() + "n");
-            } else {
-                stream += (line + System.lineSeparator() + "n");
+    private static void updateStorageFile(String path, String[] medData) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+            String line = br.readLine();
+            String[] linearray;
+            String stream = "";
+            int q = 0;
+            while (line != null) {
+                linearray = Read.readCSVLine(line);
+                if (line.contains(medData[1])) {
+                    q = Integer.parseInt(linearray[2]);
+                    q += Integer.parseInt(medData[2]);
+                    linearray[2] = String.valueOf(q);
+                    stream += (arrToCSV(linearray) + System.lineSeparator());
+                } else {
+                    stream += (line + System.lineSeparator());
+                }
             }
             bw.write(stream);
-        }}catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Exception has been occured");
         }
-
-        
     }
 
     private static String arrToCSV(String[] arr) {
@@ -104,7 +102,7 @@ public class Write {
     }
 
     public static Patient addNewPatient() throws Exception {
-        String[] patientData = input.getPatientInput(),ICUData = ICUManage.getEmptyBed();
+        String[] patientData = input.getPatientInput(), ICUData = ICUManage.getEmptyBed();
         String patientDataPath = "." + slash + "data" + slash + "patientsdata";
         patientData[0] = genretaUuid().toString();
         Patient patient = new Patient(patientData);
@@ -143,13 +141,40 @@ public class Write {
         String path = "." + slash + "data" + slash + "storage" + slash + "medcationStorage.csv";
         String[] medData = input.getSysMedInput();
         if (ValidInput.isExistSysMed(medData[1])) {
-            updateExistedSysMed(path,medData);
+            updateExistedSysMed(path, medData);
         } else {
-            addNewSysMed(path,medData);
+            addNewSysMed(path, medData);
         }
     }
 
     public static TreatmentData addNewTreatmentData() {
+        String[] info = input.getTdinfo();
+        Patient patient = (Patient) NetworkManage.PersonsNames.get(info[0]);
+        Doctor doctor = (Doctor) NetworkManage.PersonsNames.get(info[1]);
+        String path = "." + slash + "data" + slash + "treatmentdata";
+        String tdFolderPath;
+        if (NetworkManage.hasTreatmentData(patient, doctor)) {
+            Prompt.hasRelationship(patient, doctor);
+            tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
+           try{
+            if (CmdInput.getchoose()){
+                String tdpath = tdFolderPath + slash + "td.csv";
+                
+
+
+
+
+
+
+
+
+
+            }
+        }catch(Exception e){
+           System.out.println("Exception has been occured !!"); 
+        }
+        }
+
         return null;
     }
 
@@ -164,17 +189,14 @@ public class Write {
         return null;
     }
 
-    private static void updateExistedSysMed(String path,String[] medData) {
+    private static void updateExistedSysMed(String path, String[] medData) {
         Prompt.addedExistedSysMed();
         StoreManage.medicationStorage.get(medData[1]).addQuantity(medData[2]);
         updateStorageFile(path, medData);
     }
 
-    private static void addNewSysMed(String path,String[] medData) {
-        UUID id;
-        do {
-            id = UUID.randomUUID();
-        } while (StoreManage.storageid.contains(id));
+    private static void addNewSysMed(String path, String[] medData) {
+        UUID id = genretaUuid();
         medData[0] = id.toString();
         SystemMedication newmed = new SystemMedication(medData);
         StoreManage.medicationStorage.put(newmed.getName(), newmed);
