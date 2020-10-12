@@ -9,6 +9,10 @@ public class TreatmentData {
     private double WTH ; 
     private List<Prescription> prescriptions ;
 
+    public TreatmentData(){
+
+    }
+    
     public TreatmentData(String[] data,List<Prescription>  prescriptions) {
         PatientId = UUID.fromString(data[0]);
         DoctorId =  UUID.fromString(data[1]);

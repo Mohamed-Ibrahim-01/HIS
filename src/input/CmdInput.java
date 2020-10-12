@@ -124,6 +124,12 @@ public class CmdInput implements Input {
         return WTH;
     }
 
+    public static String addNewWTH() throws Exception {
+        Prompt.askToInput("the weekly treatment hours ");
+        String WTH = br.readLine();
+        Prompt.printDashline();
+        return WTH;
+    }
     private String getStringDate() {
         return "";
     }

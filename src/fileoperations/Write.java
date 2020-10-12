@@ -225,23 +225,41 @@ public class Write {
                         addNewPrescription(tdFolderPath, patient, doctor);
                     } while (CmdInput.morePR());
                 }
+                Prompt.endOfUpdatingTD();
             } catch (Exception e) {
                 System.out.println("Exception has been occured !!");
             }
-        }else{
-
+        } else {
+            Prompt.hasNotRelationship(patient, doctor);
+            tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
+            createFolder(tdFolderPath, "");
+            creatFile(tdFolderPath, "td.csv");
+            creatFile(tdFolderPath, "pr.csv");
+            String tdpath = tdFolderPath + slash + "td.csv";
+            String prpath = tdFolderPath + slash + "pr.csv";
+            TreatmentData treatmentData = new TreatmentData();
+            treatmentData.setDoctorId(doctor.getId());
+            treatmentData.setPatientId(patient.getId());
+            NetworkManage.addTreatmentData(patient, doctor, treatmentData);
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(tdpath)));
+                Prompt.showTitle(" treatmentdata information ");
+                String[] data = new String[3];
+                data[0] = patient.getId().toString();
+                data[1] = doctor.getId().toString();
+                data[2] = CmdInput.addNewWTH();
+                bw.write(arrToCSV(data));
+                treatmentData.setHoursPerWeekPerPatient(Double.parseDouble(data[2]));
+                Prompt.showTitle("Patient id , Doctor id and WTH have been added");
+                Prompt.headerOfPrescription(patient, doctor);
+                do {
+                    addNewPrescription(tdFolderPath, patient, doctor);
+                } while (CmdInput.morePR());
+                Prompt.endOfAddingNewTD();
+            } catch (Exception w) {
+                System.out.println("Exception occured ! ");
+            }
         }
-    }
-
-    public static void addTDFile(UUID patientID, UUID doctorID, double WTH) {
-    }
-
-    public static Prescription addNewPrescription() {
-        return null;
-    }
-
-    public static List<Medication> addPrMedications() {
-        return null;
     }
 
     private static void updateExistedSysMed(String path, String[] medData) {
@@ -268,7 +286,6 @@ public class Write {
     }
 
     private static void addNewPrescription(String tdfolderpath, Patient patient, Doctor doctor) {
-
         String[] prInput = input.getPRInput();
         Prescription prescription;
         List<Medication> medications = new ArrayList<Medication>();
