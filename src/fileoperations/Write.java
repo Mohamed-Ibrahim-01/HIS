@@ -130,19 +130,26 @@ public class Write {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
         return formatter.format(new Date());
     }
-    private static void addPatienttoIcus(Patient patient){
+    private static void addPatientToIcus(Patient patient){
         ICUManage.addPatient(patient);
         ICU patientIcu = ICUManage.getICU(patient.getICUname());
         int[] columns = {4};
         String icusDataPath = "."+ slash + "data"+slash+ "icu";
         String icusPath = icusDataPath + slash + "ICUs.csv", newBedsNum = String.valueOf(patientIcu.getBusyBeds());
+        String patientBed = patient.getId().toString() + "," + patient.getBedNumber();
         updateCSVLine(icusPath,patientIcu.getName(),columns,newBedsNum) ;
         File icuFolder = new File(icusDataPath+slash+patientIcu.getName());
         if(icuFolder.exists()){
-
+            writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv",patientBed);
         }
         else{
-
+            try{
+                File patientsFile = new File(icuFolder.getAbsolutePath()+slash+"ps.csv");
+                patientsFile.createNewFile();
+                writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv",patientBed);
+            }
+            catch(Exception e){
+            }
         }
 
     }
@@ -155,7 +162,7 @@ public class Write {
         patientData[8] = currentDate();
         patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
-        addPatienttoIcus(patient);
+        addPatientToIcus(patient);
         addMedicalHistory(patient);
         addMedicalStatus(patient);
         createFolder(patientDataPath, patient.getId().toString());
