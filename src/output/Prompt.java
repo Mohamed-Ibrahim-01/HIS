@@ -26,5 +26,13 @@ public class Prompt {
     public static void wthorNewPR(){
         System.out.println("Do you want to update WTH or add new prescription ? \n to update WTH press 1 \n to add new prescription press 2 ");
     }
-
+    public static void headerOfPrescription(Patient patient ,Doctor doctor){
+        System.out.println("new priscription will be added by doctor / "+doctor.getName()+" to patient / "+patient.getName());       
+    }
+    public static void takeChoose(){
+        System.out.println("Do you want to add anther medication ? \" press 1 to add or press 2 to exit \" ");
+    }
+    public static void AnotherPR(){
+        System.out.println("Do you want to add anther prescription ? \" press 1 to add or press 2 to exit \" ");
+    }
 }

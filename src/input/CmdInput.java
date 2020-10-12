@@ -57,14 +57,35 @@ public class CmdInput implements Input {
 
     @Override
     public String[] getMedInput() {
-        return null;
+        String[] data = new String[3];
+        try {
+            Prompt.printDashline();
+            Prompt.askToInput(" the name of the medication");
+            data[0] = br.readLine();
+            Prompt.askToInput(" the daily dose ");
+            data[1] = br.readLine();
+            Prompt.askToInput(" the dose value ");
+            data[2] = br.readLine();
+            Prompt.printDashline();
+        } catch (Exception e) {
+            System.out.println("Exception has been occured");
+        }
+        return data;
     }
 
     @Override
-    public String[] getPRInput(
-
-    ) {
-        return null;
+    public String[] getPRInput() {
+        String[] data = new String[3];
+        try {
+            Prompt.askToInput(" the date of prescription \" in the form of \"dd/mm/yyyy\",pleas\"");
+            data[1] = br.readLine();
+            Prompt.askToInput("the duration of the prescription ");
+            data[2] = br.readLine();
+            Prompt.printDashline();
+        } catch (Exception e) {
+            System.out.println("Exception has been occured");
+        }
+        return data;
     }
 
     @Override
@@ -82,21 +103,25 @@ public class CmdInput implements Input {
         }
         return info;
     }
-    public static boolean getchoose()throws Exception{
-            Prompt.wthorNewPR();
-            String temp = br.readLine();
-            if (temp == "1"){
-                Prompt.printDashline();
-                return true ; 
-            }else {
-                Prompt.printDashline();
-                return false ; 
-            }
+
+    public static boolean getchoose() throws Exception {
+        Prompt.wthorNewPR();
+        String temp = br.readLine();
+        if (temp == "1") {
+            Prompt.printDashline();
+            return true;
+        } else {
+            Prompt.printDashline();
+            return false;
+        }
     }
-    public static String updatewth()throws Exception{
+
+    public static String updatewth() throws Exception {
+        Prompt.printDashline();
         Prompt.askToInput("the new weekly treatment hours ");
-         String WTH = br.readLine();
-         return WTH ;
+        String WTH = br.readLine();
+        Prompt.printDashline();
+        return WTH;
     }
 
     private String getStringDate() {
@@ -134,4 +159,24 @@ public class CmdInput implements Input {
         return medData;
     }
 
+    public static boolean moreMed() {
+        boolean r = true;
+        try {
+            Prompt.takeChoose();
+            r = (br.readLine() == "1" ? true : false);
+        } catch (Exception e) {
+            System.out.println("exception has been occured");
+        }
+        return r;
+    }
+    public static boolean morePR(){
+        boolean r = true;
+        try {
+            Prompt.AnotherPR();
+            r = (br.readLine() == "1" ? true : false);
+        } catch (Exception e) {
+            System.out.println("exception has been occured");
+        }
+        return r;
+    }
 }
