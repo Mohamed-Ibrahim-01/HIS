@@ -48,4 +48,7 @@ public class Doctor extends Person {
     public HashMap<Patient, TreatmentData> getPatientsData() {
         return PatientsData;
     }
+    public TreatmentData getTreatmentData(Patient patient){
+        return PatientsData.get(patient);
+    }
 }

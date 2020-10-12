@@ -25,6 +25,7 @@ public class ICU {
     }
     public void addPatient(String id, String bedNum){
         patientsBeds.put(UUID.fromString(id), bedNum);
+        busyBeds(1);
     }
     
     public String getName() { return Name; }
