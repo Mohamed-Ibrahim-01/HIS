@@ -61,5 +61,11 @@ public class GUIInput implements Input {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public String[] getTdinfo() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }
