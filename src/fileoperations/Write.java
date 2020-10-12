@@ -207,58 +207,65 @@ public class Write {
         }
     }
 
-    public static void addNewTreatmentData() {
+    public static void addTreatmentData() {
         String[] info = input.getTdinfo();
         Patient patient = (Patient) NetworkManage.PersonsNames.get(info[0]);
         Doctor doctor = (Doctor) NetworkManage.PersonsNames.get(info[1]);
         String path = "." + slash + "data" + slash + "treatmentdata";
-        String tdFolderPath;
         if (NetworkManage.hasTreatmentData(patient, doctor)) {
-            Prompt.hasRelationship(patient, doctor);
-            tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
-            try {
-                if (CmdInput.getchoose()) {
-                    updateWTH(tdFolderPath, patient, doctor);
-                } else {
-                    Prompt.headerOfPrescription(patient, doctor);
-                    do {
-                        addNewPrescription(tdFolderPath, patient, doctor);
-                    } while (CmdInput.morePR());
-                }
-                Prompt.endOfUpdatingTD();
-            } catch (Exception e) {
-                System.out.println("Exception has been occured !!");
-            }
+            updateTreatmentData(path, patient, doctor);
         } else {
-            Prompt.hasNotRelationship(patient, doctor);
-            tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
-            createFolder(tdFolderPath, "");
-            creatFile(tdFolderPath, "td.csv");
-            creatFile(tdFolderPath, "pr.csv");
-            String tdpath = tdFolderPath + slash + "td.csv";
-            String prpath = tdFolderPath + slash + "pr.csv";
-            TreatmentData treatmentData = new TreatmentData();
-            treatmentData.setDoctorId(doctor.getId());
-            treatmentData.setPatientId(patient.getId());
-            NetworkManage.addTreatmentData(patient, doctor, treatmentData);
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(tdpath)));
-                Prompt.showTitle(" treatmentdata information ");
-                String[] data = new String[3];
-                data[0] = patient.getId().toString();
-                data[1] = doctor.getId().toString();
-                data[2] = CmdInput.addNewWTH();
-                bw.write(arrToCSV(data));
-                treatmentData.setHoursPerWeekPerPatient(Double.parseDouble(data[2]));
-                Prompt.showTitle("Patient id , Doctor id and WTH have been added");
+            addNewTreatmentData(path, patient, doctor);
+        }
+    }
+
+    private static void updateTreatmentData(String path, Patient patient, Doctor doctor) {
+        Prompt.hasRelationship(patient, doctor);
+        String tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
+        try {
+            if (CmdInput.getchoose()) {
+                updateWTH(tdFolderPath, patient, doctor);
+            } else {
                 Prompt.headerOfPrescription(patient, doctor);
                 do {
                     addNewPrescription(tdFolderPath, patient, doctor);
                 } while (CmdInput.morePR());
-                Prompt.endOfAddingNewTD();
-            } catch (Exception w) {
-                System.out.println("Exception occured ! ");
             }
+            Prompt.endOfUpdatingTD();
+        } catch (Exception e) {
+            System.out.println("Exception has been occured !!");
+        }
+    }
+
+    private static void addNewTreatmentData(String path, Patient patient, Doctor doctor) {
+        Prompt.hasNotRelationship(patient, doctor);
+        String tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
+        createFolder(tdFolderPath, "");
+        creatFile(tdFolderPath, "td.csv");
+        creatFile(tdFolderPath, "pr.csv");
+        String tdpath = tdFolderPath + slash + "td.csv";
+        String prpath = tdFolderPath + slash + "pr.csv";
+        TreatmentData treatmentData = new TreatmentData();
+        treatmentData.setDoctorId(doctor.getId());
+        treatmentData.setPatientId(patient.getId());
+        NetworkManage.addTreatmentData(patient, doctor, treatmentData);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(tdpath)));
+            Prompt.showTitle(" treatmentdata information ");
+            String[] data = new String[3];
+            data[0] = patient.getId().toString();
+            data[1] = doctor.getId().toString();
+            data[2] = CmdInput.addNewWTH();
+            bw.write(arrToCSV(data));
+            treatmentData.setHoursPerWeekPerPatient(Double.parseDouble(data[2]));
+            Prompt.showTitle("Patient id , Doctor id and WTH have been added");
+            Prompt.headerOfPrescription(patient, doctor);
+            do {
+                addNewPrescription(tdFolderPath, patient, doctor);
+            } while (CmdInput.morePR());
+            Prompt.endOfAddingNewTD();
+        } catch (Exception w) {
+            System.out.println("Exception occured ! ");
         }
     }
 
