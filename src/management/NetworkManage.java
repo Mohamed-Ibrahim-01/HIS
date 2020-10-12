@@ -16,10 +16,12 @@ import src.models.TreatmentData;
 public class NetworkManage {
 
     private static HashMap<UUID, Person> Persons;
+    public  static HashMap<String,Person> PersonsNames;
     private static int numPatients, numDoctors;
 
     public NetworkManage() {
          Persons = new HashMap<UUID, Person>();
+         PersonsNames = new HashMap<String,Person>();
     }
 
     public static void loadData() {
@@ -72,6 +74,8 @@ public class NetworkManage {
         if (Persons.containsKey(Id))
             return false;
         Persons.put(Id, p);
+        String name = p.getName();
+        PersonsNames.put(name,p);
         return true;
     }
 
@@ -89,5 +93,8 @@ public class NetworkManage {
     }
     public static Set<UUID> Ids(){
         return Persons.keySet();
+    }
+    public static boolean hasTreatmentData(Patient patient , Doctor doctor){
+        return (doctor.getPatientsData().get(patient) != null )? true : false ;
     }
 }
