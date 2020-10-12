@@ -26,4 +26,5 @@ public class Prompt {
     public static void wthorNewPR(){
         System.out.println("Do you want to update WTH or add new prescription ? \n to update WTH press 1 \n to add new prescription press 2 ");
     }
+
 }

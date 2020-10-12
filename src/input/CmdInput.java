@@ -93,6 +93,11 @@ public class CmdInput implements Input {
                 return false ; 
             }
     }
+    public static String updatewth()throws Exception{
+        Prompt.askToInput("the new weekly treatment hours ");
+         String WTH = br.readLine();
+         return WTH ;
+    }
 
     private String getStringDate() {
         return "";
