@@ -10,7 +10,7 @@ public class CmdInput implements Input {
     private static final BufferedReader br = new BufferedReader(r);
 
     @Override
-    public String[] getPatientInput() {
+    public String[] getPatient() {
         Prompt.showTitle("Patient Data");
         String[] patientData = new String[10];
         String[] patientDataStrs = { "Name", "Address", "Phone", "Birth Date", "Sex", "Complain" };
@@ -26,33 +26,52 @@ public class CmdInput implements Input {
     }
 
     @Override
-    public String[] getMsInput() {
-        return null;
+    public String getMap(String mapName) {
+        String map = "";
+        if(mapName.equals("Chronic Disease")) Prompt.showTitle("Medical History");
+        try{
+            do{
+                Prompt.askToInputInForm(mapName,"{Name}:{Date}");
+                map += br.readLine() + ",";
+            }
+            while(need("more "+mapName + "s"));
+        }
+        catch(Exception e){}
+        return map;
+    }
+    @Override
+    public String[] getMedicalStatus(){
+        Prompt.showTitle("Medical Status");
+        String[] medicalStatusAttributes = {"Temprature", "systolicBP","DiastolicBP","Heart Rate" }, medicalStatus = new String[4];
+        for(String attribute : medicalStatusAttributes){
+            int i = 0;
+            Prompt.askToInput(attribute);
+            medicalStatus[i++] = getInput();
+        }
+        return medicalStatus;
+    }
+    private static String getInput(){
+        String input = "";
+        try{
+            input += br.readLine();
+        }
+        catch(Exception e){
+            System.out.println("Exception has been occured");
+        }
+        return input;
     }
 
     @Override
-    public String getCRDisMap() {
-        return null;
-    }
-
-    @Override
-    public String getDisMap() {
-        return null;
-    }
-
-    @Override
-    public String getHospMap() {
-        return null;
-    }
-
-    @Override
-    public String getMedMap() {
-        return null;
-    }
-
-    @Override
-    public String[] getDoctorInput() {
-        return null;
+    public String[] getDoctor() {
+        Prompt.showTitle("Doctor Data");
+        String[] DoctorData = new String[9];
+        String[] DoctorDataStrs = { "Name", "Address", "Phone", "Birth Date", "Sex", "SSN","MSA","Degree" };
+            for (int i = 0; i < 8; i++) {
+                Prompt.askToInput("Doctor " + DoctorDataStrs[i]);
+                DoctorData[i + 1] = getInput();
+            }
+        Prompt.printDashline();
+        return DoctorData;
     }
 
     @Override
@@ -130,26 +149,6 @@ public class CmdInput implements Input {
         Prompt.printDashline();
         return WTH;
     }
-    private String getStringDate() {
-        return "";
-    }
-
-    private String getmed() {
-        return "";
-    }
-
-    private String getHosp() {
-        return "";
-    }
-
-    private String getDisease() {
-        return "";
-    }
-
-    private String getCRDisease() {
-        return "";
-    }
-
     public String[] getSysMedInput() {
         String[] medData = new String[3];
         try {
@@ -184,5 +183,17 @@ public class CmdInput implements Input {
             System.out.println("exception has been occured");
         }
         return r;
+    }
+    @Override
+    public boolean need(String needed){
+        Prompt.askToNeed(needed);
+        try{
+            String response = br.readLine();
+            return (response.equals("1") ? true : false);
+        }
+        catch(Exception e){
+            System.out.println("exception has been occured");
+        }
+        return false;
     }
 }

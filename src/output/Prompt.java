@@ -15,12 +15,19 @@ public class Prompt {
 
     public static void showTitle(String title) {
         System.out.println("====================================================================");
-        System.out.println("                           " + title + "                                ");
+        System.out.println("                           " + title + "                            ");
         System.out.println("====================================================================");
     }
 
     public static void askToInput(String toInput) {
         System.out.println("Please,Enter " + toInput + " : ");
+    }
+    public static void askToInputInForm(String toInput,String form) {
+        System.out.println("Please,Enter " + toInput + "in form " + "[ " + form + " ]" + " : ");
+    }
+
+    public static void askToNeed(String toNeed){
+        System.out.println("Do you want to add " + toNeed + " [1 -> YES, 0 -> NO] : ");
     }
 
     public static void hasRelationship(Patient patient, Doctor doctor) {

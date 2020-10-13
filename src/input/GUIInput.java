@@ -3,43 +3,13 @@ package src.input;
 public class GUIInput implements Input {
 
     @Override
-    public String[] getPatientInput() {
+    public String[] getDoctor() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public String[] getMsInput() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getCRDisMap() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getDisMap() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getHospMap() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getMedMap() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String[] getDoctorInput() {
+    public String[] getPatient() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -67,5 +37,23 @@ public class GUIInput implements Input {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
+    @Override
+    public boolean need(String needed) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public String[] getMedicalStatus() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getMap(String mapName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Date;
 import java.util.LinkedList;
 import java.text.SimpleDateFormat;
@@ -216,27 +214,43 @@ public class Read {
         return personMH;
     }
 
-    private static HashMap<String, Date> getPmhMap(String[] lineArray) {
+   // public static HashMap<String, Date> getPmhMap(String[] lineArray) {
+   //     if (lineArray.length == 1 && lineArray[0].equals("null"))
+   //         return null;
+   //     else {
+   //         HashMap<String, Date> data = new HashMap<String, Date>();
+   //         for (String S : lineArray) {
+   //             Matcher m = Pattern.compile(
+   //                     "([a-zA-Z\\s]+):(\\s*)(([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(1[8-9]\\d{2}|20[0-2][0-9]))")
+   //                     .matcher(S);
+   //             m.find();
+   //             try {
+   //                 Date date = new SimpleDateFormat("dd/MM/yyyy").parse(m.group(3));
+   //                 String value = m.group(1);
+   //                 data.put(value, date);
+   //             } catch (Exception e) {
+   //             }
+   //         }
+   //         return data;
+   //     }
+   // }
+
+    public static HashMap<String, Date> getPmhMap(String[] lineArray) {
         if (lineArray.length == 1 && lineArray[0].equals("null"))
             return null;
-        else {
-            HashMap<String, Date> data = new HashMap<String, Date>();
-            for (String S : lineArray) {
-                Matcher m = Pattern.compile(
-                        "([a-zA-Z\\s]+):(\\s*)(([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(1[8-9]\\d{2}|20[0-2][0-9]))")
-                        .matcher(S);
-                m.find();
-                try {
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(m.group(3));
-                    String value = m.group(1);
-                    data.put(value, date);
-                } catch (Exception e) {
-                }
+        HashMap<String, Date> data = new HashMap<String, Date>();
+        String[] splited = new String[2] ;
+        for (String S : lineArray) {
+            try {
+                splited = S.split(":");
+                String value = splited[0];
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(splited[1]);
+                data.put(value, date);
+            } catch (Exception e) {
             }
-            return data;
         }
+        return data;
     }
-
     private static String[] getTd(String path) throws Exception {
         BufferedReader br;
         br = new BufferedReader(new FileReader(new File(path + slash + "td.csv")));

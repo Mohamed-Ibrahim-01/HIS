@@ -7,13 +7,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.UUID;
-
-import src.input.CmdInput;
+import src.input.*;
 import src.management.NetworkManage;
 import src.management.StoreManage;
 import src.models.Doctor;
 import src.models.ICU;
 import src.models.MedicalHistory;
+import src.models.MedicalStatus;
 import src.models.Medication;
 import src.models.Patient;
 import src.models.PersonMH;
@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 
 public class Write {
     private static final String slash = File.separator;
-    private static CmdInput input = new CmdInput();
+    private static Input input = new CmdInput();
 
     private static UUID genretaUuid() {
         UUID id;
@@ -148,8 +148,7 @@ public class Write {
             writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv", patientBed);
         } else {
             try {
-                File patientsFile = new File(icuFolder.getAbsolutePath() + slash + "ps.csv");
-                patientsFile.createNewFile();
+                creatFile(icuFolder.getAbsolutePath(), "ps.csv");
                 writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv", patientBed);
             } catch (Exception e) {
             }
@@ -157,44 +156,72 @@ public class Write {
 
     }
 
+    private static String patientDataPath = "." + slash + "data" + slash + "patientsdata";
+    private static String  doctorsDataPath = "." + slash + "data" + slash + "doctorsdata" ;
     public static Patient addNewPatient() throws Exception {
-        String[] patientData = input.getPatientInput(), ICUData = ICUManage.getEmptyBed();
-        String patientDataPath = "." + slash + "data" + slash + "patientsdata";
+        String[] patientData = input.getPatient(), ICUData = ICUManage.getEmptyBed();
         patientData[0] = genretaUuid().toString();
         patientData[7] = ICUData[0];
         patientData[8] = currentDate();
         patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
-        addPatientToIcus(patient);
-        addMedicalHistory(patient);
-        addMedicalStatus(patient);
+        String patientFolder = patientDataPath + slash + patient.getId().toString();
         createFolder(patientDataPath, patient.getId().toString());
-        writeInFile(patientDataPath, arrToCSV(patientData));
+        writeInFile(patientDataPath + slash + "patients.csv", arrToCSV(patientData));
+        addPatientToIcus(patient);
+        addMedicalStatus(patient, patientFolder);
+        if(input.need("Medical History")) addMedicalHistory(patient);
         NetworkManage.addPatient(patient);
-        return null;
+        return patient;
     }
+
 
     public static void addMedicalHistory(Patient patient) throws Exception {
-
+        MedicalHistory medicalHistory = new MedicalHistory(patient,null,null);
+        String patientFolder = patientDataPath + slash + patient.getId().toString();
+        addPersonMH(medicalHistory, patientFolder,"pmh.csv");
+        if(input.need("FamilyMH")) addFamilyMH(medicalHistory,patientFolder);
     }
 
-    public static void addPersonMH(MedicalHistory medicalHistory) {
-
+    public static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
+        PersonMH patientMH = new PersonMH();
+        creatFile(patientFolder, fileName);
+        String[] mapNames = {"Chronic Disease","Hospitalization", "Medication","Disease"};
+        for(String mapName : mapNames)
+            addPmhMap(patientMH, mapName, patientFolder + slash +fileName);
     }
 
-    public static void addFamilyMH(MedicalHistory medicalHistory) {
-
+    public static void addFamilyMH(MedicalHistory medicalHistory, String patientFolder) {
+        String[] familyMembers = {"fmh.csv", "mmh.csv", "gmmh1.csv", "gfmh1.csv", "gmmh2.csv", "gfmh2.csv"};
+        for(String member : familyMembers)
+            addPersonMH(medicalHistory, patientFolder, member);
     }
 
-    public static void addPmhMap(PersonMH personMH) {
+    public static void addPmhMap(PersonMH patientMH, String mapName, String filePath) {
+        String map = input.getMap(mapName);
+        writeInFile(filePath, map);
+        switch(mapName){
+            case "Chronic Disease" : patientMH.setChronicDiseases(Read.getPmhMap(map.split(","))); break;
+            case "Hospitalization" : patientMH.setHospitalizations(Read.getPmhMap(map.split(",")));break; 
+            case "Medication"      : patientMH.setMedications(Read.getPmhMap(map.split(",")));break;
+            case "Disease"         : patientMH.setDiseases(Read.getPmhMap(map.split(","))); break;
+        }
     }
 
-    public static void addMedicalStatus(Patient patient) {
-
+    public static void addMedicalStatus(Patient patient, String patientFolder) {
+        String[] medicalStatusValues  = input.getMedicalStatus();
+        MedicalStatus medicalStatus = new MedicalStatus(medicalStatusValues);
+        creatFile(patientFolder, "ms.csv");
+        writeInFile(patientFolder + slash + "ms.csv", arrToCSV(medicalStatusValues));
+        patient.setMedicalStatus(medicalStatus);
     }
 
-    public static Doctor addNewDoctor() throws Exception {
-        return null;
+    public static Doctor addNewDoctor() {
+        String[] doctorData = input.getDoctor();
+        doctorData[0] = genretaUuid().toString();
+        Doctor doctor = new Doctor(doctorData);
+        writeInFile(doctorsDataPath + slash + "Doctors.csv", arrToCSV(doctorData));
+        return doctor;
     }
 
     public static void addSystemMedication() {
@@ -239,12 +266,12 @@ public class Write {
 
     private static void addNewTreatmentData(String path, Patient patient, Doctor doctor) {
         Prompt.hasNotRelationship(patient, doctor);
-        String tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
-        createFolder(tdFolderPath, "");
+        String folderName = patient.getId().toString() + "_" + doctor.getId().toString();
+        String tdFolderPath = path + folderName;
+        createFolder(path, folderName);
         creatFile(tdFolderPath, "td.csv");
         creatFile(tdFolderPath, "pr.csv");
         String tdpath = tdFolderPath + slash + "td.csv";
-        String prpath = tdFolderPath + slash + "pr.csv";
         TreatmentData treatmentData = new TreatmentData();
         treatmentData.setDoctorId(doctor.getId());
         treatmentData.setPatientId(patient.getId());
