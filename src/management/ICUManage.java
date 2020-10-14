@@ -26,7 +26,7 @@ public class ICUManage {
                 return bedData;
             }
         }
-        return null;
+        return bedData;
     }
     public static void addPatient(Patient patient){
         icus.get(patient.getICUname()).addPatient(patient.getId().toString(),patient.getBedNumber());
