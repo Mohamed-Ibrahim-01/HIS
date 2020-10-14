@@ -2,7 +2,6 @@ package src.models;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.UUID;
 public class Doctor extends Person {
     // SSN : Social Security Number MSA: Major Scientific Area
     private String SSN, MSA , Degree ; 
@@ -10,21 +9,17 @@ public class Doctor extends Person {
 
     public Doctor(){
     }
-    public Doctor(final String[] params){
+    /**
+     * @param params should contain 9 vars
+     */
+    public Doctor(String... params){
         super(params);
         SSN = params[6];
         MSA = params[7];
         Degree = params[8];
+        PatientsData = new HashMap<Patient,TreatmentData>();
     }
 
-    public Doctor(UUID id,String name,String address, String phone, String birthDate, String sex, String ssn,
-            String msa, String degree) {
-        super(name, id, address, phone, birthDate, sex);
-        SSN = ssn;
-        MSA = msa;
-        Degree = degree;
-        PatientsData = new HashMap<Patient, TreatmentData>();
-    }
     @Override
     public String toString(){
         return  super.toString() +  "::" + SSN + "::" + MSA + "::" + Degree;
