@@ -20,14 +20,14 @@ public class Prompt {
     }
 
     public static void askToInput(String toInput) {
-        System.out.println("Please,Enter " + toInput + " : ");
+        System.out.print("Please,Enter " + toInput + " : ");
     }
     public static void askToInputInForm(String toInput,String form) {
-        System.out.println("Please,Enter " + toInput + "in form " + "[ " + form + " ]" + " : ");
+        System.out.print("Please,Enter " + toInput + "in form " + "[ " + form + " ]" + " : ");
     }
 
     public static void askToNeed(String toNeed){
-        System.out.println("Do you want to add " + toNeed + " [1 -> YES, 0 -> NO] : ");
+        System.out.print("Do you want to add " + toNeed + " [1 -> YES, 0 -> NO] : ");
     }
 
     public static void hasRelationship(Patient patient, Doctor doctor) {
