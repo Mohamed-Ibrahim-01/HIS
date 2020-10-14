@@ -66,7 +66,7 @@ public class Read {
                 icus.add(createIcu(lineArray, Path + slash + lineArray[0]));
             }
         } catch (Exception e) {
-            System.out.println("Exception occured");
+            System.out.println("Exception occured in readICU");
         }
         return icus;
     }
@@ -101,7 +101,7 @@ public class Read {
                 medicationStorage.add(new SystemMedication(lineArray));
             }
         } catch (Exception e) {
-            System.out.println("Exception occured");
+            System.out.println("Exception occured in readMedicationStorage");
         }
         return medicationStorage;
     }
@@ -109,14 +109,15 @@ public class Read {
     public static List<TreatmentData> readTreatmentData() {
         List<TreatmentData> treatmentData = new ArrayList<TreatmentData>();
         try {
-            String Path = "." + slash + "data" + slash + "TreatmentData";
+            String Path = "." + slash + "data" + slash + "treatmentdata";
             File Folder = new File(Path);
             File[] folders = Folder.listFiles();
             for (File folder : folders) {
                 treatmentData.add(creatTreatmentData(folder.getAbsolutePath()));
             }
         } catch (Exception e) {
-            System.out.println("Exception occured");
+            System.out.println("Exception occured in readTratmentData");
+            e.printStackTrace();
         }
         return treatmentData;
     }
