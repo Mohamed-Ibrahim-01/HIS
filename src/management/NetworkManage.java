@@ -19,12 +19,9 @@ public class NetworkManage {
     public  static HashMap<String,Person> PersonsNames;
     private static int numPatients, numDoctors;
 
-    public NetworkManage() {
-         Persons = new HashMap<UUID, Person>();
-         PersonsNames = new HashMap<String,Person>();
-    }
-
     public static void loadData() {
+        Persons = new HashMap<UUID, Person>();
+        PersonsNames = new HashMap<String,Person>();
         List<Doctor> doctors = Read.readDoctors();
         List<Patient> patients = Read.readPatients();
         List<TreatmentData> data = Read.readTreatmentData();
@@ -71,8 +68,6 @@ public class NetworkManage {
 
     private static boolean addPerson(Person p) {
         UUID Id = p.getId();
-        if (Persons.containsKey(Id))
-            return false;
         Persons.put(Id, p);
         String name = p.getName();
         PersonsNames.put(name,p);
