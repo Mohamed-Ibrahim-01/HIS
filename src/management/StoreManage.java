@@ -10,13 +10,15 @@ import src.models.SystemMedication;
 
 public class StoreManage {
 
-    public static HashSet<UUID> storageid;
+    public static HashSet<UUID> storageids;
     public static HashMap<String,SystemMedication> medicationStorage ;
 
     public static void loadData() {
+        storageids = new HashSet<UUID>();
+        medicationStorage = new HashMap<String,SystemMedication>();
         List<SystemMedication> MedicationStorage = Read.readMedicationStorage();
         for (SystemMedication m : MedicationStorage) {
-            storageid.add(m.getId());
+            storageids.add(m.getId());
             medicationStorage.put(m.getName(), m);
         }
     }
