@@ -10,6 +10,7 @@ import src.models.Patient;
 public class ICUManage {
     public static HashMap<String,ICU> icus ;
     public static void loadData(){
+        icus = new HashMap<String,ICU>();
         List<ICU> icusList = Read.readICUs();
         for(ICU icu : icusList){
             icus.put(icu.getName(), icu);
