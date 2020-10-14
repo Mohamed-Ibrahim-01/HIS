@@ -29,7 +29,10 @@ public class ICUManage {
         return bedData;
     }
     public static void addPatient(Patient patient){
-        icus.get(patient.getICUname()).addPatient(patient.getId().toString(),patient.getBedNumber());
+        ICU icu = icus.get(patient.getICUname());
+        String patientId = patient.getId().toString();
+        icu.addPatient(patientId,patient.getBedNumber());
+        icu.busyBeds(1);
     }
     public static ICU getICU(String icuName){
         return icus.get(icuName);
