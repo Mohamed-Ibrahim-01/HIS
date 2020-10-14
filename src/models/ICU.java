@@ -25,7 +25,6 @@ public class ICU {
     }
     public void addPatient(String id, String bedNum){
         patientsBeds.put(UUID.fromString(id), bedNum);
-        busyBeds(1);
     }
     
     public String getName() { return Name; }
@@ -52,8 +51,15 @@ public class ICU {
     }
 
     public void busyBeds(int increament ){
-        BusyBeds += increament;
-        FreeBeds = BedsNumber - BusyBeds; 
+        int temp = BusyBeds + increament;
+        if(temp > BedsNumber){
+            BusyBeds = BedsNumber;
+            FreeBeds = 0;
+        }
+        else{
+            BusyBeds += increament;
+            FreeBeds = BedsNumber - BusyBeds; 
+        }
     }
 
     public void freeBeds(int freedBeds){
@@ -63,8 +69,8 @@ public class ICU {
     public boolean isFull(){
         return (FreeBeds == 0);
     }
-    //Pre Condition : Free Beds not equal 0 (Not Full)
     public int nextFreeBed(){
+        if(isFull()) return -1 ;
         return BusyBeds+1;
     }
 
@@ -79,8 +85,7 @@ public class ICU {
     }
     @Override
     public String toString(){
-        return "code = " +this.Code+"name = "+ this.Name+"manager = "+this.Manager+"beds number = "+this.BedsNumber+"\n"+"capacity = "+this.capacity+"busy = "+this.BusyBeds+"free = "+this.FreeBeds ;
-
+        return "code = " +this.Code+" name = "+ this.Name+" manager = "+this.Manager+" beds number = "+this.BedsNumber+"\n"+"capacity = "+this.capacity+" busy = "+this.BusyBeds+" free = "+this.FreeBeds ;
     }  
 
 
