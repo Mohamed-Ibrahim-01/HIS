@@ -43,8 +43,8 @@ public class CmdInput implements Input {
     public String[] getMedicalStatus(){
         Prompt.showTitle("Medical Status");
         String[] medicalStatusAttributes = {"Temprature", "systolicBP","DiastolicBP","Heart Rate" }, medicalStatus = new String[4];
+        int i = 0;
         for(String attribute : medicalStatusAttributes){
-            int i = 0;
             Prompt.askToInput(attribute);
             medicalStatus[i++] = getInput();
         }
