@@ -100,22 +100,22 @@ public class Write {
     }
 
     private static void updateCSVLine(String path, String keyword, int[] columns, String... newValues) {
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));) {
-
-            String line = br.readLine(),stream = "";
-            while (line != null) {
-                String[] linearray = Read.readCSVLine(line);
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(path)));){
+            String line = "";
+            StringBuffer stream = new StringBuffer();
+            while ((line = br.readLine()) != null) {
                 if (line.contains(keyword)) {
+                    String[] linearray = Read.readCSVLine(line);
                     for (int i = 0; i < columns.length; i++) {
                         linearray[columns[i]] = newValues[i];
                     }
-                    stream += (arrToCSV(linearray) + System.lineSeparator());
+                    stream.append(arrToCSV(linearray) + System.lineSeparator());
                 }
-                else stream += (line + System.lineSeparator());
+                else stream.append(line + System.lineSeparator());
             }
-            bw.write(stream);
-            bw.close(); br.close();
+            FileWriter fr =  new FileWriter(new File(path),false);
+            fr.write(stream.toString());
+            fr.close(); br.close();
         } 
         catch (Exception e) {
             System.out.println("Exception has been occured");
@@ -131,7 +131,7 @@ public class Write {
     }
 
     private static String currentDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("ddm/m/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return formatter.format(new Date());
     }
 
@@ -226,8 +226,8 @@ public class Write {
 
     public static void addTreatmentData() {
         String[] info = input.getTdinfo();
-        Patient patient = (Patient) NetworkManage.PersonsNames.get(info[0]);
-        Doctor doctor = (Doctor) NetworkManage.PersonsNames.get(info[1]);
+        Patient patient = (Patient) NetworkManage.getPatient(info[0]);
+        Doctor doctor = (Doctor) NetworkManage.getDoctor(info[1]);
         String path = "." + slash + "data" + slash + "treatmentdata";
         if (NetworkManage.hasTreatmentData(patient, doctor)) 
             updateTreatmentData(path, patient, doctor);
@@ -281,7 +281,7 @@ public class Write {
             } while (CmdInput.morePR());
             Prompt.endOfAddingNewTD();
         } catch (Exception w) {
-            System.out.println("Exception occured ! ");
+            System.out.println("Exception occured in addNewTreatMentData ! ");
         }
     }
 
