@@ -76,12 +76,14 @@ public class Read {
         try (BufferedReader br = new BufferedReader(new FileReader(new File(patientsDataPath + slash + "ps.csv")))) {
             String[] patientsLineArray = null;
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 patientsLineArray = readCSVLine(line);
                 icu.addPatient(patientsLineArray[0], patientsLineArray[1]);
             }
         } catch (Exception e) {
             System.out.println("There is a problem in createIcu");
+            e.printStackTrace();
         }
         return icu;
     }
