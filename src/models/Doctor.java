@@ -1,7 +1,8 @@
 package src.models;
-import java.util.UUID;
 
 import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
 public class Doctor extends Person {
     // SSN : Social Security Number MSA: Major Scientific Area
     private String SSN, MSA , Degree ; 
@@ -38,7 +39,9 @@ public class Doctor extends Person {
     public String getDegree() { return Degree; }
     public void setDegree(String degree) { Degree = degree; }
 
-    public HashMap<Patient, TreatmentData> getPatients() { return PatientsData; }
+    public Set<Patient> getPatients() {
+        return PatientsData.keySet(); 
+    }
     public void setPatients(HashMap<Patient, TreatmentData> patients) { PatientsData = patients; }
 
     public void addTreatmentData(Patient patient, TreatmentData treatmentData){
@@ -50,5 +53,8 @@ public class Doctor extends Person {
     }
     public TreatmentData getTreatmentData(Patient patient){
         return PatientsData.get(patient);
+    }
+    public boolean hasPatient(Patient patient){
+        return PatientsData.containsKey(patient);
     }
 }

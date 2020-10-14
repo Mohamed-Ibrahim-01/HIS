@@ -95,6 +95,6 @@ public class NetworkManage {
         return Persons.keySet();
     }
     public static boolean hasTreatmentData(Patient patient , Doctor doctor){
-        return (doctor.getPatientsData().get(patient) != null )? true : false ;
+        return doctor.hasPatient(patient); 
     }
 }

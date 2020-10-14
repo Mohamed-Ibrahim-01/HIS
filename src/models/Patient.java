@@ -2,7 +2,6 @@ package src.models;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.UUID;
 
 public class Patient extends Person {
     private String AdmittanceDate, Complain,ICUname,BedNumber;

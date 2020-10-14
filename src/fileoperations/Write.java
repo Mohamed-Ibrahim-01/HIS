@@ -24,7 +24,6 @@ import src.output.Prompt;
 import src.system.System1;
 import src.validation.ValidInput;
 import src.management.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -32,7 +31,9 @@ import java.text.SimpleDateFormat;
 public class Write {
     private static final String slash = File.separator;
     private static Input input = new CmdInput();
-
+    private static String icusDataPath = "." + slash + "data" + slash + "icu";
+    private static String patientDataPath = "." + slash + "data" + slash + "patientsdata";
+    private static String  doctorsDataPath = "." + slash + "data" + slash + "doctorsdata" ;
     private static UUID genretaUuid() {
         UUID id;
         do {
@@ -42,20 +43,21 @@ public class Write {
         return id;
     }
 
-    private static boolean createFolder(String path, String name) {
+    private static String createFolder(String path, String name) {
         File Folder = new File(path + slash + name);
-        return Folder.mkdir();
+        Folder.mkdir();
+        return path + slash + name ;
     }
 
-    private static boolean creatFile(String path, String name) {
-        boolean result = false;
+    private static String creatFile(String path, String name) {
         try {
             File file = new File(path + slash + name);
-            result = file.createNewFile();
-        } catch (Exception e) {
+            file.createNewFile();
+        } 
+        catch (Exception e) {
             System.out.println("Exception has been occured !!");
         }
-        return result;
+        return path + slash + name;
     }
 
     private static boolean writeInFile(String filePath, String strToWrite) {
@@ -65,7 +67,8 @@ public class Write {
             bw.flush();
             bw.close();
             return true;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return false;
         }
     }
@@ -99,33 +102,29 @@ public class Write {
         try (BufferedReader br = new BufferedReader(new FileReader(new File(path)));
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));) {
 
-            String line = br.readLine();
-            String[] linearray;
-            String stream = "";
+            String line = br.readLine(),stream = "";
             while (line != null) {
-                linearray = Read.readCSVLine(line);
+                String[] linearray = Read.readCSVLine(line);
                 if (line.contains(keyword)) {
                     for (int i = 0; i < columns.length; i++) {
                         linearray[columns[i]] = newValues[i];
                     }
                     stream += (arrToCSV(linearray) + System.lineSeparator());
-                } else
-                    stream += (line + System.lineSeparator());
+                }
+                else stream += (line + System.lineSeparator());
             }
             bw.write(stream);
-        } catch (Exception e) {
+            bw.close(); br.close();
+        } 
+        catch (Exception e) {
             System.out.println("Exception has been occured");
         }
     }
 
     private static String arrToCSV(String[] arr) {
         String CSVLine = "";
-        for (String str : arr) {
-            if (str.contains(","))
-                CSVLine += ",\"" + str + "\"";
-            else
-                CSVLine += "," + str;
-        }
+        for (String str : arr) 
+            CSVLine += (str.contains(",")) ? (",\"" + str + "\"") : ("," + str) ;
         CSVLine = CSVLine.substring(1);
         return CSVLine;
     }
@@ -139,25 +138,15 @@ public class Write {
         ICUManage.addPatient(patient);
         ICU patientIcu = ICUManage.getICU(patient.getICUname());
         int[] columns = { 4 };
-        String icusDataPath = "." + slash + "data" + slash + "icu";
         String icusPath = icusDataPath + slash + "ICUs.csv", newBedsNum = String.valueOf(patientIcu.getBusyBeds());
-        String patientBed = patient.getId().toString() + "," + patient.getBedNumber();
+        String patientBed = patient.getId().toString() + "," + patient.getBedNumber(), icuPatientsFilePath = "";
         updateCSVLine(icusPath, patientIcu.getName(), columns, newBedsNum);
         File icuFolder = new File(icusDataPath + slash + patientIcu.getName());
-        if (icuFolder.exists()) {
-            writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv", patientBed);
-        } else {
-            try {
-                creatFile(icuFolder.getAbsolutePath(), "ps.csv");
-                writeInFile(icuFolder.getAbsolutePath() + slash + "ps.csv", patientBed);
-            } catch (Exception e) {
-            }
-        }
-
+        if (!icuFolder.exists()) 
+            icuPatientsFilePath =  creatFile(icuFolder.getAbsolutePath(), "ps.csv");
+        writeInFile(icuPatientsFilePath, patientBed);
     }
 
-    private static String patientDataPath = "." + slash + "data" + slash + "patientsdata";
-    private static String  doctorsDataPath = "." + slash + "data" + slash + "doctorsdata" ;
     public static Patient addNewPatient() throws Exception {
         String[] patientData = input.getPatient(), ICUData = ICUManage.getEmptyBed();
         patientData[0] = genretaUuid().toString();
@@ -165,8 +154,7 @@ public class Write {
         patientData[8] = currentDate();
         patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
-        String patientFolder = patientDataPath + slash + patient.getId().toString();
-        createFolder(patientDataPath, patient.getId().toString());
+        String patientFolder = createFolder(patientDataPath, patient.getId().toString());
         writeInFile(patientDataPath + slash + "patients.csv", arrToCSV(patientData));
         addPatientToIcus(patient);
         addMedicalStatus(patient, patientFolder);
@@ -185,10 +173,10 @@ public class Write {
 
     public static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
         PersonMH patientMH = new PersonMH();
-        creatFile(patientFolder, fileName);
+        String pmhFilePath = creatFile(patientFolder, fileName);
         String[] mapNames = {"Chronic Disease","Hospitalization", "Medication","Disease"};
         for(String mapName : mapNames)
-            addPmhMap(patientMH, mapName, patientFolder + slash +fileName);
+            addPmhMap(patientMH, mapName, pmhFilePath);
     }
 
     public static void addFamilyMH(MedicalHistory medicalHistory, String patientFolder) {
@@ -211,8 +199,8 @@ public class Write {
     public static void addMedicalStatus(Patient patient, String patientFolder) {
         String[] medicalStatusValues  = input.getMedicalStatus();
         MedicalStatus medicalStatus = new MedicalStatus(medicalStatusValues);
-        creatFile(patientFolder, "ms.csv");
-        writeInFile(patientFolder + slash + "ms.csv", arrToCSV(medicalStatusValues));
+        String medicalStatusFilePath = creatFile(patientFolder, "ms.csv");
+        writeInFile(medicalStatusFilePath, arrToCSV(medicalStatusValues));
         patient.setMedicalStatus(medicalStatus);
     }
 
@@ -221,6 +209,7 @@ public class Write {
         doctorData[0] = genretaUuid().toString();
         Doctor doctor = new Doctor(doctorData);
         writeInFile(doctorsDataPath + slash + "Doctors.csv", arrToCSV(doctorData));
+        NetworkManage.addDoctor(doctor);
         return doctor;
     }
 
@@ -239,11 +228,10 @@ public class Write {
         Patient patient = (Patient) NetworkManage.PersonsNames.get(info[0]);
         Doctor doctor = (Doctor) NetworkManage.PersonsNames.get(info[1]);
         String path = "." + slash + "data" + slash + "treatmentdata";
-        if (NetworkManage.hasTreatmentData(patient, doctor)) {
+        if (NetworkManage.hasTreatmentData(patient, doctor)) 
             updateTreatmentData(path, patient, doctor);
-        } else {
+        else 
             addNewTreatmentData(path, patient, doctor);
-        }
     }
 
     private static void updateTreatmentData(String path, Patient patient, Doctor doctor) {
@@ -259,7 +247,8 @@ public class Write {
                 } while (CmdInput.morePR());
             }
             Prompt.endOfUpdatingTD();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Exception has been occured !!");
         }
     }
@@ -267,8 +256,7 @@ public class Write {
     private static void addNewTreatmentData(String path, Patient patient, Doctor doctor) {
         Prompt.hasNotRelationship(patient, doctor);
         String folderName = patient.getId().toString() + "_" + doctor.getId().toString();
-        String tdFolderPath = path + folderName;
-        createFolder(path, folderName);
+        String tdFolderPath = createFolder(path, folderName);
         creatFile(tdFolderPath, "td.csv");
         creatFile(tdFolderPath, "pr.csv");
         String tdpath = tdFolderPath + slash + "td.csv";
@@ -319,12 +307,19 @@ public class Write {
         doctor.getTreatmentData(patient).setHoursPerWeekPerPatient(Double.parseDouble(WTH));
     }
 
+    /** 
+     * TODO: rewrite this function 
+     * Because -> Violating : 1-Genral code for both GUI and CMD
+     *                        2-Using utill funcions like writeInFile line 21
+     *                        3-Using only The input class to get Data line 14
+     *                        4-Abstraction (Inforamtion Hiding) line 31
+     * 
+     * */
     private static void addNewPrescription(String tdfolderpath, Patient patient, Doctor doctor) {
         String[] prInput = input.getPRInput();
         Prescription prescription;
         List<Medication> medications = new ArrayList<Medication>();
-        String prpath = tdfolderpath + slash + "pr.csv";
-        String line = "";
+        String prpath = tdfolderpath + slash + "pr.csv",line = "";
         int prnum = 0;
         BufferedReader br;
         BufferedWriter bWriter, bw;
