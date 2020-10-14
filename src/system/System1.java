@@ -2,6 +2,8 @@ package src.system;
 
 import java.util.HashSet;
 import java.util.UUID;
+
+import src.fileoperations.Write;
 import src.management.ICUManage;
 import src.management.NetworkManage;
 import src.management.StoreManage;
@@ -13,5 +15,9 @@ public class System1 {
         NetworkManage.loadData();
         ICUManage.loadData();
         StoreManage.loadData();
+    }
+    public static void main(String[] args){
+        loadAllData();
+        Write.addNewPatient();
     }
 }
