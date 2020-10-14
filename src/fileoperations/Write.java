@@ -147,7 +147,7 @@ public class Write {
         writeInFile(icuPatientsFilePath, patientBed);
     }
 
-    public static Patient addNewPatient() throws Exception {
+    public static Patient addNewPatient() {
         String[] patientData = input.getPatient(), ICUData = ICUManage.getEmptyBed();
         patientData[0] = genretaUuid().toString();
         patientData[7] = ICUData[0];
@@ -164,7 +164,7 @@ public class Write {
     }
 
 
-    public static void addMedicalHistory(Patient patient) throws Exception {
+    public static void addMedicalHistory(Patient patient)  {
         MedicalHistory medicalHistory = new MedicalHistory(patient,null,null);
         String patientFolder = patientDataPath + slash + patient.getId().toString();
         addPersonMH(medicalHistory, patientFolder,"pmh.csv");
