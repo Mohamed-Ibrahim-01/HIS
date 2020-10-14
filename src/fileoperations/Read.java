@@ -73,6 +73,7 @@ public class Read {
 
     public static ICU createIcu(String[] lineArray, String patientsDataPath) {
         ICU icu = new ICU(lineArray);
+        if(lineArray[4].equals("0")) return icu;
         try (BufferedReader br = new BufferedReader(new FileReader(new File(patientsDataPath + slash + "ps.csv")))) {
             String[] patientsLineArray = null;
             String line;
