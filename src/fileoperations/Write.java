@@ -62,6 +62,7 @@ public class Write {
 
     private static boolean writeInFile(String filePath, String strToWrite) {
         try {
+            strToWrite = System.lineSeparator() + strToWrite;
             BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));
             bw.write(strToWrite);
             bw.flush();
@@ -130,7 +131,7 @@ public class Write {
     }
 
     private static String currentDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("ddm/m/yyyy");
         return formatter.format(new Date());
     }
 
@@ -150,8 +151,8 @@ public class Write {
     public static Patient addNewPatient() {
         String[] patientData = input.getPatient(), ICUData = ICUManage.getEmptyBed();
         patientData[0] = genretaUuid().toString();
-        patientData[7] = ICUData[0];
-        patientData[8] = currentDate();
+        patientData[8] = ICUData[0];
+        patientData[7] = currentDate();
         patientData[9] = ICUData[1];
         Patient patient = new Patient(patientData);
         String patientFolder = createFolder(patientDataPath, patient.getId().toString());
@@ -295,7 +296,7 @@ public class Write {
         medData[0] = id.toString();
         SystemMedication newmed = new SystemMedication(medData);
         StoreManage.medicationStorage.put(newmed.getName(), newmed);
-        StoreManage.storageid.add(id);
+        StoreManage.storageids.add(id);
         writeInFile(path, arrToCSV(medData));
     }
 
