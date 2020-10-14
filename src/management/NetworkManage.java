@@ -16,7 +16,7 @@ import src.models.TreatmentData;
 public class NetworkManage {
 
     private static HashMap<UUID, Person> Persons;
-    public  static HashMap<String,Person> PersonsNames;
+    private static HashMap<String,Person> PersonsNames;
     private static int numPatients, numDoctors;
 
     public static void loadData() {
@@ -41,6 +41,10 @@ public class NetworkManage {
             Doctor doctor = (Doctor) Persons.get(t.getDoctorId());
             addTreatmentData(patient, doctor, t);
             List<Prescription> prescriptions = t.getPrescriptions();
+            collectPatientMedications(prescriptions,doctor,patient);
+        }
+    }
+    private static void collectPatientMedications(List<Prescription> prescriptions, Doctor doctor, Patient patient){
             for (Prescription p : prescriptions) {
                 p.setDoctor(doctor);
                 p.setPatient(patient);
@@ -49,7 +53,6 @@ public class NetworkManage {
                     patient.addMedication(m);
                 }
             }
-        }
     }
 
     public static boolean addPatient(Patient t) {
@@ -91,5 +94,12 @@ public class NetworkManage {
     }
     public static boolean hasTreatmentData(Patient patient , Doctor doctor){
         return doctor.hasPatient(patient); 
+    }
+
+    public static Patient getPatient(String patientName){
+        return (Patient) PersonsNames.get(patientName);
+    }
+    public static Doctor getDoctor(String doctorName){
+        return (Doctor) PersonsNames.get(doctorName);
     }
 }
