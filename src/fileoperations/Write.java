@@ -140,11 +140,11 @@ public class Write {
         ICU patientIcu = ICUManage.getICU(patient.getICUname());
         int[] columns = { 4 };
         String icusPath = icusDataPath + slash + "ICUs.csv", newBedsNum = String.valueOf(patientIcu.getBusyBeds());
-        String patientBed = patient.getId().toString() + "," + patient.getBedNumber(), icuPatientsFilePath = "";
+        String patientBed = patient.getId().toString() + "," + patient.getBedNumber();
         updateCSVLine(icusPath, patientIcu.getName(), columns, newBedsNum);
         File icuFolder = new File(icusDataPath + slash + patientIcu.getName());
-        if (!icuFolder.exists()) 
-            icuPatientsFilePath =  creatFile(icuFolder.getAbsolutePath(), "ps.csv");
+        String icuPatientsFilePath = icuFolder.getAbsolutePath() + slash + "ps.csv";
+        if (!icuFolder.exists()) creatFile(icuFolder.getAbsolutePath(), "ps.csv");
         writeInFile(icuPatientsFilePath, patientBed);
     }
 
