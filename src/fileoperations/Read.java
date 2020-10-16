@@ -189,6 +189,7 @@ public class Read {
         PersonMH personMH = new PersonMH();
         try {
             BufferedReader br = new BufferedReader(new FileReader(pmh));
+            br.readLine();
             String line;
             for (int i = 0; (line = br.readLine()) != null; i++) {
                 String[] lineArray = readCSVLine(line);

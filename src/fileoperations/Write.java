@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import javax.xml.catalog.Catalog;
-
 import src.input.*;
 import src.management.NetworkManage;
 import src.management.StoreManage;
@@ -166,7 +163,7 @@ public class Write {
 
     public static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
         PersonMH patientMH = new PersonMH();
-        String pmhFilePath = creatFile(patientFolder, fileName, "");
+        String pmhFilePath = creatFile(patientFolder, fileName, "Patient Medical History");
         String[] mapNames = { "Chronic Disease", "Hospitalization", "Medication", "Disease" };
         for (String mapName : mapNames)
             addPmhMap(patientMH, mapName, pmhFilePath);
