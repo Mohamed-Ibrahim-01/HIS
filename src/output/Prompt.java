@@ -27,7 +27,7 @@ public class Prompt {
     }
 
     public static void askToNeed(String toNeed){
-        System.out.print("Do you want to add " + toNeed + " [1 -> YES, 0 -> NO] : ");
+        System.out.print("Do you want to " + toNeed + "?" +" [1 -> YES, 0 -> NO] : ");
     }
 
     public static void hasRelationship(Patient patient, Doctor doctor) {

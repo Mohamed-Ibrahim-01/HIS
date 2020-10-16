@@ -10,4 +10,5 @@ public interface Input {
     public boolean need(String needed);
     public String[] getMedicalStatus();
     public String getMap(String mapName);
+    public String getWTH();
 }
