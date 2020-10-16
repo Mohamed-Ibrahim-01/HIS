@@ -116,7 +116,8 @@ public class Write {
             fr.close();
             br.close();
         } catch (Exception e) {
-            System.out.println("Exception has been occured");
+            System.out.println("Exception has been occured in updatecsvline");
+            e.printStackTrace();
         }
     }
 
