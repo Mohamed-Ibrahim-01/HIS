@@ -5,6 +5,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import src.input.*;
@@ -23,9 +26,7 @@ import src.models.TreatmentData;
 import src.system.System1;
 import src.validation.ValidInput;
 import src.management.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+
 
 public class Write {
     private static final String slash = File.separator;
@@ -60,16 +61,12 @@ public class Write {
     }
 
     private static boolean writeInFile(String filePath, String strToWrite) {
-        try {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));){
             strToWrite = System.lineSeparator() + strToWrite;
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));
             bw.write(strToWrite);
             bw.flush();
-            bw.close();
             return true;
-        } catch (Exception e) {
-            return false;
-        }
+        } catch (Exception e) { return false; }
     }
 
     private static void updateStorageFile(String path, String[] medData) {
@@ -246,7 +243,7 @@ public class Write {
 
     private static void updateTreatmentData(String path, Patient patient, Doctor doctor) {
         // Prompt.hasRelationship(patient, doctor);
-        String tdFolderPath = path + patient.getId().toString() + "_" + doctor.getId().toString();
+        String tdFolderPath = path + slash + patient.getId().toString() + "_" + doctor.getId().toString();
         try {
             if (input.need(" update WTH or add new prescription")) {
                 updateWTH(tdFolderPath, patient, doctor);
@@ -268,14 +265,13 @@ public class Write {
         String tdFolderPath = createFolder(path, folderName);
         String tdpath = creatFile(tdFolderPath, "td.csv");
         creatFile(tdFolderPath, "pr.csv");
-        TreatmentData treatmentData;
         // Prompt.showTitle(" treatmentdata information ");
         String[] data = new String[3];
         data[0] = patient.getId().toString();
         data[1] = doctor.getId().toString();
         data[2] = input.getWTH();
         writeInFile(tdpath, arrToCSV(data));
-        treatmentData = new TreatmentData(data, new ArrayList<Prescription>());
+        TreatmentData treatmentData = new TreatmentData(data, new ArrayList<Prescription>());
         NetworkManage.addTreatmentData(patient, doctor, treatmentData);
         // Prompt.showTitle("Patient id , Doctor id and WTH have been added");
         // Prompt.headerOfPrescription(patient, doctor);
@@ -300,7 +296,7 @@ public class Write {
         writeInFile(path, arrToCSV(medData));
     }
 
-    private static void updateWTH(String tdfolderpath, Patient patient, Doctor doctor) throws Exception {
+    private static void updateWTH(String tdfolderpath, Patient patient, Doctor doctor) {
         String tdpath = tdfolderpath + slash + "td.csv";
         int[] columns = { 2 };
         String WTH = input.getWTH();
@@ -308,34 +304,24 @@ public class Write {
         doctor.getTreatmentData(patient).setHoursPerWeekPerPatient(Double.parseDouble(WTH));
     }
 
-    /**
-     * TODO: rewrite this function Because -> Violating : 1-Genral code for both GUI
-     * and CMD 2-Using utill funcions like writeInFile line 21 3-Using only The
-     * input class to get Data line 14 4-Abstraction (Inforamtion Hiding) line 31
-     * 
-     */
     private static void addNewPrescription(String tdfolderpath, Patient patient, Doctor doctor) {
         String[] prInput = input.getPRInput();
         Prescription prescription;
         List<Medication> medications = new ArrayList<Medication>();
         String prpath = tdfolderpath + slash + "pr.csv";
-        try {
-            prInput[0] = String.valueOf(getLinesNumber(prpath) + 1);
-            writeInFile(prpath, arrToCSV(prInput));
-            String mdpath = creatFile(tdfolderpath, "md" + prInput[0] + ".csv");
-            do {
-                medications.add(addNewMed(mdpath, patient));
-            } while (input.need(" add another mediction"));
-        } catch (Exception e) {
-            System.out.println("Excepton occured in method addNewPrescription !! ");
-        }
+        prInput[0] = String.valueOf(getLinesNumber(prpath) + 1);
+        writeInFile(prpath, arrToCSV(prInput));
+        String mdpath = creatFile(tdfolderpath, "md" + prInput[0] + ".csv");
+        do {
+            medications.add(addNewMed(mdpath, patient));
+        } while (input.need(" add another mediction"));
         prescription = new Prescription(medications, prInput);
         prescription.setDoctor(doctor);
         prescription.setPatient(patient);
         doctor.getTreatmentData(patient).getPrescriptions().add(prescription);
     }
 
-    private static Medication addNewMed(String mdpath, Patient patient) throws Exception {
+    private static Medication addNewMed(String mdpath, Patient patient) {
         String[] data = input.getMedInput();
         Medication medication = new Medication(data);
         patient.getMedications().add(medication);
@@ -343,15 +329,12 @@ public class Write {
         return medication;
     }
 
-    private static int getLinesNumber(String path) throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-        br.readLine();
+    private static int getLinesNumber(String path) {
         int prnum = 0;
-        while ((br.readLine()) != null) {
-            prnum++;
-        }
-        br.close();
+        try(BufferedReader br = new BufferedReader(new FileReader(new File(path)));){
+            br.readLine();
+            while ((br.readLine()) != null) prnum++;
+        } catch(Exception e){System.out.println("File not found in getLinesNumber");}
         return prnum;
     }
-
 }
