@@ -4,7 +4,9 @@ public class MedicalHistory{
     private PersonMH PatientMH;
     private FamilyMH PatientFamilyMH;
     public MedicalHistory(){
-
+        this.Patient = null;
+        this.PatientMH = null;
+        this.PatientFamilyMH = null;
     }
 
     public MedicalHistory(Patient patient, PersonMH patientMH, FamilyMH patientFamilyMH) {

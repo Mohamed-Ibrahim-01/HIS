@@ -181,6 +181,7 @@ public class Read {
             }
             medicalHistory.setPatientFamilyMH(new FamilyMH(familyMembers));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return medicalHistory;
     }
@@ -208,7 +209,8 @@ public class Read {
                         break;
                     case GENETIC_DISEASES: {
                         List<String> lineAttributes = new ArrayList<String>();
-                        Collections.addAll(lineAttributes, lineArray);
+                        if(!(lineArray.length == 1 && lineArray[0].equals("null"))) Collections.addAll(lineAttributes, lineArray);
+                        personMH.setGeneticDiseases(lineAttributes);
                         break;
                     }
                 }
