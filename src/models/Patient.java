@@ -102,6 +102,14 @@ public class Patient extends Person {
     public void setDoctorsData(HashMap<Doctor, TreatmentData> doctorsData) {
         DoctorsData = doctorsData;
     }
+
+    public int getConditionDegree() {
+        return conditionDegree;
+    }
+
+    public void setConditionDegree(int conditionDegree) {
+        this.conditionDegree = conditionDegree;
+    }
  
 
 }

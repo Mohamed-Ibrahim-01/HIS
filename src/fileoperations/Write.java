@@ -142,7 +142,7 @@ public class Write {
         patientData[8] = ICUData[0];
         patientData[7] = currentDate();
         patientData[9] = ICUData[1];
-        patientData[10]= "0";
+        patientData[10] = "0";
         Patient patient = new Patient(patientData);
         String patientFolder = createFolder(patientDataPath, patient.getId().toString());
         writeInFile(patientDataPath + slash + "patients.csv", arrToCSV(patientData));
@@ -154,7 +154,7 @@ public class Write {
         return patient;
     }
 
-    public static void addMedicalHistory(Patient patient) {
+    private static void addMedicalHistory(Patient patient) {
         MedicalHistory medicalHistory = new MedicalHistory(patient, null, null);
         String patientFolder = patientDataPath + slash + patient.getId().toString();
         addPersonMH(medicalHistory, patientFolder, "pmh.csv");
@@ -162,7 +162,7 @@ public class Write {
             addFamilyMH(medicalHistory, patientFolder);
     }
 
-    public static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
+    private static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
         PersonMH patientMH = new PersonMH();
         String pmhFilePath = creatFile(patientFolder, fileName, "Patient Medical History");
         String[] mapNames = { "Chronic Disease", "Hospitalization", "Medication", "Disease" };
@@ -170,13 +170,13 @@ public class Write {
             addPmhMap(patientMH, mapName, pmhFilePath);
     }
 
-    public static void addFamilyMH(MedicalHistory medicalHistory, String patientFolder) {
+    private static void addFamilyMH(MedicalHistory medicalHistory, String patientFolder) {
         String[] familyMembers = { "fmh.csv", "mmh.csv", "gmmh1.csv", "gfmh1.csv", "gmmh2.csv", "gfmh2.csv" };
         for (String member : familyMembers)
             addPersonMH(medicalHistory, patientFolder, member);
     }
 
-    public static void addPmhMap(PersonMH patientMH, String mapName, String filePath) {
+    private static void addPmhMap(PersonMH patientMH, String mapName, String filePath) {
         String map = input.getMap(mapName);
         writeInFile(filePath, map);
         switch (mapName) {
@@ -195,7 +195,7 @@ public class Write {
         }
     }
 
-    public static void addMedicalStatus(Patient patient, String patientFolder) {
+    private static void addMedicalStatus(Patient patient, String patientFolder) {
         String[] medicalStatusValues = input.getMedicalStatus();
         MedicalStatus medicalStatus = new MedicalStatus(medicalStatusValues);
         String medicalStatusFilePath = creatFile(patientFolder, "ms.csv", "Temprature,SysBP,DiaBP,HeartRate");
