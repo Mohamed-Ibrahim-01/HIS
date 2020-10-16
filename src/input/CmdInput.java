@@ -127,10 +127,8 @@ public class CmdInput implements Input {
 
     @Override
     public String getWTH() {
-        Prompt.printDashline();
         Prompt.askToInput("the weekly treatment hours ");
         String WTH = getInput();
-        Prompt.printDashline();
         return WTH;
     }
     

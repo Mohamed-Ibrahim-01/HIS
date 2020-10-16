@@ -1,5 +1,6 @@
 package src.system;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -17,9 +18,11 @@ public class System1 {
         StoreManage.loadData();
     }
     public static void main(String[] args){
-        loadAllData();
-        Write.addNewPatient();
+      //  loadAllData();
+      //  Write.addTreatmentData();
         //System.out.println( ICUManage.getICU("A1"));
         //System.out.println(ICUManage.getEmptyBed()[1]);
+      
+
     }
 }
