@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import javax.xml.catalog.Catalog;
+
 import src.input.*;
 import src.management.NetworkManage;
 import src.management.StoreManage;
@@ -26,7 +29,6 @@ import src.models.TreatmentData;
 import src.system.System1;
 import src.validation.ValidInput;
 import src.management.*;
-
 
 public class Write {
     private static final String slash = File.separator;
@@ -50,72 +52,64 @@ public class Write {
         return path + slash + name;
     }
 
-    private static String creatFile(String path, String name) {
+    private static String creatFile(String path, String name, String header) {
         try {
             File file = new File(path + slash + name);
             file.createNewFile();
+            overWriteByHeader(file, header);
         } catch (Exception e) {
-            System.out.println("Exception has been occured !!");
+            System.out.println("Exception has been occured in mehod creat file !!");
         }
         return path + slash + name;
     }
 
+    private static void overWriteByHeader(File file, String header) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file));) {
+            bw.write(header);
+        } catch (Exception e) {
+            System.out.println("Exception has occured in method overrite by header ");
+        }
+    }
+
     private static boolean writeInFile(String filePath, String strToWrite) {
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));) {
             strToWrite = System.lineSeparator() + strToWrite;
             bw.write(strToWrite);
             bw.flush();
             return true;
-        } catch (Exception e) { return false; }
-    }
-
-    private static void updateStorageFile(String path, String[] medData) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
-            String line = br.readLine();
-            String[] linearray;
-            String stream = "";
-            int q = 0;
-            while (line != null) {
-                linearray = Read.readCSVLine(line);
-                if (line.contains(medData[1])) {
-                    q = Integer.parseInt(linearray[2]);
-                    q += Integer.parseInt(medData[2]);
-                    linearray[2] = String.valueOf(q);
-                    stream += (arrToCSV(linearray) + System.lineSeparator());
-                } else {
-                    stream += (line + System.lineSeparator());
-                }
-            }
-            bw.write(stream);
         } catch (Exception e) {
-            System.out.println("Exception has been occured");
+            return false;
         }
     }
 
     private static void updateCSVLine(String path, String keyword, int[] columns, String... newValues) {
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(path)));) {
-            String line = "";
+        File file = new File(path);
+        try (BufferedReader br = new BufferedReader(new FileReader(file));) {
+            String line = br.readLine(), next = br.readLine();
             StringBuffer stream = new StringBuffer();
-            while ((line = br.readLine()) != null) {
+            for (boolean last = false; (line != null); line = next, next = br.readLine()) {
+                last = (next == null);
                 if (line.contains(keyword)) {
                     String[] linearray = Read.readCSVLine(line);
                     for (int i = 0; i < columns.length; i++) {
                         linearray[columns[i]] = newValues[i];
                     }
-                    stream.append(arrToCSV(linearray) + System.lineSeparator());
-                } else
-                    stream.append(line + System.lineSeparator());
+                    stream.append(arrToCSV(linearray) + putSeparator(last));
+                } else {
+                    stream.append(line + putSeparator(last));
+                }
             }
             FileWriter fr = new FileWriter(new File(path), false);
             fr.write(stream.toString());
             fr.close();
-            br.close();
         } catch (Exception e) {
             System.out.println("Exception has been occured in updatecsvline");
             e.printStackTrace();
         }
+    }
+
+    private static String putSeparator(boolean last) {
+        return last ? "" : System.lineSeparator();
     }
 
     private static String arrToCSV(String[] arr) {
@@ -141,7 +135,7 @@ public class Write {
         File icuFolder = new File(icusDataPath + slash + patientIcu.getName());
         String icuPatientsFilePath = icuFolder.getAbsolutePath() + slash + "ps.csv";
         if (!icuFolder.exists())
-            creatFile(icuFolder.getAbsolutePath(), "ps.csv");
+            creatFile(icuFolder.getAbsolutePath(), "ps.csv", "patientID,BedNumber");
         writeInFile(icuPatientsFilePath, patientBed);
     }
 
@@ -172,7 +166,7 @@ public class Write {
 
     public static void addPersonMH(MedicalHistory medicalHistory, String patientFolder, String fileName) {
         PersonMH patientMH = new PersonMH();
-        String pmhFilePath = creatFile(patientFolder, fileName);
+        String pmhFilePath = creatFile(patientFolder, fileName, "");
         String[] mapNames = { "Chronic Disease", "Hospitalization", "Medication", "Disease" };
         for (String mapName : mapNames)
             addPmhMap(patientMH, mapName, pmhFilePath);
@@ -206,7 +200,7 @@ public class Write {
     public static void addMedicalStatus(Patient patient, String patientFolder) {
         String[] medicalStatusValues = input.getMedicalStatus();
         MedicalStatus medicalStatus = new MedicalStatus(medicalStatusValues);
-        String medicalStatusFilePath = creatFile(patientFolder, "ms.csv");
+        String medicalStatusFilePath = creatFile(patientFolder, "ms.csv", "Temprature,SysBP,DiaBP,HeartRate");
         writeInFile(medicalStatusFilePath, arrToCSV(medicalStatusValues));
         patient.setMedicalStatus(medicalStatus);
     }
@@ -263,8 +257,8 @@ public class Write {
         // Prompt.hasNotRelationship(patient, doctor);
         String folderName = patient.getId().toString() + "_" + doctor.getId().toString();
         String tdFolderPath = createFolder(path, folderName);
-        String tdpath = creatFile(tdFolderPath, "td.csv");
-        creatFile(tdFolderPath, "pr.csv");
+        String tdpath = creatFile(tdFolderPath, "td.csv", "PatientID,DoctorID,WTH");
+        creatFile(tdFolderPath, "pr.csv", "PRnum,Date,Duration");
         // Prompt.showTitle(" treatmentdata information ");
         String[] data = new String[3];
         data[0] = patient.getId().toString();
@@ -283,8 +277,10 @@ public class Write {
 
     private static void updateExistedSysMed(String path, String[] medData) {
         // Prompt.addedExistedSysMed();
-        StoreManage.medicationStorage.get(medData[1]).addQuantity(medData[2]);
-        updateStorageFile(path, medData);
+        int[] columns = { 2 };
+        SystemMedication systemMedication = StoreManage.medicationStorage.get(medData[1]);
+        systemMedication.addQuantity(medData[2]);
+        updateCSVLine(path, medData[1], columns, String.valueOf(systemMedication.getQuantity()));
     }
 
     private static void addNewSysMed(String path, String[] medData) {
@@ -311,7 +307,7 @@ public class Write {
         String prpath = tdfolderpath + slash + "pr.csv";
         prInput[0] = String.valueOf(getLinesNumber(prpath) + 1);
         writeInFile(prpath, arrToCSV(prInput));
-        String mdpath = creatFile(tdfolderpath, "md" + prInput[0] + ".csv");
+        String mdpath = creatFile(tdfolderpath, "md" + prInput[0] + ".csv", "Name,DailyDose,DoseValue");
         do {
             medications.add(addNewMed(mdpath, patient));
         } while (input.need(" add another mediction"));
@@ -331,10 +327,13 @@ public class Write {
 
     private static int getLinesNumber(String path) {
         int prnum = 0;
-        try(BufferedReader br = new BufferedReader(new FileReader(new File(path)));){
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(path)));) {
             br.readLine();
-            while ((br.readLine()) != null) prnum++;
-        } catch(Exception e){System.out.println("File not found in getLinesNumber");}
+            while ((br.readLine()) != null)
+                prnum++;
+        } catch (Exception e) {
+            System.out.println("File not found in getLinesNumber");
+        }
         return prnum;
     }
 }
