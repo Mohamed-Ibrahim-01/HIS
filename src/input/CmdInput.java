@@ -21,7 +21,6 @@ public class CmdInput implements Input {
             }
         } catch (Exception e) {
         }
-        Prompt.printDashline();
         return patientData;
     }
 
