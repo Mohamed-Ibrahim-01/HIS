@@ -142,6 +142,7 @@ public class Write {
         patientData[8] = ICUData[0];
         patientData[7] = currentDate();
         patientData[9] = ICUData[1];
+        patientData[10]= "0";
         Patient patient = new Patient(patientData);
         String patientFolder = createFolder(patientDataPath, patient.getId().toString());
         writeInFile(patientDataPath + slash + "patients.csv", arrToCSV(patientData));

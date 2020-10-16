@@ -12,7 +12,7 @@ public class CmdInput implements Input {
     @Override
     public String[] getPatient() {
         Prompt.showTitle("Patient Data");
-        String[] patientData = new String[10];
+        String[] patientData = new String[11];
         String[] patientDataStrs = { "Name", "Address", "Phone", "Birth Date", "Sex", "Complain" };
         try {
             for (int i = 0; i < 6; i++) {

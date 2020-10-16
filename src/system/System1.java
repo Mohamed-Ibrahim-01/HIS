@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.UUID;
 
+import src.enums.Capacity;
 import src.fileoperations.Write;
 import src.management.ICUManage;
 import src.management.NetworkManage;
@@ -18,8 +19,8 @@ public class System1 {
         StoreManage.loadData();
     }
     public static void main(String[] args){
-      loadAllData();
-      Write.addNewPatient();
+    //   loadAllData();
+    //   Write.addNewPatient();
         //System.out.println( ICUManage.getICU("A1"));
         //System.out.println(ICUManage.getEmptyBed()[1]);
     }

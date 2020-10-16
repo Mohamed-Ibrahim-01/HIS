@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 public class Patient extends Person {
     private String AdmittanceDate, Complain,ICUname,BedNumber;
+    private int conditionDegree ;  
     private MedicalStatus MedicalStatus;
     private MedicalHistory MedicalHistory;
     private HashMap<Doctor, TreatmentData> DoctorsData;
@@ -16,6 +17,7 @@ public class Patient extends Person {
         AdmittanceDate = params[7];
         ICUname = params[8];
         BedNumber = params[9];
+        conditionDegree =  Integer.parseInt(params[10]);
         Medications = new HashSet<Medication>();
         DoctorsData = new HashMap<Doctor, TreatmentData>();
     }
