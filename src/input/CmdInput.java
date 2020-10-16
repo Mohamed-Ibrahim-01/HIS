@@ -27,34 +27,36 @@ public class CmdInput implements Input {
     @Override
     public String getMap(String mapName) {
         String map = "";
-        if(mapName.equals("Chronic Disease")) Prompt.showTitle("Medical History");
-        try{
-            do{
-                Prompt.askToInputInForm(mapName,"{Name}:{Date}");
+        if (mapName.equals("Chronic Disease"))
+            Prompt.showTitle("Medical History");
+        try {
+            do {
+                Prompt.askToInputInForm(mapName, "{Name}:{Date}");
                 map += br.readLine() + ",";
-            }
-            while(need("more "+mapName + "s"));
+            } while (need("more " + mapName + "s"));
+        } catch (Exception e) {
         }
-        catch(Exception e){}
         return map;
     }
+
     @Override
-    public String[] getMedicalStatus(){
+    public String[] getMedicalStatus() {
         Prompt.showTitle("Medical Status");
-        String[] medicalStatusAttributes = {"Temprature", "systolicBP","DiastolicBP","Heart Rate" }, medicalStatus = new String[4];
+        String[] medicalStatusAttributes = { "Temprature", "systolicBP", "DiastolicBP", "Heart Rate" },
+                medicalStatus = new String[4];
         int i = 0;
-        for(String attribute : medicalStatusAttributes){
+        for (String attribute : medicalStatusAttributes) {
             Prompt.askToInput(attribute);
             medicalStatus[i++] = getInput();
         }
         return medicalStatus;
     }
-    private static String getInput(){
+
+    private static String getInput() {
         String input = "";
-        try{
+        try {
             input += br.readLine();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Exception has been occured");
         }
         return input;
@@ -64,11 +66,11 @@ public class CmdInput implements Input {
     public String[] getDoctor() {
         Prompt.showTitle("Doctor Data");
         String[] DoctorData = new String[9];
-        String[] DoctorDataStrs = { "Name", "Address", "Phone", "Birth Date", "Sex", "SSN","MSA","Degree" };
-            for (int i = 0; i < 8; i++) {
-                Prompt.askToInput("Doctor " + DoctorDataStrs[i]);
-                DoctorData[i + 1] = getInput();
-            }
+        String[] DoctorDataStrs = { "Name", "Address", "Phone", "Birth Date", "Sex", "SSN", "MSA", "Degree" };
+        for (int i = 0; i < 8; i++) {
+            Prompt.askToInput("Doctor " + DoctorDataStrs[i]);
+            DoctorData[i + 1] = getInput();
+        }
         Prompt.printDashline();
         return DoctorData;
     }
@@ -122,32 +124,15 @@ public class CmdInput implements Input {
         return info;
     }
 
-    public static boolean getchoose() throws Exception {
-        Prompt.wthorNewPR();
-        String temp = br.readLine();
-        if (temp == "1") {
-            Prompt.printDashline();
-            return true;
-        } else {
-            Prompt.printDashline();
-            return false;
-        }
-    }
-
-    public static String updatewth() throws Exception {
+    @Override
+    public String getWTH() {
         Prompt.printDashline();
-        Prompt.askToInput("the new weekly treatment hours ");
-        String WTH = br.readLine();
-        Prompt.printDashline();
-        return WTH;
-    }
-
-    public static String addNewWTH() throws Exception {
         Prompt.askToInput("the weekly treatment hours ");
-        String WTH = br.readLine();
+        String WTH = getInput();
         Prompt.printDashline();
         return WTH;
     }
+    
     public String[] getSysMedInput() {
         String[] medData = new String[3];
         try {
@@ -163,34 +148,14 @@ public class CmdInput implements Input {
         return medData;
     }
 
-    public static boolean moreMed() {
-        boolean r = true;
-        try {
-            Prompt.takeChoose();
-            r = (br.readLine() == "1" ? true : false);
-        } catch (Exception e) {
-            System.out.println("exception has been occured");
-        }
-        return r;
-    }
-    public static boolean morePR(){
-        boolean r = true;
-        try {
-            Prompt.AnotherPR();
-            r = (br.readLine() == "1" ? true : false);
-        } catch (Exception e) {
-            System.out.println("exception has been occured");
-        }
-        return r;
-    }
+
     @Override
-    public boolean need(String needed){
+    public boolean need(String needed) {
         Prompt.askToNeed(needed);
-        try{
+        try {
             String response = br.readLine();
             return (response.equals("1") ? true : false);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("exception has been occured");
         }
         return false;
