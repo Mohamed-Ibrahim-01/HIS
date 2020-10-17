@@ -1,12 +1,15 @@
 package src.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 public class Doctor extends Person {
     // SSN : Social Security Number MSA: Major Scientific Area
     private String SSN, MSA , Degree ; 
     private HashMap<Patient,TreatmentData> PatientsData;
-
+    private String[] attributesNames = {"Id","Name","Address","Phone","BirthDate","Sex","SSN","MSA","Degree"};
+    private String[] attributes;
     public Doctor(){
     }
     /**
@@ -18,6 +21,7 @@ public class Doctor extends Person {
         MSA = params[7];
         Degree = params[8];
         PatientsData = new HashMap<Patient,TreatmentData>();
+        attributes = params;
     }
 
     @Override
@@ -26,7 +30,8 @@ public class Doctor extends Person {
     }
 
     public String getSSN() { return SSN; }
-    public void setSSN(String sSN) { SSN = sSN; }
+    public void setSSN(String sSN) { SSN = sSN; 
+    }
 
     public String getMSA() { return MSA; }
     public void setMSA(String mSA) { MSA = mSA; }
@@ -51,5 +56,29 @@ public class Doctor extends Person {
     }
     public boolean hasPatient(Patient patient){
         return PatientsData.containsKey(patient);
+    }
+
+    public void setPatientsData(HashMap<Patient, TreatmentData> patientsData) {
+        PatientsData = patientsData;
+    }
+
+    public String[] getAttributesNames() {
+        return attributesNames;
+    }
+
+    public void setAttributesNames(String[] attributesNames) {
+        this.attributesNames = attributesNames;
+    }
+
+    public String[] getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String[] attributes) {
+        this.attributes = attributes;
+    }
+
+    public List<Patient> getPatientList(){
+       return new ArrayList<Patient>(PatientsData.keySet());
     }
 }

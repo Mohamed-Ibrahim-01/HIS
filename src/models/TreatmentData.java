@@ -20,8 +20,8 @@ public class TreatmentData {
         this.prescriptions = prescriptions;
     }
 
-    public double getHoursPerWeekPerPatient() { return WTH; }
-    public void setHoursPerWeekPerPatient(double WTH) { this.WTH = WTH; }
+    public double getWTH() { return WTH; }
+    public void setWTH(double WTH) { this.WTH = WTH; }
     public UUID getPatientId() { return PatientId; }
     public void setPatientId(UUID patientId) { PatientId = patientId; }
     public UUID getDoctorId() { return DoctorId; }
