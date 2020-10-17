@@ -18,15 +18,16 @@ public class NetworkManage {
     private static HashMap<UUID, Person> Persons;
     private static HashMap<String,Person> PersonsNames;
     private static int numPatients, numDoctors;
+    private static List<Doctor> Doctors ;
 
     public static void loadData() {
         Persons = new HashMap<UUID, Person>();
         PersonsNames = new HashMap<String,Person>();
-        List<Doctor> doctors = Read.readDoctors();
+        Doctors = Read.readDoctors();
         List<Patient> patients = Read.readPatients();
         List<TreatmentData> data = Read.readTreatmentData();
 
-        for (Doctor d : doctors) {
+        for (Doctor d : Doctors) {
             if (!addDoctor(d)) {
                 System.out.println("doctor" + d.getName() + "has not been added");
             }
@@ -101,5 +102,13 @@ public class NetworkManage {
     }
     public static Doctor getDoctor(String doctorName){
         return (Doctor) PersonsNames.get(doctorName);
+    }
+
+    public static List<Doctor> getDoctors() {
+        return Doctors;
+    }
+
+    public static void setDoctors(List<Doctor> doctors) {
+        Doctors = doctors;
     }
 }

@@ -12,14 +12,22 @@ public class StoreManage {
 
     public static HashSet<UUID> storageids;
     public static HashMap<String,SystemMedication> medicationStorage ;
-
+    private static List<SystemMedication> MedicationStorage ;
     public static void loadData() {
         storageids = new HashSet<UUID>();
         medicationStorage = new HashMap<String,SystemMedication>();
-        List<SystemMedication> MedicationStorage = Read.readMedicationStorage();
+        MedicationStorage = Read.readMedicationStorage();
         for (SystemMedication m : MedicationStorage) {
             storageids.add(m.getId());
             medicationStorage.put(m.getName(), m);
         }
+    }
+
+    public static List<SystemMedication> getMedicationStorage() {
+        return MedicationStorage;
+    }
+
+    public static void setMedicationStorage(List<SystemMedication> medicationStorage) {
+        MedicationStorage = medicationStorage;
     }
 }
