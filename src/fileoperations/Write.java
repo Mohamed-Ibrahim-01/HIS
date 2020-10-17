@@ -295,7 +295,7 @@ public class Write {
         int[] columns = { 2 };
         String WTH = input.getWTH();
         updateCSVLine(tdpath, patient.getId().toString() + "," + doctor.getId().toString(), columns, WTH);
-        doctor.getTreatmentData(patient).setHoursPerWeekPerPatient(Double.parseDouble(WTH));
+        doctor.getTreatmentData(patient).setWTH(Double.parseDouble(WTH));
     }
 
     private static void addNewPrescription(String tdfolderpath, Patient patient, Doctor doctor) {
