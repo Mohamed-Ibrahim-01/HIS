@@ -4,6 +4,11 @@ import src.models.*;
 import src.management.*;
 
 public class CmdOutput {
+    public static void printPatient(String name){
+        Patient patient = NetworkManage.getPatient(name);
+        Prompt.showTitle("  PRINTING PATIENT'S INFORMATION  ");
+        printPerson(patient);
+    }
 
     private static void printPerson(Person person) {
         Prompt.printDashline();
