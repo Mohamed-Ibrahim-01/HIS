@@ -11,6 +11,10 @@ import java.util.List;
 public class CmdOutput {
     public static void printPatient(String name){
         Patient patient = NetworkManage.getPatient(name);
+        if(patient == null) {
+            Prompt.showTitle("PATIENT NOT FOUND");
+            return ;
+        }
         Prompt.showTitle("  PRINTING PATIENT'S INFORMATION  ");
         printData(patient.getPatientData());
     }
@@ -22,6 +26,10 @@ public class CmdOutput {
 
     public static void printMedicalHistory(String name){
         Patient patient = NetworkManage.getPatient(name);
+        if(patient == null) {
+            Prompt.showTitle("PATIENT NOT FOUND");
+            return ;
+        }
         Prompt.showTitle("  PRINTING PATIENT'S MEDICAL HISTORY");
         String[] mapNames = {"Hospitalizations","ChronicDiseases","Diseases","Medications"};
         for(HashMap<String,Date> map : patient.getMedicalHistory().getPatientMH().getHistory()){
@@ -30,8 +38,23 @@ public class CmdOutput {
             printData(mapToArr(map)); 
         }
     }
+    public static void prnitPatientMedications(String name){
+        Patient patient = NetworkManage.getPatient(name);
+        if(patient == null) {
+            Prompt.showTitle("PATIENT NOT FOUND");
+            return ;
+        }
+        Prompt.showTitle("  PRINTING PATIENT'S MEDICATIONS");
+        for(Medication medication : patient.getMedications()){
+            System.out.println(medication);
+        }
+    }
     public static void printIcu(String name){
         ICU icu = ICUManage.getICU(name);
+        if(icu == null) {
+            Prompt.showTitle("ICU NOT FOUND");
+            return ;
+        }
         Prompt.showTitle("PRINTING ICU DATA");
         System.out.println(icu);
     }
