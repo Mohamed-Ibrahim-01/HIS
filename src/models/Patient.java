@@ -10,6 +10,7 @@ public class Patient extends Person {
     private MedicalHistory MedicalHistory;
     private HashMap<Doctor, TreatmentData> DoctorsData;
     private HashSet<Medication> Medications;
+    private String[] AttributesValues;
     
     public Patient (String... params){
         super(params);
@@ -20,6 +21,19 @@ public class Patient extends Person {
         conditionDegree =  Integer.parseInt(params[10]);
         Medications = new HashSet<Medication>();
         DoctorsData = new HashMap<Doctor, TreatmentData>();
+        AttributesValues = params;
+    }
+    public String[][]  getPatientData(){
+        String[][] patientData = new String[12][2];
+        String[] attributes = new String[12], patientAttributes = {"Complain","AdmittanceDate","ICUname","BedNumber","ConditionDegree","MedicalStatus"};
+        System.arraycopy(super.getAttributes(), 0, attributes, 0, 5);
+        System.arraycopy(patientAttributes, 0, attributes, 6, 11);
+        for(int i = 0 ; i < attributes.length ; i++){
+            patientData[i][0] = patientAttributes[i];
+            patientData[i][1] = AttributesValues[i];
+        }
+        patientData[12][1] = MedicalStatus.toString();
+        return patientData;
     }
     public String getAdmittanceDate() {
         return AdmittanceDate;

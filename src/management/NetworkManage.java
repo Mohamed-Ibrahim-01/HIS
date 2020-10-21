@@ -19,12 +19,13 @@ public class NetworkManage {
     private static HashMap<String,Person> PersonsNames;
     private static int numPatients, numDoctors;
     private static List<Doctor> Doctors ;
+    private static List<Patient> Patients ;
 
     public static void loadData() {
         Persons = new HashMap<UUID, Person>();
         PersonsNames = new HashMap<String,Person>();
         Doctors = Read.readDoctors();
-        List<Patient> patients = Read.readPatients();
+        Patients  = Read.readPatients();
         List<TreatmentData> data = Read.readTreatmentData();
 
         for (Doctor d : Doctors) {
@@ -32,7 +33,7 @@ public class NetworkManage {
                 System.out.println("doctor" + d.getName() + "has not been added");
             }
         }
-        for (Patient d : patients) {
+        for (Patient d : Patients) {
             if (!addPatient(d)) {
                 System.out.println("patient" + d.getName() + "has not been added");
             }
@@ -108,6 +109,9 @@ public class NetworkManage {
         return Doctors;
     }
 
+    public static List<Patient> getPatients() {
+        return  Patients;
+    }
     public static void setDoctors(List<Doctor> doctors) {
         Doctors = doctors;
     }

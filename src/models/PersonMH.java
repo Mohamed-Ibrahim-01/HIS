@@ -1,6 +1,7 @@
 package src.models;
 
 import java.util.List;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,5 +55,13 @@ public class PersonMH{
        if(GeneticDiseases.contains(name)) return false;
        GeneticDiseases.add(name);
        return true;
+   }
+   public List<HashMap<String,Date>> getHistory(){
+        List<HashMap<String,Date>> history = new LinkedList<HashMap<String,Date>>();
+        history.add(Hospitalizations);
+        history.add(ChronicDiseases);
+        history.add(Diseases);
+        history.add(Medications);
+        return history;
    }
 }

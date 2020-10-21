@@ -1,6 +1,7 @@
 package src.management;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import src.fileoperations.Read;
@@ -36,5 +37,8 @@ public class ICUManage {
     }
     public static ICU getICU(String icuName){
         return icus.get(icuName);
+    }
+    public static List<ICU> getIcus(){
+        return new LinkedList<ICU>(icus.values());
     }
 }
