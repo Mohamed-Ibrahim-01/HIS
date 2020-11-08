@@ -307,16 +307,21 @@ public class Read {
     }
 
     public static String[] readCSVLine(String line) {
+        if (line == "") return null; 
         String[] splitedLine = line.split(",");
         List<String> lineAttributes = new LinkedList<String>();
         Collections.addAll(lineAttributes, splitedLine);
         for (int i = 0; i < lineAttributes.size(); i++) {
             String curr = lineAttributes.get(i);
             if (curr.startsWith("\"")) {
-                String next = lineAttributes.get(i + 1);
-                curr = (curr + "," + next).replace("\"", "");
+                StringBuilder hasCommaStr = new StringBuilder(curr);
+                while(true) {
+                    String removed = lineAttributes.remove(i+1);
+                    hasCommaStr.append("," + removed);
+                    if(removed.endsWith("\"")) break;
+                }
+                curr = hasCommaStr.toString().replace("\"", "");
                 lineAttributes.set(i, curr);
-                lineAttributes.remove(next);
             }
         }
         return lineAttributes.toArray(new String[lineAttributes.size()]);
